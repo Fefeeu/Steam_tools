@@ -19,6 +19,7 @@ public class ApiConnection {
 
             HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject respostaJson = new JSONObject(response.body());
+
             return respostaJson;
         } catch (Exception e){
             System.out.println(e);

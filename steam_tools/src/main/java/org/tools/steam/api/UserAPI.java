@@ -8,6 +8,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserAPI {
 
@@ -22,26 +24,26 @@ public class UserAPI {
         return jogos;
     }
 
-    public static Jogo[] getWishlist(String userId){
+    public static List<Jogo> getWishlist(String userId){
+
+        List<Jogo> wishList = new ArrayList<>();
 
         JSONArray jogosJson = getWishListItems(userId);
 
         int tamanhoWishList = jogosJson.length();
-        Jogo[] listaDeDesejos = new Jogo[tamanhoWishList];
 
         for (int i = 0; i < tamanhoWishList; i++){
             JSONObject jogoAtual = jogosJson.getJSONObject(i);
 
-            String appid = jogoAtual.getString("appid");
+            int appid = jogoAtual.getInt("appid");
             int prioridade = jogoAtual.getInt("priority");
 
             Jogo jogo = GameAPI.getGame(appid);
+            jogo.setPrioridade(prioridade);
 
+            wishList.add(jogo);
         }
 
-
-        System.out.println();
-
-        return listaDeDesejos;
+        return wishList;
     }
 }
