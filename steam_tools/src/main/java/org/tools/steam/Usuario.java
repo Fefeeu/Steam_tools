@@ -20,8 +20,11 @@ public class Usuario {
 
     public void escreverListaDeDesejos(){
         for(int i = 0; i < this.wishList.size(); i++){
-            System.out.println(i);
             System.out.println(this.wishList.get(i));
         }
+    }
+
+    public List<Jogo> getWishList() {
+        return wishList;
     }
 }

@@ -5,36 +5,63 @@ public class Jogo {
     private int appid = 0;
     private double preco = 99.99;
     private double promocao = 0.00;
-    private boolean em_promocao = false;
+    private boolean emPromocao = false;
     private int prioridade = 999999;
+    private boolean foiLancado = false;
 
     public Jogo(String nome, int appid, double preco, double promocao){
         this.nome = nome;
         this.appid = appid;
         this.preco = preco;
-        this.promocao = promocao;
+        this.adicionarPromocao(promocao);
+
+
     }
 
     public Jogo(String nome, int appid, double preco, double promocao, int prioridade){
         this.nome = nome;
         this.appid = appid;
         this.preco = preco;
-        this.promocao = promocao;
+        this.adicionarPromocao(promocao);
         this.prioridade = prioridade;
     }
 
     public void adicionarPromocao(double promocao){
         this.promocao = promocao;
-        this.em_promocao = true;
+        if (promocao > 0) this.emPromocao = true;
     }
 
     public void removerPromocao(){
         this.promocao = 0;
-        this.em_promocao = false;
+        this.emPromocao = false;
     }
 
     public void setPrioridade(int prioridade){
         this.prioridade = prioridade;
+    }
+
+    public void lancarJogo(){
+        this.foiLancado = true;
+    }
+
+    public boolean isFoiLancado() {
+        return foiLancado;
+    }
+
+    public boolean isEmPromocao() {
+        return emPromocao;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public double getPromocao() {
+        return promocao;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     @Override
@@ -44,8 +71,9 @@ public class Jogo {
                 ", appid='" + appid + '\'' +
                 ", preco=" + preco +
                 ", promocao=" + promocao +
-                ", em_promocao=" + em_promocao +
+                ", em_promocao=" + emPromocao +
                 ", prioridade=" + prioridade +
+                ", foiLancado?=" + foiLancado +
                 '}';
     }
 }
