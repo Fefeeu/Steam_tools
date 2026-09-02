@@ -1,4 +1,4 @@
-package org.tools.steam.api;
+package org.steam.api;
 
 import org.json.JSONObject;
 
