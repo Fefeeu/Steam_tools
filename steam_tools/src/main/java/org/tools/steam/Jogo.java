@@ -8,14 +8,15 @@ public class Jogo {
     private boolean emPromocao = false;
     private int prioridade = 999999;
     private boolean foiLancado = false;
+    private String dataInicioPromocao;
+    private String dataFinalPromocao;
+    private boolean novaPromocao = false;
 
     public Jogo(String nome, int appid, double preco, double promocao){
         this.nome = nome;
         this.appid = appid;
         this.preco = preco;
         this.adicionarPromocao(promocao);
-
-
     }
 
     public Jogo(String nome, int appid, double preco, double promocao, int prioridade){
@@ -62,6 +63,14 @@ public class Jogo {
 
     public String getNome() {
         return nome;
+    }
+
+    public boolean isNovaPromocao() {
+        return novaPromocao;
+    }
+
+    public void setNovaPromocao(boolean novaPromocao) {
+        this.novaPromocao = novaPromocao;
     }
 
     @Override
