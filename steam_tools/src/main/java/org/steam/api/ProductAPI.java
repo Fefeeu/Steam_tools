@@ -34,15 +34,22 @@ public class ProductAPI {
                 JSONArray DLCs = gamePage.getJSONObject("data").getJSONArray("dlc");
                 List<Produto> dlcs = new ArrayList<>();
                 for (Object dlc : DLCs) {
+                    //Thread.sleep(1000);
                     Produto dlcJson = getJogo(dlc.toString(), 0);
-                    compDLC(dlcJson, jogo.getNome());
+                    if(dlcJson.getNome() != "")
+                    {
+                        compDLC(dlcJson, jogo.getNome());
+                    }
+
                     dlcs.add(dlcJson);
 
                 }
                 jogo.setDlcs(dlcs);
             } catch (JSONException e) {
                 jogo.setDlcs(null);
-            }
+            }/* catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }*/
 
 
             //pegando data de lancamento
