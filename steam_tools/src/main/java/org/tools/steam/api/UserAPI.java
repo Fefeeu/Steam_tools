@@ -4,10 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tools.steam.Jogo;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +34,40 @@ public class UserAPI {
             int appid = jogoAtual.getInt("appid");
             int prioridade = jogoAtual.getInt("priority");
 
-            Jogo jogo = GameAPI.getGame(appid);
-            jogo.setPrioridade(prioridade);
+            Jogo jogo = null;
+            int tentativas = 0;
+            int maxTentativas = 3;
 
+            while (jogo == null && tentativas < maxTentativas) {
+                jogo = GameAPI.getGame(appid);
+
+                if (jogo == null) {
+                    tentativas++;
+                    System.out.println("DEU ALGO ERRADO REQUISIÇÃO JOGO: " + appid + " - tentativa " + tentativas + "/" + maxTentativas + ", esperando...");
+
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return wishList;
+                    }
+                }
+            }
+
+            if (jogo == null) {
+                System.out.println("Desisti do jogo " + appid + " após " + maxTentativas + " tentativas.");
+                continue;
+            }
+
+            jogo.setPrioridade(prioridade);
             wishList.add(jogo);
+
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return wishList;
+            }
         }
 
         return wishList;

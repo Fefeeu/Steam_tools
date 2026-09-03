@@ -31,6 +31,9 @@ public class Usuario {
             this.beckupWishList = getFileBeckupWishList();
         }
         this.wishList = UserAPI.getWishlist(this.idUsuario);
+    }
+
+    public void atualizaBeckupWishList(){
         salvarWishListEmArquivo();
     }
 

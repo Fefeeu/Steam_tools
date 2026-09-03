@@ -73,6 +73,10 @@ public class Jogo {
         this.novaPromocao = novaPromocao;
     }
 
+    public int getAppid() {
+        return appid;
+    }
+
     @Override
     public String toString() {
         return "Jogo{" +
