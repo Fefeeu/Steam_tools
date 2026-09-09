@@ -1,4 +1,4 @@
-package org.tools.steam;
+package org.steam;
 
 public class Jogo {
     private String nome = "";

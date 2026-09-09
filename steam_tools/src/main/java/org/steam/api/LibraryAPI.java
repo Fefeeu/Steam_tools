@@ -1,8 +1,8 @@
-package org.tools.steam.api;
+package org.steam.api;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.tools.ConfigLoader;
+import org.ConfigLoader;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

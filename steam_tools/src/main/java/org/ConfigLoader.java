@@ -1,4 +1,4 @@
-package org.tools;
+package org;
 
 import java.io.FileInputStream;
 import java.io.IOException;

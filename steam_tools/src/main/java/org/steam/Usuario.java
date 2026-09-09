@@ -1,8 +1,8 @@
-package org.tools.steam;
+package org.steam;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.tools.steam.api.UserAPI;
+import org.steam.api.UserAPI;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

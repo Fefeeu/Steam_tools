@@ -1,11 +1,9 @@
-package org.tools.output;
+package org.output;
 
-import org.tools.steam.Jogo;
-import org.tools.steam.Usuario;
-import org.tools.steam.api.UserAPI;
+import org.steam.Jogo;
+import org.steam.Usuario;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

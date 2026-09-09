@@ -10,9 +10,19 @@
     "novaPromocao": false
   },
   {
+    "nome": "7 Days to Die",
+    "appid": 251570,
+    "preco": 525000.0,
+    "promocao": 0.0,
+    "emPromocao": false,
+    "prioridade": 0,
+    "foiLancado": true,
+    "novaPromocao": false
+  },
+  {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 36.99,
+    "preco": 21.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -23,8 +33,8 @@
     "nome": "Rain World",
     "appid": 312520,
     "preco": 73.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "promocao": 0.65,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -32,7 +42,7 @@
   {
     "nome": "DARK SOULS™ III",
     "appid": 374320,
-    "preco": 229.9,
+    "preco": 59.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 9,
@@ -52,9 +62,9 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 47.49,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 29.99,
+    "promocao": 0.5,
+    "emPromocao": true,
     "prioridade": 8,
     "foiLancado": true,
     "novaPromocao": false
@@ -72,9 +82,9 @@
   {
     "nome": "Outer Wilds",
     "appid": 753640,
-    "preco": 32.99,
-    "promocao": 0.4,
-    "emPromocao": true,
+    "preco": 22.99,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 2,
     "foiLancado": true,
     "novaPromocao": false
@@ -102,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 88.99,
+    "preco": 14.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -132,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 64.95,
+    "preco": 118.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -143,8 +153,8 @@
     "nome": "Neon White",
     "appid": 1533420,
     "preco": 32.49,
-    "promocao": 0.6,
-    "emPromocao": true,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 7,
     "foiLancado": true,
     "novaPromocao": false
@@ -173,8 +183,8 @@
     "nome": "Haste",
     "appid": 1796470,
     "preco": 59.99,
-    "promocao": 0.4,
-    "emPromocao": true,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -182,9 +192,9 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 239.0,
-    "promocao": 0.2,
-    "emPromocao": true,
+    "preco": 49.99,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -202,9 +212,9 @@
   {
     "nome": "The Farmer Was Replaced",
     "appid": 2060160,
-    "preco": 30.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 9.99,
+    "promocao": 0.2,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -212,7 +222,7 @@
   {
     "nome": "Dispatch",
     "appid": 2592160,
-    "preco": 38.99,
+    "preco": 28.99,
     "promocao": 0.2,
     "emPromocao": true,
     "prioridade": 0,
@@ -223,8 +233,8 @@
     "nome": "9 Kings",
     "appid": 2784470,
     "preco": 39.99,
-    "promocao": 0.5,
-    "emPromocao": true,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -242,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 59.99,
+    "preco": 19.5,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -262,19 +272,9 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 7.99,
+    "preco": 359.0,
     "promocao": 0.0,
     "emPromocao": false,
-    "prioridade": 0,
-    "foiLancado": true,
-    "novaPromocao": false
-  },
-  {
-    "nome": "7 Days to Die",
-    "appid": 251570,
-    "preco": 121.99,
-    "promocao": 0.45,
-    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false

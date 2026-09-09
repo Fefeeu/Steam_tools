@@ -1,6 +1,6 @@
-package org.tools.steam;
+package org.steam;
 
-import org.tools.steam.api.LibraryAPI;
+import org.steam.api.LibraryAPI;
 
 import java.util.HashSet;
 import java.util.Map;

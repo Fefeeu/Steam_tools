@@ -1,9 +1,9 @@
-package org.tools.steam.api;
+package org.steam.api;
 
 import org.json.JSONObject;
 import org.json.JSONException;
-import org.tools.steam.Jogo;
-import org.tools.steam.api.ApiConnection;
+import org.steam.Jogo;
+import org.steam.api.ApiConnection;
 
 public class GameAPI {
 

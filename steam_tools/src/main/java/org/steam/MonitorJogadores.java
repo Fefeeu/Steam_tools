@@ -1,6 +1,6 @@
-package org.tools.steam;
+package org.steam;
 
-import org.tools.steam.api.PlayerCountAPI;
+import org.steam.api.PlayerCountAPI;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
