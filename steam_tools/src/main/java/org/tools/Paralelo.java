@@ -57,7 +57,7 @@ public class Paralelo {
 
         String[] amigos = {
                 "76561198299393168",
-                "76561197960265729"
+                "76561199497837378"
         };
 
         ComparadorBiblioteca comparador = new ComparadorBiblioteca();
@@ -68,6 +68,10 @@ public class Paralelo {
 
                 Set<String> comuns = comparador.jogosEmComum(amigos);
                 Set<String> exclusivosPrimeiro = comparador.jogosExclusivos(amigos[0], amigos[1]);
+
+                if (i == REPETICOES) {
+                    comparador.imprimirRelatorio(comuns, exclusivosPrimeiro, amigos[0], amigos);
+                }
 
                 System.out.println("[Biblioteca] Rodada " + i + "/" + REPETICOES
                         + " - comuns: " + comuns.size() + ", exclusivos: " + exclusivosPrimeiro.size());

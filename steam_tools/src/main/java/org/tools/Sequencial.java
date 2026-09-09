@@ -53,10 +53,9 @@ public class Sequencial {
         comparador.coletarBibliotecas(amigos);
 
         Set<String> comuns = comparador.jogosEmComum(amigos);
-        System.out.println("Jogos em comum: " + comuns.size());
-
         Set<String> exclusivosPrimeiro = comparador.jogosExclusivos(amigos[0], amigos[1]);
-        System.out.println("Exclusivos de " + amigos[0] + ": " + exclusivosPrimeiro.size());
+
+        comparador.imprimirRelatorio(comuns, exclusivosPrimeiro, amigos[0], amigos);
 
         System.out.println("[Biblioteca] Concluído.");
     }

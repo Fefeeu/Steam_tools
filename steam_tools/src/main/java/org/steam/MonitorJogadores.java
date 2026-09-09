@@ -29,11 +29,16 @@ public class MonitorJogadores {
             t.join();
         }
     }
-    public void imprimirRelatorio(){
-        System.out.println("---- JOGADORES ONLINE ----");
+
+    public void imprimirRelatorio() {
+        System.out.println("\n\n\n");
+        String espacos = " ============================= ";
+        System.out.println(espacos + "Jogadores Online" + espacos);
+
         jogadoresOnline.forEach((appid, cont) -> {
             String nome = nomesJogos.getOrDefault(appid, appid);
             System.out.println(nome + "(" + appid + "):" + cont + " jogadores online");
         });
+        System.out.println("\n\n\n");
     }
 }
