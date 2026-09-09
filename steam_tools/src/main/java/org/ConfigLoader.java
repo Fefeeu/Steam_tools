@@ -9,10 +9,10 @@ public class ConfigLoader {
     private static final Properties props = new Properties();
 
     static {
-        try (FileInputStream input = new FileInputStream("config.properties")) {
+        try (FileInputStream input = new FileInputStream("config.proconfigperties")) {
             props.load(input);
         } catch (IOException e) {
-            System.out.println("Aviso: config.properties não encontrado. Crie um a partir do config.properties.example");
+            System.out.println("\n\n\n\nAviso: config.properties não encontrado. Crie um a partir do config.properties.example");
         }
     }
 

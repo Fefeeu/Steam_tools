@@ -13,6 +13,7 @@ public abstract class Notificacao {
     public static void wishList(Usuario usuario){
         List<Jogo> jogosEmPromocao = getPromotionDiference(usuario);
 
+        System.out.println("\n\n\n");
         String espacos = " ============================= ";
         System.out.println(espacos + "Jogos Em Promoção" + espacos);
 
@@ -23,6 +24,7 @@ public abstract class Notificacao {
                 System.out.println(jogosEmPromocao.get(i).getNome());
             }
         }
+        System.out.println("\n\n\n");
     }
 
     public static List<Jogo> getPromotionDiference(Usuario usuario) {
