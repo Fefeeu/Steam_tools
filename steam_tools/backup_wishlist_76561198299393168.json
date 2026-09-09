@@ -12,7 +12,7 @@
   {
     "nome": "7 Days to Die",
     "appid": 251570,
-    "preco": 525000.0,
+    "preco": 121.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -22,7 +22,7 @@
   {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 21.99,
+    "preco": 36.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -42,7 +42,7 @@
   {
     "nome": "DARK SOULS™ III",
     "appid": 374320,
-    "preco": 59.99,
+    "preco": 229.9,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 9,
@@ -52,7 +52,7 @@
   {
     "nome": "Fallout 4",
     "appid": 377160,
-    "preco": 59.99,
+    "preco": 15.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -72,7 +72,7 @@
   {
     "nome": "Breathedge",
     "appid": 738520,
-    "preco": 79.99,
+    "preco": 24.99,
     "promocao": 0.9,
     "emPromocao": true,
     "prioridade": 0,
@@ -82,7 +82,7 @@
   {
     "nome": "Outer Wilds",
     "appid": 753640,
-    "preco": 22.99,
+    "preco": 67.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 2,
@@ -112,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 14.99,
+    "preco": 38.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -142,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 118.0,
+    "preco": 35.95,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -152,7 +152,7 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 32.49,
+    "preco": 74.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 7,
@@ -192,7 +192,7 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 49.99,
+    "preco": 199.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -212,7 +212,7 @@
   {
     "nome": "The Farmer Was Replaced",
     "appid": 2060160,
-    "preco": 9.99,
+    "preco": 30.99,
     "promocao": 0.2,
     "emPromocao": true,
     "prioridade": 0,
@@ -222,7 +222,7 @@
   {
     "nome": "Dispatch",
     "appid": 2592160,
-    "preco": 28.99,
+    "preco": 38.99,
     "promocao": 0.2,
     "emPromocao": true,
     "prioridade": 0,
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 19.5,
+    "preco": 59.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 359.0,
+    "preco": 7.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
