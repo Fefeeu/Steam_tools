@@ -12,7 +12,7 @@
   {
     "nome": "7 Days to Die",
     "appid": 251570,
-    "preco": 121.99,
+    "preco": 44.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -22,7 +22,7 @@
   {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 36.99,
+    "preco": 49.95,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -52,7 +52,7 @@
   {
     "nome": "Fallout 4",
     "appid": 377160,
-    "preco": 11.99,
+    "preco": 15.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -62,7 +62,7 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 29.99,
+    "preco": 47.49,
     "promocao": 0.5,
     "emPromocao": true,
     "prioridade": 8,
@@ -72,7 +72,7 @@
   {
     "nome": "Breathedge",
     "appid": 738520,
-    "preco": 79.99,
+    "preco": 24.99,
     "promocao": 0.9,
     "emPromocao": true,
     "prioridade": 0,
@@ -112,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 14.99,
+    "preco": 88.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -132,7 +132,7 @@
   {
     "nome": "Sea of Stars: Sunset Edition",
     "appid": 1244090,
-    "preco": 99.99,
+    "preco": 44.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 13,
@@ -142,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 22.99,
+    "preco": 64.95,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -192,7 +192,7 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 34.99,
+    "preco": 199.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -202,7 +202,7 @@
   {
     "nome": "Slay the Princess — The Pristine Cut",
     "appid": 1989270,
-    "preco": 17.99,
+    "preco": 53.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 3,
@@ -242,7 +242,7 @@
   {
     "nome": "Town to City",
     "appid": 3115220,
-    "preco": 89.99,
+    "preco": 28.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 7.99,
+    "preco": 6.39,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
