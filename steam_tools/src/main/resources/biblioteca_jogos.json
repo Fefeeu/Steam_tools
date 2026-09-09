@@ -1,0 +1,1646 @@
+[ {
+  "nome" : "Outlast",
+  "appid" : "238320",
+  "preco" : 14.99,
+  "diasSemJogar" : 2033,
+  "dlcs" : [ {
+    "nome" : "Outlast: Whistleblower DLC",
+    "appid" : "273300",
+    "preco" : 16.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2014-05-06"
+  } ],
+  "dataLancamento" : "2013-09-04"
+}, {
+  "nome" : "LEGO® The Lord of the Rings™",
+  "appid" : "214510",
+  "preco" : 89.99,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2012-11-27"
+}, {
+  "nome" : "The Elder Scrolls V: Skyrim",
+  "appid" : "72850",
+  "preco" : 39.99,
+  "diasSemJogar" : 792,
+  "dlcs" : [ {
+    "nome" : "The Elder Scrolls V: Skyrim Soundtrack",
+    "appid" : "1240360",
+    "preco" : 29.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-02-11"
+  } ],
+  "dataLancamento" : "2011-11-10"
+}, {
+  "nome" : "ARK: Survival Evolved",
+  "appid" : "346110",
+  "preco" : 46.99,
+  "diasSemJogar" : 26,
+  "dlcs" : [ {
+    "nome" : "ARK: Aquatica",
+    "appid" : "3537070",
+    "preco" : 46.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-07-15"
+  }, {
+    "nome" : "ARK: Aquatica Original Soundtrack",
+    "appid" : "3820060",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-07-15"
+  }, {
+    "nome" : "ARK: Aquatica - Luminati Suns Song",
+    "appid" : "3761020",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-06-02"
+  }, {
+    "nome" : "Fjordur - ARK Expansion Map",
+    "appid" : "1887560",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-06-12"
+  }, {
+    "nome" : "Lost Island - ARK Expansion Map",
+    "appid" : "1691800",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-12-14"
+  }, {
+    "nome" : "ARK: Genesis Season Pass",
+    "appid" : "1113410",
+    "preco" : 46.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-08-08"
+  }, {
+    "nome" : "Valguero - ARK Expansion Map",
+    "appid" : "1100810",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-06-18"
+  }, {
+    "nome" : "Ragnarok - ARK Expansion Map",
+    "appid" : "642250",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-12"
+  }, {
+    "nome" : "ARK: Extinction - Expansion Pack",
+    "appid" : "887380",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-11-06"
+  }, {
+    "nome" : "ARK: Aberration - Expansion Pack",
+    "appid" : "708770",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-12-12"
+  }, {
+    "nome" : "ARK: Scorched Earth - Expansion Pack",
+    "appid" : "512540",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-09-01"
+  }, {
+    "nome" : "Primitive+ ARK Total Conversion",
+    "appid" : "508150",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-07-28"
+  }, {
+    "nome" : "The Center - ARK Expansion Map",
+    "appid" : "473850",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-05-17"
+  }, {
+    "nome" : "Crystal Isles - ARK Expansion Map",
+    "appid" : "1270830",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-06-11"
+  }, {
+    "nome" : "ARK: Survival Evolved Original Soundtrack",
+    "appid" : "1646550",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-26"
+  }, {
+    "nome" : "ARK: Expansion Packs Original Soundtrack",
+    "appid" : "1646690",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-26"
+  }, {
+    "nome" : "ARK: Genesis Part 1 Original Soundtrack",
+    "appid" : "1646700",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-27"
+  }, {
+    "nome" : "ARK: Genesis Part 2 Original Soundtrack",
+    "appid" : "1646720",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-03"
+  } ],
+  "dataLancamento" : "2017-08-27"
+}, {
+  "nome" : "Left 4 Dead 2",
+  "appid" : "550",
+  "preco" : 32.99,
+  "diasSemJogar" : 1949,
+  "dataLancamento" : "2009-11-16"
+}, {
+  "nome" : "Subnautica: Below Zero",
+  "appid" : "848450",
+  "preco" : 124.5,
+  "diasSemJogar" : 104,
+  "dlcs" : [ {
+    "nome" : "Subnautica: Below Zero Original Soundtrack",
+    "appid" : "1619010",
+    "preco" : 44.5,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-04-30"
+  } ],
+  "dataLancamento" : "2021-05-13"
+}, {
+  "nome" : "Crime Scene Cleaner",
+  "appid" : "1040200",
+  "preco" : 89.99,
+  "diasSemJogar" : 11,
+  "dlcs" : [ {
+    "nome" : "Crime Scene Cleaner - Biohazard",
+    "appid" : "4492060",
+    "preco" : 0.0,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Crime Scene Cleaner Soundtrack",
+    "appid" : "3153150",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-08-27"
+  } ],
+  "dataLancamento" : "2024-08-14"
+}, {
+  "nome" : "Conan Exiles - Public Beta Client",
+  "appid" : "931180",
+  "preco" : 0.0,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2018-11-21"
+}, {
+  "nome" : "Enigma of Fear",
+  "appid" : "1507580",
+  "preco" : 32.5,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2024-11-28"
+}, {
+  "nome" : "Raft",
+  "appid" : "648800",
+  "preco" : 67.99,
+  "diasSemJogar" : 59,
+  "dataLancamento" : "2022-06-20"
+}, {
+  "nome" : "Exanima",
+  "appid" : "362490",
+  "preco" : 27.99,
+  "diasSemJogar" : 836,
+  "dataLancamento" : "2015-04-29"
+}, {
+  "nome" : "The Elder Scrolls V: Skyrim Special Edition",
+  "appid" : "489830",
+  "preco" : 149.0,
+  "diasSemJogar" : 593,
+  "dlcs" : [ {
+    "nome" : "The Elder Scrolls V: Skyrim Anniversary Upgrade",
+    "appid" : "1746860",
+    "preco" : 79.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-10"
+  }, {
+    "nome" : "The Elder Scrolls V: Skyrim Special Edition - Creations",
+    "appid" : "598120",
+    "preco" : 21.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-09-25"
+  } ],
+  "dataLancamento" : "2016-10-27"
+}, {
+  "nome" : "Valheim",
+  "appid" : "892970",
+  "preco" : 1299.0,
+  "diasSemJogar" : 74,
+  "dlcs" : [ {
+    "nome" : "Valheim Soundtrack",
+    "appid" : "1620250",
+    "preco" : 449.0,
+    "diasSemJogar" : 0
+  } ]
+}, {
+  "nome" : "TaleSpire",
+  "appid" : "720620",
+  "preco" : 47.49,
+  "diasSemJogar" : 1371,
+  "dataLancamento" : "2021-04-14"
+}, {
+  "nome" : "XCOM: Enemy Unknown",
+  "appid" : "200510",
+  "preco" : 69.99,
+  "diasSemJogar" : 20706,
+  "dlcs" : [ {
+    "nome" : "XCOM: Enemy Within",
+    "appid" : "225340",
+    "preco" : 49.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2013-11-14"
+  }, {
+    "nome" : "XCOM: Enemy Unknown - Slingshot Pack",
+    "appid" : "209812",
+    "preco" : 12.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2012-12-04"
+  }, {
+    "nome" : "XCOM: Enemy Unknown - Elite Soldier Pack",
+    "appid" : "209811",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2012-10-23"
+  } ],
+  "dataLancamento" : "2012-10-11"
+}, {
+  "nome" : "Trove",
+  "appid" : "304050",
+  "preco" : 0.0,
+  "diasSemJogar" : 3300,
+  "dlcs" : [ {
+    "nome" : "Trove - Gearcrafter's Pack",
+    "appid" : "3296310",
+    "preco" : 46.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-11-01"
+  }, {
+    "nome" : "Trove - Arcanium Triumph Pack",
+    "appid" : "2689510",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-11-14"
+  }, {
+    "nome" : "Trove - Eclipse Pack",
+    "appid" : "693160",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-08-22"
+  }, {
+    "nome" : "Trove - Arcanium Expedition Pack",
+    "appid" : "380231",
+    "preco" : 16.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-07-09"
+  }, {
+    "nome" : "Trove - Double Dragon Pack",
+    "appid" : "462920",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-04-15"
+  }, {
+    "nome" : "Trove - Geode Companion Pack 1",
+    "appid" : "881590",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-06-26"
+  }, {
+    "nome" : "Trove - Geode Companion Pack 2",
+    "appid" : "881591",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-07-16"
+  }, {
+    "nome" : "Trove - Dynomighty Miner Pack",
+    "appid" : "807020",
+    "preco" : 27.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-02-20"
+  }, {
+    "nome" : "Trove - Square Necessities Pack",
+    "appid" : "789530",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-02-06"
+  }, {
+    "nome" : "Trove - Fast Fortune Pack",
+    "appid" : "658001",
+    "preco" : 109.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-27"
+  }, {
+    "nome" : "Trove - Soundtrack Vol. 1",
+    "appid" : "462050",
+    "preco" : 16.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-05-02"
+  }, {
+    "nome" : "Trove - Mega Menagerie Pack",
+    "appid" : "658000",
+    "preco" : 169.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-27"
+  } ],
+  "dataLancamento" : "2015-07-09"
+}, {
+  "nome" : "Arctico",
+  "appid" : "325210",
+  "preco" : 30.0,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2022-02-15"
+}, {
+  "nome" : "Unturned",
+  "appid" : "304930",
+  "preco" : 0.0,
+  "diasSemJogar" : 1377,
+  "dlcs" : [ {
+    "nome" : "Unturned - Permanent Gold Upgrade",
+    "appid" : "306460",
+    "preco" : 19.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2014-07-07"
+  } ],
+  "dataLancamento" : "2017-07-07"
+}, {
+  "nome" : "American Theft 80s",
+  "appid" : "1321450",
+  "preco" : 59.99,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2022-06-15"
+}, {
+  "nome" : "Wallpaper Engine",
+  "appid" : "431960",
+  "preco" : 17.99,
+  "diasSemJogar" : 61,
+  "dlcs" : [ {
+    "nome" : "Wallpaper Engine - Editor Extensions",
+    "appid" : "1790230",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-26"
+  } ],
+  "dataLancamento" : "2018-11-16"
+}, {
+  "nome" : "Bless Unleashed Playtest",
+  "appid" : "1478540",
+  "preco" : 0.0,
+  "diasSemJogar" : 1943,
+  "dataLancamento" : "2021-05-09"
+}, {
+  "nome" : "XCOM®: Chimera Squad",
+  "appid" : "882100",
+  "preco" : 14.99,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2020-04-23"
+}, {
+  "nome" : "Subnautica",
+  "appid" : "264710",
+  "preco" : 124.5,
+  "diasSemJogar" : 114,
+  "dlcs" : [ {
+    "nome" : "Subnautica Original Soundtrack",
+    "appid" : "1619300",
+    "preco" : 44.5,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-04-30"
+  } ],
+  "dataLancamento" : "2018-01-23"
+}, {
+  "nome" : "Borderlands: The Pre-Sequel",
+  "appid" : "261640",
+  "preco" : 43000.0,
+  "diasSemJogar" : 2546,
+  "dlcs" : [ {
+    "nome" : "Borderlands: The Pre-Sequel Season Pass",
+    "appid" : "319090",
+    "preco" : 44.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-03-24"
+  }, {
+    "nome" : "Claptastic Voyage and Ultimate Vault Hunter Upgrade Pack 2",
+    "appid" : "316410",
+    "preco" : 14.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-03-24"
+  } ],
+  "dataLancamento" : "2014-10-13"
+}, {
+  "nome" : "ARK: The Survival Of The Fittest",
+  "appid" : "407530",
+  "preco" : 0.0,
+  "diasSemJogar" : 3219,
+  "dataLancamento" : "2017-08-29"
+}, {
+  "nome" : "Warhammer: Vermintide 2",
+  "appid" : "552500",
+  "preco" : 88.99,
+  "diasSemJogar" : 2336,
+  "dlcs" : [ {
+    "nome" : "Warhammer: Vermintide 2 - Versus",
+    "appid" : "3283450",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-11-14"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Necromancer Career",
+    "appid" : "2585630",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-10-19"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Necromancer Cosmetic Upgrade",
+    "appid" : "2585640",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-10-19"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Warrior Priest Career",
+    "appid" : "1782450",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-12-09"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Warrior Priest Cosmetic Upgrade",
+    "appid" : "1782451",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-12-09"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Sister of the Thorn",
+    "appid" : "1629000",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-03"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Sister of the Thorn Cosmetic Upgrade",
+    "appid" : "1629010",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-03"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Chaos Wastes",
+    "appid" : "1601550",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-04-20"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Forgotten Relics Pack",
+    "appid" : "1592630",
+    "preco" : 20.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-04-20"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Outcast Engineer Cosmetic Upgrade",
+    "appid" : "1443790",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-11-19"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Outcast Engineer Career",
+    "appid" : "1443780",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-11-19"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Grail Knight Cosmetic Upgrade",
+    "appid" : "1345990",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-06-23"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Grail Knight Career",
+    "appid" : "1343500",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-06-23"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Winds of Magic",
+    "appid" : "1033060",
+    "preco" : 59.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-08-13"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Back to Ubersreik",
+    "appid" : "975400",
+    "preco" : 32.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-12-10"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Collector's Edition Upgrade",
+    "appid" : "737040",
+    "preco" : 49.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-03-08"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Shadows Over Bögenhafen",
+    "appid" : "828790",
+    "preco" : 32.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-08-28"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - A Treacherous Adventure",
+    "appid" : "2199500",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-11-09"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Karak Azgaraz",
+    "appid" : "2445960",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-06-13"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Verminous Dreams",
+    "appid" : "3283440",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-12-09"
+  }, {
+    "nome" : "Warhammer: Vermintide 2 - Return to the Reik",
+    "appid" : "4040200",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-11-20"
+  } ],
+  "dataLancamento" : "2018-03-08"
+}, {
+  "nome" : "Ultimate Chicken Horse",
+  "appid" : "386940",
+  "preco" : 44.99,
+  "diasSemJogar" : 1274,
+  "dlcs" : [ {
+    "nome" : "Ultimate Chicken Horse Soundtrack",
+    "appid" : "493070",
+    "preco" : 26.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-06-23"
+  } ],
+  "dataLancamento" : "2016-03-04"
+}, {
+  "nome" : "Phasmophobia",
+  "appid" : "739630",
+  "preco" : 41.99,
+  "diasSemJogar" : 1802,
+  "dataLancamento" : "2020-09-18"
+}, {
+  "nome" : "Dead by Daylight",
+  "appid" : "381210",
+  "preco" : 19.99,
+  "diasSemJogar" : 2204,
+  "dlcs" : [ {
+    "nome" : "Dead by Daylight: Chorus of Sin",
+    "appid" : "5060920",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-08-25"
+  }, {
+    "nome" : "Dead by Daylight: Jason",
+    "appid" : "4791830",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-06-16"
+  }, {
+    "nome" : "Dead by Daylight: Stranger Things Chapter 2",
+    "appid" : "4318580",
+    "preco" : 41.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-01-27"
+  }, {
+    "nome" : "Dead by Daylight - Sinister Grace",
+    "appid" : "4019590",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-09-23"
+  }, {
+    "nome" : "Dead by Daylight: The Walking Dead",
+    "appid" : "3884020",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-07-29"
+  }, {
+    "nome" : "Dead by Daylight: Five Nights at Freddy’s",
+    "appid" : "3796620",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-06-17"
+  }, {
+    "nome" : "Dead by Daylight - Steady Pulse",
+    "appid" : "3698790",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-05-06"
+  }, {
+    "nome" : "Dead by Daylight - Tokyo Ghoul",
+    "appid" : "3448670",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-04-02"
+  }, {
+    "nome" : "Dead by Daylight - Doomed Course",
+    "appid" : "3261720",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-11-28"
+  }, {
+    "nome" : "Dead by Daylight - Castlevania Chapter",
+    "appid" : "3103150",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-08-27"
+  }, {
+    "nome" : "Dead by Daylight - Tomb Raider Chapter",
+    "appid" : "3024580",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-07-16"
+  }, {
+    "nome" : "Dead by Daylight - Dungeons & Dragons",
+    "appid" : "2958440",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-06-03"
+  }, {
+    "nome" : "Dead by Daylight - All Things Wicked Chapter",
+    "appid" : "2661270",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-03-12"
+  }, {
+    "nome" : "Dead by Daylight - Alan Wake Chapter",
+    "appid" : "2661250",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-01-30"
+  }, {
+    "nome" : "Dead by Daylight - Endless Hunt Pack",
+    "appid" : "2922730",
+    "preco" : 69.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-05-14"
+  }, {
+    "nome" : "Dead by Daylight - Maddening Darkness Pack",
+    "appid" : "2526530",
+    "preco" : 34.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-01-08"
+  }, {
+    "nome" : "Dead by Daylight - Old Wounds Pack",
+    "appid" : "2526540",
+    "preco" : 69.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-01-08"
+  }, {
+    "nome" : "Dead by Daylight - Macabre Tales Pack",
+    "appid" : "2526550",
+    "preco" : 69.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-01-08"
+  }, {
+    "nome" : "Dead by Daylight - Chucky Chapter",
+    "appid" : "2656010",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-11-28"
+  }, {
+    "nome" : "Dead by Daylight - Stranger Things Chapter",
+    "appid" : "1135280",
+    "preco" : 41.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-09-17"
+  }, {
+    "nome" : "Dead by Daylight - Alien Chapter Pack",
+    "appid" : "2515990",
+    "preco" : 41.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-08-29"
+  }, {
+    "nome" : "Dead by Daylight - Nicolas Cage Chapter Pack",
+    "appid" : "2469400",
+    "preco" : 34.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-07-25"
+  }, {
+    "nome" : "Dead by Daylight - End Transmission Chapter",
+    "appid" : "2399750",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-06-13"
+  }, {
+    "nome" : "Dead by Daylight - Resident Evil: PROJECT W Chapter",
+    "appid" : "2102730",
+    "preco" : 41.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-08-30"
+  }, {
+    "nome" : "Dead by Daylight - Sadako Rising Chapter",
+    "appid" : "1899750",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-03-08"
+  }, {
+    "nome" : "Dead by Daylight - Resident Evil Chapter",
+    "appid" : "1634040",
+    "preco" : 41.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-15"
+  }, {
+    "nome" : "Dead by Daylight - Escape Expansion Pack",
+    "appid" : "1622941",
+    "preco" : 87.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-15"
+  }, {
+    "nome" : "Dead by Daylight - Terror Expansion Pack",
+    "appid" : "1622940",
+    "preco" : 87.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-15"
+  }, {
+    "nome" : "Dead by Daylight - A Nightmare on Elm Street™",
+    "appid" : "700282",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-10-26"
+  }, {
+    "nome" : "Dead by Daylight - Ash vs Evil Dead",
+    "appid" : "1009821",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-04-02"
+  }, {
+    "nome" : "Dead by Daylight - The Saw® Chapter",
+    "appid" : "750381",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-01-23"
+  }, {
+    "nome" : "Dead by Daylight - Leatherface™",
+    "appid" : "700280",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-09-14"
+  }, {
+    "nome" : "Dead by Daylight - Ghost Face®",
+    "appid" : "1089270",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-06-18"
+  }, {
+    "nome" : "Dead By Daylight - Silent Hill Chapter",
+    "appid" : "1324970",
+    "preco" : 27.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-06-16"
+  }, {
+    "nome" : "Dead by Daylight - A Lullaby for the Dark Chapter",
+    "appid" : "661770",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-07-27"
+  }, {
+    "nome" : "Dead by Daylight - The Last Breath Chapter",
+    "appid" : "509060",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-08-18"
+  }, {
+    "nome" : "Dead by Daylight - Left Behind",
+    "appid" : "573940",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-03-08"
+  }, {
+    "nome" : "Dead by Daylight - Charity Case",
+    "appid" : "627510",
+    "preco" : 17.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-08-10"
+  }, {
+    "nome" : "Dead by Daylight - Original Soundtrack",
+    "appid" : "492140",
+    "preco" : 34.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-06-14"
+  } ],
+  "dataLancamento" : "2016-06-14"
+}, {
+  "nome" : "Conan Exiles Enhanced",
+  "appid" : "440900",
+  "preco" : 99.49,
+  "diasSemJogar" : 1979,
+  "dlcs" : [ {
+    "nome" : "Conan Exiles Enhanced: Isle of Siptah",
+    "appid" : "1206200",
+    "preco" : 19.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - People of the Dragon Pack",
+    "appid" : "1668110",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Architects of Argos Pack",
+    "appid" : "1265640",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Riders of Hyboria Pack",
+    "appid" : "1173900",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Debaucheries of Derketo Pack",
+    "appid" : "1147100",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Blood and Sand Pack",
+    "appid" : "1134010",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - The Riddle of Steel",
+    "appid" : "1076150",
+    "preco" : 6.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Treasures of Turan Pack",
+    "appid" : "1040930",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Seekers of the Dawn Pack",
+    "appid" : "972370",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - The Savage Frontier Pack",
+    "appid" : "919390",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - Jewel of the West Pack",
+    "appid" : "887120",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "Conan Exiles Enhanced - The Imperial East Pack",
+    "appid" : "760730",
+    "preco" : 9.99,
+    "diasSemJogar" : 0
+  } ],
+  "dataLancamento" : "2018-05-08"
+}, {
+  "nome" : "Deadlock",
+  "appid" : "1422450",
+  "preco" : 0.0,
+  "diasSemJogar" : 193
+}, {
+  "nome" : "DARK SOULS™: REMASTERED",
+  "appid" : "570940",
+  "preco" : 154.9,
+  "diasSemJogar" : 140,
+  "dataLancamento" : "2018-05-23"
+}, {
+  "nome" : "Thief Simulator 2",
+  "appid" : "1332720",
+  "preco" : 59.99,
+  "diasSemJogar" : 20706,
+  "dlcs" : [ {
+    "nome" : "Thief Simulator 2: Cruise Ship DLC",
+    "appid" : "3027860",
+    "preco" : 0.0,
+    "diasSemJogar" : 0
+  } ],
+  "dataLancamento" : "2023-10-04"
+}, {
+  "nome" : "Primal Carnage",
+  "appid" : "215470",
+  "preco" : 19.49,
+  "diasSemJogar" : 3576,
+  "dataLancamento" : "2012-10-29"
+}, {
+  "nome" : "STAR WARS™ Knights of the Old Republic™",
+  "appid" : "32370",
+  "preco" : 32.99,
+  "diasSemJogar" : 3845,
+  "dataLancamento" : "2009-09-05"
+}, {
+  "nome" : "PEAK",
+  "appid" : "3527290",
+  "preco" : 7.99,
+  "diasSemJogar" : 19,
+  "dataLancamento" : "2025-06-16"
+}, {
+  "nome" : "STAR WARS™ Battlefront II (Classic, 2005)",
+  "appid" : "6060",
+  "preco" : 32.99,
+  "diasSemJogar" : 2317,
+  "dataLancamento" : "2009-07-08"
+}, {
+  "nome" : "The Witcher 3: Wild Hunt - Complete Edition",
+  "appid" : "292030",
+  "preco" : 69.99,
+  "diasSemJogar" : 744,
+  "dlcs" : [ {
+    "nome" : "The Witcher 3: Wild Hunt — Songs of the Past",
+    "appid" : "5006530",
+    "preco" : 0.0,
+    "diasSemJogar" : 0
+  }, {
+    "nome" : "The Witcher 3: Wild Hunt Soundtrack",
+    "appid" : "1229320",
+    "preco" : 22.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-02-10"
+  }, {
+    "nome" : "The Witcher 3: Wild Hunt - Hearts of Stone Soundtrack",
+    "appid" : "1233280",
+    "preco" : 18.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-02-10"
+  }, {
+    "nome" : "The Witcher 3: Wild Hunt - Blood and Wine Soundtrack",
+    "appid" : "1233340",
+    "preco" : 18.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-02-10"
+  } ],
+  "dataLancamento" : "2015-05-18"
+}, {
+  "nome" : "Thief Simulator",
+  "appid" : "704850",
+  "preco" : 59.99,
+  "diasSemJogar" : 20706,
+  "dlcs" : [ {
+    "nome" : "Thief Simulator - Shopping Center DLC",
+    "appid" : "2518240",
+    "preco" : 23.5,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-12-10"
+  }, {
+    "nome" : "Thief Simulator - Luxury Houses DLC",
+    "appid" : "1840650",
+    "preco" : 23.5,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-04-06"
+  } ],
+  "dataLancamento" : "2018-11-09"
+}, {
+  "nome" : "Stardew Valley",
+  "appid" : "413150",
+  "preco" : 165000.0,
+  "diasSemJogar" : 792,
+  "dlcs" : [ {
+    "nome" : "Stardew Valley Soundtrack",
+    "appid" : "440820",
+    "preco" : 4.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-02-26"
+  } ],
+  "dataLancamento" : "2016-02-26"
+}, {
+  "nome" : "KLETKA",
+  "appid" : "1699480",
+  "preco" : 32.99,
+  "diasSemJogar" : 514,
+  "dlcs" : [ {
+    "nome" : "KLETKA - Original Soundtrack",
+    "appid" : "3376170",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-12-13"
+  } ],
+  "dataLancamento" : "2026-02-19"
+}, {
+  "nome" : "Portal 2",
+  "appid" : "620",
+  "preco" : 9.99,
+  "diasSemJogar" : 1979,
+  "dlcs" : [ {
+    "nome" : "Portal 2 Soundtrack",
+    "appid" : "323180",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2014-09-24"
+  } ],
+  "dataLancamento" : "2011-04-18"
+}, {
+  "nome" : "State of Decay: YOSE",
+  "appid" : "329430",
+  "preco" : 37.99,
+  "diasSemJogar" : 20706,
+  "dlcs" : [ {
+    "nome" : "State of Decay: Original Game Soundtrack",
+    "appid" : "1274660",
+    "preco" : 14.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-03-25"
+  }, {
+    "nome" : "State of Decay: Year-One Survival Edition Soundtrack",
+    "appid" : "397220",
+    "preco" : 10.89,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-03-25"
+  } ],
+  "dataLancamento" : "2015-04-27"
+}, {
+  "nome" : "Aground",
+  "appid" : "876650",
+  "preco" : 46.99,
+  "diasSemJogar" : 1379,
+  "dlcs" : [ {
+    "nome" : "Aground Soundtrack Deluxe Edition",
+    "appid" : "1163780",
+    "preco" : 29.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-09-24"
+  }, {
+    "nome" : "Aground - Backer Items",
+    "appid" : "2382320",
+    "preco" : 32.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2023-04-06"
+  } ],
+  "dataLancamento" : "2020-04-17"
+}, {
+  "nome" : "The Survivalists",
+  "appid" : "897450",
+  "preco" : 133.9,
+  "diasSemJogar" : 727,
+  "dlcs" : [ {
+    "nome" : "The Survivalists - Frostbite Fortress",
+    "appid" : "4094590",
+    "preco" : 13.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-03-12"
+  }, {
+    "nome" : "The Survivalists - Monkey Business Pack",
+    "appid" : "1256750",
+    "preco" : 6.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-10-09"
+  }, {
+    "nome" : "The Survivalists - Digital Artbook",
+    "appid" : "1378760",
+    "preco" : 8.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-10-09"
+  }, {
+    "nome" : "The Survivalists Soundtrack",
+    "appid" : "1377870",
+    "preco" : 10.69,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-10-09"
+  } ],
+  "dataLancamento" : "2020-10-09"
+}, {
+  "nome" : "Dead Island 2",
+  "appid" : "934700",
+  "preco" : 249.0,
+  "diasSemJogar" : 141,
+  "dlcs" : [ {
+    "nome" : "Dead Island 2 - Kingdom Come: Deliverance II Weapons Pack",
+    "appid" : "2667910",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-10-22"
+  }, {
+    "nome" : "Dead Island 2 - Expansion Pass",
+    "appid" : "2813110",
+    "preco" : 80.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - SoLA",
+    "appid" : "2813310",
+    "preco" : 50.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Haus",
+    "appid" : "2813100",
+    "preco" : 35.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Red’s Demise Katana",
+    "appid" : "2813030",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Golden Weapons Pack",
+    "appid" : "2813010",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Pulp Weapons Pack",
+    "appid" : "2813020",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Memories of Banoi Pack",
+    "appid" : "2813000",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Silver Star Jacob",
+    "appid" : "2813040",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Cyber Slayer Amy",
+    "appid" : "2813050",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Gaelic Queen Dani",
+    "appid" : "2813060",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Jungle Fantasy Ryan",
+    "appid" : "2813070",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Steel Horse Carla",
+    "appid" : "2813080",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  }, {
+    "nome" : "Dead Island 2 - Character Pack: Venice Vogue Bruno",
+    "appid" : "2813090",
+    "preco" : 15.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-04-22"
+  } ],
+  "dataLancamento" : "2024-04-22"
+}, {
+  "nome" : "Borderlands 2",
+  "appid" : "49520",
+  "preco" : 44.99,
+  "diasSemJogar" : 1380,
+  "dlcs" : [ {
+    "nome" : "Borderlands 2: Commander Lilith & the Fight for Sanctuary",
+    "appid" : "872280",
+    "preco" : 44.5,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-06-09"
+  }, {
+    "nome" : "Borderlands 2 Season Pass",
+    "appid" : "218560",
+    "preco" : 44.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2012-09-20"
+  }, {
+    "nome" : "Borderlands 2: Ultimate Vault Hunter Upgrade Pack 2",
+    "appid" : "224180",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2013-09-03"
+  }, {
+    "nome" : "Borderlands 2: Gunzerker Madness Pack",
+    "appid" : "225826",
+    "preco" : 3.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2013-01-22"
+  }, {
+    "nome" : "Borderlands 2: Gunzerker Domination Pack",
+    "appid" : "225828",
+    "preco" : 3.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2013-01-22"
+  } ],
+  "dataLancamento" : "2012-09-20"
+}, {
+  "nome" : "Tabletop Simulator",
+  "appid" : "286160",
+  "preco" : 16.75,
+  "diasSemJogar" : 1360,
+  "dlcs" : [ {
+    "nome" : "Tabletop Simulator - Zombicide",
+    "appid" : "468726",
+    "preco" : 9.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-06-03"
+  }, {
+    "nome" : "Tabletop Simulator - Superfight",
+    "appid" : "367330",
+    "preco" : 5.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-06-05"
+  }, {
+    "nome" : "Tabletop Simulator - Cosmic Encounter Connector",
+    "appid" : "405130",
+    "preco" : 9.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-09-29"
+  }, {
+    "nome" : "Tabletop Simulator - Pillars of Eternity: Lords of the Eastern Reach",
+    "appid" : "610695",
+    "preco" : 8.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-02-08"
+  }, {
+    "nome" : "Tabletop Simulator - Xia: Legends of a Drift System",
+    "appid" : "468737",
+    "preco" : 5.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-03-24"
+  }, {
+    "nome" : "Tabletop Simulator - Dawn of the Zeds",
+    "appid" : "610705",
+    "preco" : 8.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-05-28"
+  }, {
+    "nome" : "Tabletop Simulator - Unearth",
+    "appid" : "610702",
+    "preco" : 6.69,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-12-16"
+  }, {
+    "nome" : "Tabletop Simulator - Warfighter",
+    "appid" : "468723",
+    "preco" : 14.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-03-03"
+  }, {
+    "nome" : "Tabletop Simulator - Darkest Night",
+    "appid" : "433520",
+    "preco" : 6.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-01-08"
+  }, {
+    "nome" : "Tabletop Simulator - Dungeon Drop",
+    "appid" : "610704",
+    "preco" : 6.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-04-23"
+  }, {
+    "nome" : "Tabletop Simulator - Three Kingdoms Redux",
+    "appid" : "610692",
+    "preco" : 5.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-07-20"
+  }, {
+    "nome" : "Tabletop Simulator - The Red Dragon Inn: Battle For Greyport",
+    "appid" : "610693",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-08-04"
+  }, {
+    "nome" : "Tabletop Simulator - Blood Rage",
+    "appid" : "610700",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-09-07"
+  }, {
+    "nome" : "Tabletop Simulator - Boss Monster",
+    "appid" : "610701",
+    "preco" : 4.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-09-25"
+  }, {
+    "nome" : "Tabletop Simulator - Down in Flames: Locked-On",
+    "appid" : "610706",
+    "preco" : 12.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-02-05"
+  }, {
+    "nome" : "Tabletop Simulator - Wizard's Academy",
+    "appid" : "468730",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-07-08"
+  }, {
+    "nome" : "Tabletop Simulator - One Night Ultimate Werewolf",
+    "appid" : "610708",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-03-05"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Quest",
+    "appid" : "610698",
+    "preco" : 14.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-12-20"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Galaxies",
+    "appid" : "437590",
+    "preco" : 4.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-01-21"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Western",
+    "appid" : "468736",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-12-16"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Defenders",
+    "appid" : "468734",
+    "preco" : 3.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-09-23"
+  }, {
+    "nome" : "Tabletop Simulator - Tortuga 1667",
+    "appid" : "610697",
+    "preco" : 5.69,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-02-28"
+  }, {
+    "nome" : "Tabletop Simulator - Deck Quest",
+    "appid" : "610699",
+    "preco" : 6.59,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-04-03"
+  }, {
+    "nome" : "Tabletop Simulator - The Great Dinosaur Rush",
+    "appid" : "610694",
+    "preco" : 24.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-08-25"
+  }, {
+    "nome" : "Tabletop Simulator - Abraca...What?",
+    "appid" : "468739",
+    "preco" : 20.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-09"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Kingdoms + Heroes' Call",
+    "appid" : "458910",
+    "preco" : 6.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-04-04"
+  }, {
+    "nome" : "Tabletop Simulator - In the Name of Odin",
+    "appid" : "468720",
+    "preco" : 8.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-04-28"
+  }, {
+    "nome" : "Tabletop Simulator - Indonesia",
+    "appid" : "468721",
+    "preco" : 7.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-04-14"
+  }, {
+    "nome" : "Tabletop Simulator - Khronos Hunter",
+    "appid" : "610690",
+    "preco" : 6.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-05-18"
+  }, {
+    "nome" : "Tabletop Simulator - Mr. Game!",
+    "appid" : "468727",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-05-06"
+  }, {
+    "nome" : "Tabletop Simulator - Mistfall",
+    "appid" : "425960",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2015-12-14"
+  }, {
+    "nome" : "Tabletop Simulator - Cavern Tavern",
+    "appid" : "610691",
+    "preco" : 7.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-23"
+  }, {
+    "nome" : "Tabletop Simulator - Simurgh",
+    "appid" : "468729",
+    "preco" : 13.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-06-21"
+  }, {
+    "nome" : "Tabletop Simulator - RARRR!!",
+    "appid" : "457180",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-04-04"
+  }, {
+    "nome" : "Tabletop Simulator - Darkrock Ventures",
+    "appid" : "468735",
+    "preco" : 5.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-10-25"
+  }, {
+    "nome" : "Tabletop Simulator - Battle For Souls",
+    "appid" : "438980",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-01-29"
+  }, {
+    "nome" : "Tabletop Simulator - Spirits of the Rice Paddy",
+    "appid" : "468724",
+    "preco" : 5.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-10-07"
+  }, {
+    "nome" : "Tabletop Simulator - Scuttle!",
+    "appid" : "468722",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-02-17"
+  }, {
+    "nome" : "Tabletop Simulator - Three Cheers For Master",
+    "appid" : "468731",
+    "preco" : 5.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-08-05"
+  }, {
+    "nome" : "Tabletop Simulator - Draco Magi",
+    "appid" : "610696",
+    "preco" : 14.49,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-11-07"
+  }, {
+    "nome" : "Tabletop Simulator - Bristol 1350",
+    "appid" : "1621112",
+    "preco" : 7.79,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2024-11-13"
+  }, {
+    "nome" : "Tabletop Simulator - Tiny Epic Dinosaurs",
+    "appid" : "1621113",
+    "preco" : 6.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-01-23"
+  }, {
+    "nome" : "Tabletop Simulator - Widget's Workshop",
+    "appid" : "1621114",
+    "preco" : 16.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-03-12"
+  } ],
+  "dataLancamento" : "2015-06-05"
+}, {
+  "nome" : "Leaf it Alone",
+  "appid" : "3981100",
+  "preco" : 20.49,
+  "diasSemJogar" : 100,
+  "dataLancamento" : "2025-10-30"
+}, {
+  "nome" : "First Class Trouble",
+  "appid" : "953880",
+  "preco" : 14.09,
+  "diasSemJogar" : 800,
+  "dlcs" : [ {
+    "nome" : "First Class Trouble Sci-Fi Noir Pack",
+    "appid" : "2025040",
+    "preco" : 5.26,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-06-23"
+  }, {
+    "nome" : "First Class Trouble Easter Pack",
+    "appid" : "1951600",
+    "preco" : 5.26,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-04-14"
+  }, {
+    "nome" : "First Class Trouble Working Heroes Pack",
+    "appid" : "1910530",
+    "preco" : 8.21,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-03-03"
+  }, {
+    "nome" : "First Class Trouble Lunar New Year Pack",
+    "appid" : "1881330",
+    "preco" : 16.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-02-01"
+  }, {
+    "nome" : "First Class Trouble Supporter Pack",
+    "appid" : "1611050",
+    "preco" : 10.22,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-30"
+  }, {
+    "nome" : "First Class Trouble Keep Warm Pack",
+    "appid" : "1840110",
+    "preco" : 10.22,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-01-18"
+  }, {
+    "nome" : "First Class Trouble Runway Pack",
+    "appid" : "1749283",
+    "preco" : 10.22,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-01"
+  }, {
+    "nome" : "First Class Trouble New Years Pack",
+    "appid" : "1749284",
+    "preco" : 14.56,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-01"
+  }, {
+    "nome" : "First Class Trouble Vruumba Pack",
+    "appid" : "1749282",
+    "preco" : 5.26,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-01"
+  }, {
+    "nome" : "First Class Trouble Christmas Pack",
+    "appid" : "1749280",
+    "preco" : 5.26,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-01"
+  }, {
+    "nome" : "First Class Trouble Winter Pack",
+    "appid" : "1749281",
+    "preco" : 2.44,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-01"
+  }, {
+    "nome" : "First Class Trouble Wedding Pack",
+    "appid" : "1783790",
+    "preco" : 4.27,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-11-22"
+  }, {
+    "nome" : "First Class Trouble Pajama Party Pack",
+    "appid" : "2108660",
+    "preco" : 4.27,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-06-25"
+  }, {
+    "nome" : "First Class Trouble: The Lost and Found Collection",
+    "appid" : "4755130",
+    "preco" : 18.74,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2026-06-25"
+  } ],
+  "dataLancamento" : "2021-11-01"
+}, {
+  "nome" : "Middle-earth™: Shadow of War™",
+  "appid" : "356190",
+  "preco" : 229.99,
+  "diasSemJogar" : 2104,
+  "dlcs" : [ {
+    "nome" : "Middle-earth™: Shadow of War™ Expansion Pass",
+    "appid" : "716270",
+    "preco" : 69.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-10-09"
+  }, {
+    "nome" : "The Desolation of Mordor Story Expansion",
+    "appid" : "533110",
+    "preco" : 59.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-05-08"
+  }, {
+    "nome" : "Slaughter Tribe Nemesis Expansion",
+    "appid" : "561630",
+    "preco" : 44.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-11-21"
+  }, {
+    "nome" : "Outlaw Tribe Nemesis Expansion",
+    "appid" : "561631",
+    "preco" : 44.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-12-12"
+  }, {
+    "nome" : "The Blade of Galadriel Story Expansion",
+    "appid" : "561650",
+    "preco" : 44.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-02-06"
+  }, {
+    "nome" : "Middle-earth™: Shadow of War™ High Resolution Texture Pack",
+    "appid" : "561950",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-10-09"
+  }, {
+    "nome" : "Middle-earth™: Shadow of War™ 4K Cinematic Pack",
+    "appid" : "666840",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-10-09"
+  }, {
+    "nome" : "Middle-earth™: Shadow of War™ Story Expansion Pass",
+    "appid" : "784070",
+    "preco" : 59.9,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-02-06"
+  } ],
+  "dataLancamento" : "2017-10-09"
+} ]
