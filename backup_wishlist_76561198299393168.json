@@ -2,7 +2,7 @@
   {
     "nome": "The Binding of Isaac: Rebirth",
     "appid": 250900,
-    "preco": 27.99,
+    "preco": 14.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -22,7 +22,7 @@
   {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 21.99,
+    "preco": 36.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -32,7 +32,7 @@
   {
     "nome": "Rain World",
     "appid": 312520,
-    "preco": 32.49,
+    "preco": 73.99,
     "promocao": 0.65,
     "emPromocao": true,
     "prioridade": 0,
@@ -42,7 +42,7 @@
   {
     "nome": "DARK SOULS™ III",
     "appid": 374320,
-    "preco": 199900.0,
+    "preco": 59.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 9,
@@ -52,7 +52,7 @@
   {
     "nome": "Fallout 4",
     "appid": 377160,
-    "preco": 59.99,
+    "preco": 19.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -132,7 +132,7 @@
   {
     "nome": "Sea of Stars: Sunset Edition",
     "appid": 1244090,
-    "preco": 33.99,
+    "preco": 99.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 13,
@@ -142,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 27.99,
+    "preco": 64.95,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -152,7 +152,7 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 32.49,
+    "preco": 24.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 7,
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 19.99,
+    "preco": 59.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 23.99,
+    "preco": 99000.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
