@@ -1,12 +1,8 @@
 package org;
 
+
 import org.steam.Produto;
-import org.steam.api.ProductAPI;
-import org.steam.api.UserAPI;
 import org.steam.controller;
-
-import org.steam.util.JsonExporter;
-
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
