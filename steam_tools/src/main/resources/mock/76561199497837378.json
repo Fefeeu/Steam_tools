@@ -1,0 +1,19 @@
+{
+  "response": {
+    "games": [
+      { "appid": 413150, "name": "Stardew Valley" },
+      { "appid": 105600, "name": "Terraria" },
+      { "appid": 367520, "name": "Hollow Knight" },
+      { "appid": 400, "name": "Portal" },
+      { "appid": 945360, "name": "Among Us" },
+      { "appid": 1097150, "name": "Fall Guys" },
+      { "appid": 1426210, "name": "It Takes Two" },
+      { "appid": 477160, "name": "Human: Fall Flat" },
+      { "appid": 739630, "name": "Phasmophobia" },
+      { "appid": 548430, "name": "Deep Rock Galactic" },
+      { "appid": 252950, "name": "Rocket League" },
+      { "appid": 381210, "name": "Dead by Daylight" },
+      { "appid": 728880, "name": "Overcooked! 2" }
+    ]
+  }
+}
