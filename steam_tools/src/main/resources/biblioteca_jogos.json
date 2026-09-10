@@ -1,0 +1,155 @@
+[ {
+  "nome" : "Outlast",
+  "appid" : "238320",
+  "preco" : 14.99,
+  "diasSemJogar" : 2033,
+  "dlcs" : [ {
+    "nome" : "Outlast: Whistleblower DLC",
+    "appid" : "273300",
+    "preco" : 16.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2014-05-06"
+  } ],
+  "dataLancamento" : "2013-09-04"
+}, {
+  "nome" : "LEGO® The Lord of the Rings™",
+  "appid" : "214510",
+  "preco" : 89.99,
+  "diasSemJogar" : 20706,
+  "dataLancamento" : "2012-11-27"
+}, {
+  "nome" : "The Elder Scrolls V: Skyrim",
+  "appid" : "72850",
+  "preco" : 39.99,
+  "diasSemJogar" : 792,
+  "dlcs" : [ {
+    "nome" : "The Elder Scrolls V: Skyrim Soundtrack",
+    "appid" : "1240360",
+    "preco" : 29.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-02-11"
+  } ],
+  "dataLancamento" : "2011-11-10"
+}, {
+  "nome" : "ARK: Survival Evolved",
+  "appid" : "346110",
+  "preco" : 46.99,
+  "diasSemJogar" : 26,
+  "dlcs" : [ {
+    "nome" : "ARK: Aquatica",
+    "appid" : "3537070",
+    "preco" : 46.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-07-15"
+  }, {
+    "nome" : "ARK: Aquatica Original Soundtrack",
+    "appid" : "3820060",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-07-15"
+  }, {
+    "nome" : "ARK: Aquatica - Luminati Suns Song",
+    "appid" : "3761020",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2025-06-02"
+  }, {
+    "nome" : "Fjordur - ARK Expansion Map",
+    "appid" : "1887560",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2022-06-12"
+  }, {
+    "nome" : "Lost Island - ARK Expansion Map",
+    "appid" : "1691800",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-12-14"
+  }, {
+    "nome" : "ARK: Genesis Season Pass",
+    "appid" : "1113410",
+    "preco" : 46.99,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-08-08"
+  }, {
+    "nome" : "Valguero - ARK Expansion Map",
+    "appid" : "1100810",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2019-06-18"
+  }, {
+    "nome" : "Ragnarok - ARK Expansion Map",
+    "appid" : "642250",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-06-12"
+  }, {
+    "nome" : "ARK: Extinction - Expansion Pack",
+    "appid" : "887380",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2018-11-06"
+  }, {
+    "nome" : "ARK: Aberration - Expansion Pack",
+    "appid" : "708770",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2017-12-12"
+  }, {
+    "nome" : "ARK: Scorched Earth - Expansion Pack",
+    "appid" : "512540",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-09-01"
+  }, {
+    "nome" : "Primitive+ ARK Total Conversion",
+    "appid" : "508150",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-07-28"
+  }, {
+    "nome" : "The Center - ARK Expansion Map",
+    "appid" : "473850",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2016-05-17"
+  }, {
+    "nome" : "Crystal Isles - ARK Expansion Map",
+    "appid" : "1270830",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2020-06-11"
+  }, {
+    "nome" : "ARK: Survival Evolved Original Soundtrack",
+    "appid" : "1646550",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-26"
+  }, {
+    "nome" : "ARK: Expansion Packs Original Soundtrack",
+    "appid" : "1646690",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-26"
+  }, {
+    "nome" : "ARK: Genesis Part 1 Original Soundtrack",
+    "appid" : "1646700",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-05-27"
+  }, {
+    "nome" : "ARK: Genesis Part 2 Original Soundtrack",
+    "appid" : "1646720",
+    "preco" : 0.0,
+    "diasSemJogar" : 0,
+    "dataLancamento" : "2021-06-03"
+  } ],
+  "dataLancamento" : "2017-08-27"
+}, {
+  "nome" : "Left 4 Dead 2",
+  "appid" : "550",
+  "preco" : 32.99,
+  "diasSemJogar" : 1949,
+  "dataLancamento" : "2009-11-16"
+}
+]

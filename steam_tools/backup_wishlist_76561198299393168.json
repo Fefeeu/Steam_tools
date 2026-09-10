@@ -2,7 +2,7 @@
   {
     "nome": "The Binding of Isaac: Rebirth",
     "appid": 250900,
-    "preco": 27.99,
+    "preco": 14.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -12,7 +12,7 @@
   {
     "nome": "7 Days to Die",
     "appid": 251570,
-    "preco": 121.99,
+    "preco": 525000.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -52,7 +52,7 @@
   {
     "nome": "Fallout 4",
     "appid": 377160,
-    "preco": 11.99,
+    "preco": 59.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -62,7 +62,7 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 29.99,
+    "preco": 47.49,
     "promocao": 0.5,
     "emPromocao": true,
     "prioridade": 8,
@@ -112,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 14.99,
+    "preco": 88.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -132,7 +132,7 @@
   {
     "nome": "Sea of Stars: Sunset Edition",
     "appid": 1244090,
-    "preco": 99.99,
+    "preco": 44.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 13,
@@ -142,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 22.99,
+    "preco": 27.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -152,7 +152,7 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 74.99,
+    "preco": 24.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 7,
@@ -192,7 +192,7 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 34.99,
+    "preco": 199.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -202,7 +202,7 @@
   {
     "nome": "Slay the Princess — The Pristine Cut",
     "appid": 1989270,
-    "preco": 17.99,
+    "preco": 53.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 3,
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 59.99,
+    "preco": 25.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,

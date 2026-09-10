@@ -1,18 +1,31 @@
 package org.steam;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Produto {
-    private String nome = "";
+    private String nome = "Sem nome";
     private String appid = "000";
-    private double preco = 99.99;
-    private List<Produto> dlcs = new ArrayList<>();
-    private LocalDate dataLancamento = null;
+    private double preco = 00.00;
     private long diasSemJogar = 0;
+    private List<Produto> dlcs = new ArrayList<>();
+
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dataLancamento = null;
+
 
     //construtores
+
+
+    public Produto() {
+    }
+
     public Produto(String nome, String appid, double preco, LocalDate dataLancamento, List<Produto> dlcs){
         this.nome = nome;
         this.appid = appid;
@@ -49,6 +62,13 @@ public class Produto {
         return preco;
     }
 
+    public List<Produto> getDlcs() {
+        return dlcs;
+    }
+
+
+
+
     //sets
     public void setNome(String nome) {
         this.nome = nome;
@@ -65,6 +85,11 @@ public class Produto {
     public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
+
+    public void setAppid(String appid) {this.appid = appid; }
+
+    public void setDiasSemJogar(long diasSemJogar) {this.diasSemJogar = diasSemJogar; }
+
 
 
 

@@ -4,6 +4,7 @@ import org.output.Notificacao;
 import org.steam.ComparadorBiblioteca;
 import org.steam.MonitorJogadores;
 import org.steam.Usuario;
+import org.steam.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class Sequencial {
             notificacaoWishlist();
             comparacaoBiblioteca();
             monitorJogadores();
+            controller.MostrarJogos();
         }
 
         long duracao = System.currentTimeMillis() - inicio;

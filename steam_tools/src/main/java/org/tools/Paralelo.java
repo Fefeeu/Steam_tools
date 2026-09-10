@@ -4,6 +4,7 @@ import org.output.Notificacao;
 import org.steam.ComparadorBiblioteca;
 import org.steam.MonitorJogadores;
 import org.steam.Usuario;
+import org.steam.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,11 +20,14 @@ public class Paralelo {
         Thread threadWishlist = new Thread(Paralelo::notificacaoWishlist, "Thread-Wishlist");
         Thread threadBiblioteca = new Thread(Paralelo::comparacaoBiblioteca, "Thread-Biblioteca");
         Thread threadJogadores = new Thread(Paralelo::monitorJogadores, "Thread-Jogadores");
+        controller threadDLC = new controller();
 
+        threadDLC.start();
         threadWishlist.start();
         threadBiblioteca.start();
         threadJogadores.start();
 
+        threadDLC.join();
         threadWishlist.join();
         threadBiblioteca.join();
         threadJogadores.join();
