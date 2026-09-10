@@ -1,36 +1,28 @@
 package org;
 
-import org.steam.LoopThread;
+
 import org.steam.Produto;
-import org.steam.api.ProductAPI;
-import org.steam.api.UserAPI;
-
-import java.util.Arrays;
-import java.util.Comparator;
-
+import org.steam.controller;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        Produto[] listajogos = UserAPI.getJogos("76561198241059866");
 
-        Arrays.sort(listajogos, Comparator.comparing(Produto::getDiasSemJogar).reversed());
+        Produto[] listajogos = controller.MostrarJogos();
 
-        LoopThread t0 = new LoopThread();
+        controller t0 = new controller();
         t0.setI(0);
         t0.setListaJogos(listajogos);
 
-        LoopThread t1 = new LoopThread();
+        controller t1 = new controller();
         t1.setI(1);
         t1.setListaJogos(listajogos);
 
         //sem thread
         long tempoInicial = System.currentTimeMillis();
 
-        for(int i = 0; i < listajogos.length; i ++)
-        {
-            listajogos[i] = ProductAPI.getJogo(listajogos[i].getAppid(), listajogos[i].getDiasSemJogar());
-        }
+        controller.MostrarJogos();
+
         long tempoFinal = System.currentTimeMillis();
 
         float tempoTotal = (tempoFinal - tempoInicial)/1000;
@@ -50,5 +42,7 @@ public class Main {
 
         System.out.println("Tempo total gasto com uma thread: " + tempoTotal + " s");
         System.out.println("Tempo total gasto em paralelo: " + tempoTotalThread + " s");
+
+
     }
 }

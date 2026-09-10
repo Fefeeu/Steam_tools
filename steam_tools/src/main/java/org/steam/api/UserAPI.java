@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.steam.Jogo;
 import org.steam.Produto;
+import org.steam.util.JsonExporter;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -116,6 +117,11 @@ public class UserAPI {
 
         }
 
+        return listaJogos;
+    }
+
+    public static Produto[] getJogosDoJsonLocal() {
+        Produto[] listaJogos = JsonExporter.lerListaProdutosDoJson();
         return listaJogos;
     }
 }
