@@ -9,22 +9,14 @@ import java.util.Comparator;
 
 public class controller extends Thread{
     //
-    private int i = 0;
-    private Produto[] listaJogos;
 
-    public void setI(int i) {
-        this.i = i;
-    }
-
-    public void setListaJogos(Produto[] listaJogos) {
-        this.listaJogos = listaJogos;
-    }
 
     @Override
     public void run() {
-        String name = Thread.currentThread().getName();
-        for(int i = this.i; i < this.listaJogos.length; i = i+2) {
-            listaJogos[i] = ProductAPI.getJogoComJsonLocal(listaJogos[i].getAppid(), listaJogos[i].getDiasSemJogar());
+        Produto[] listajogos = UserAPI.getJogosDoJsonLocal();
+
+        for (int i = 0; i < listajogos.length; i++) {
+            listajogos[i] = ProductAPI.getJogoComJsonLocal(listajogos[i].getAppid(), listajogos[i].getDiasSemJogar());
         }
     }
 

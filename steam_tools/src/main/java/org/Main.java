@@ -8,15 +8,13 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
 
-        Produto[] listajogos = controller.MostrarJogos();
+        /*Produto[] listajogos = controller.MostrarJogos();
 
         controller t0 = new controller();
-        t0.setI(0);
-        t0.setListaJogos(listajogos);
+
 
         controller t1 = new controller();
-        t1.setI(1);
-        t1.setListaJogos(listajogos);
+
 
         //sem thread
         long tempoInicial = System.currentTimeMillis();
@@ -43,6 +41,6 @@ public class Main {
         System.out.println("Tempo total gasto com uma thread: " + tempoTotal + " s");
         System.out.println("Tempo total gasto em paralelo: " + tempoTotalThread + " s");
 
-
+*/
     }
 }

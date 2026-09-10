@@ -4,6 +4,7 @@ import org.output.Notificacao;
 import org.steam.ComparadorBiblioteca;
 import org.steam.MonitorJogadores;
 import org.steam.Usuario;
+import org.steam.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class Sequencial {
             notificacaoWishlist();
             comparacaoBiblioteca();
             monitorJogadores();
+            controller.MostrarJogos();
         }
 
         long duracao = System.currentTimeMillis() - inicio;
@@ -46,7 +48,7 @@ public class Sequencial {
 
         String[] amigos = {
                 "76561198299393168",
-                "76561199497837378"
+                "76561198241059866"
         };
 
         ComparadorBiblioteca comparador = new ComparadorBiblioteca();

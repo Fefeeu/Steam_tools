@@ -123,6 +123,8 @@ public class ProductAPI {
     }
 
     public static Produto getJogoComJsonLocal(String appid, long diasSemJogar) {
+        System.out.println("\n\n\n");
+
         Produto[] jogosSalvos = JsonExporter.lerListaProdutosDoJson();
 
         Map<String, Produto> mapaLocal = new HashMap<>();
@@ -158,6 +160,7 @@ public class ProductAPI {
                     System.out.println("    - " + dlc.getNome() + " | Lançamento: " + dlc.getDataLancamento());
                 }
             }
+            System.out.println("----------------------------------------");
         }
 
         try {
