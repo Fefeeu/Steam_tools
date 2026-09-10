@@ -48,7 +48,7 @@ public class Sequencial {
 
         String[] amigos = {
                 "76561198299393168",
-                "76561198241059866"
+                "76561199497837378"
         };
 
         ComparadorBiblioteca comparador = new ComparadorBiblioteca();

@@ -62,7 +62,7 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 41000.0,
+    "preco": 47.49,
     "promocao": 0.5,
     "emPromocao": true,
     "prioridade": 8,
@@ -142,7 +142,7 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 64.95,
+    "preco": 27.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 10,
@@ -152,7 +152,7 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 74.99,
+    "preco": 24.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 7,
@@ -192,7 +192,7 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 49.99,
+    "preco": 199.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -222,7 +222,7 @@
   {
     "nome": "Dispatch",
     "appid": 2592160,
-    "preco": 38.99,
+    "preco": 88.99,
     "promocao": 0.2,
     "emPromocao": true,
     "prioridade": 0,
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 59.99,
+    "preco": 25.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 23.99,
+    "preco": 7.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
