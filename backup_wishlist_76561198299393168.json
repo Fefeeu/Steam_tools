@@ -2,7 +2,7 @@
   {
     "nome": "The Binding of Isaac: Rebirth",
     "appid": 250900,
-    "preco": 14.99,
+    "preco": 27.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -22,7 +22,7 @@
   {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 36.99,
+    "preco": 21.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -42,7 +42,7 @@
   {
     "nome": "DARK SOULS™ III",
     "appid": 374320,
-    "preco": 59.99,
+    "preco": 229.9,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 9,
@@ -62,7 +62,7 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 47.49,
+    "preco": 29.99,
     "promocao": 0.5,
     "emPromocao": true,
     "prioridade": 8,
@@ -112,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 88.99,
+    "preco": 38.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -152,7 +152,7 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 24.99,
+    "preco": 74.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 7,
@@ -172,7 +172,7 @@
   {
     "nome": "Kingdom Come: Deliverance II",
     "appid": 1771300,
-    "preco": 299.0,
+    "preco": 89.95,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -192,7 +192,7 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 49.99,
+    "preco": 199.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 59.99,
+    "preco": 25.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 99000.0,
+    "preco": 7.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,

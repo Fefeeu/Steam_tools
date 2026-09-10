@@ -1,0 +1,21 @@
+{
+  "response": {
+    "games": [
+      { "appid": 413150, "name": "Stardew Valley" },
+      { "appid": 105600, "name": "Terraria" },
+      { "appid": 367520, "name": "Hollow Knight" },
+      { "appid": 400, "name": "Portal" },
+      { "appid": 730, "name": "Counter-Strike 2" },
+      { "appid": 892970, "name": "Valheim" },
+      { "appid": 1794680, "name": "Vampire Survivors" },
+      { "appid": 218620, "name": "PAYDAY 2" },
+      { "appid": 550, "name": "Left 4 Dead 2" },
+      { "appid": 683320, "name": "GRIS" },
+      { "appid": 264710, "name": "Subnautica" },
+      { "appid": 504230, "name": "Celeste" },
+      { "appid": 1145360, "name": "Hades" },
+      { "appid": 322330, "name": "Don't Starve Together" },
+      { "appid": 4000, "name": "Garry's Mod" }
+    ]
+  }
+}
