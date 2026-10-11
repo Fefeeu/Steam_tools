@@ -26,15 +26,29 @@ public class UserAPI {
         return jogos;
     }
 
-    private static JSONArray getWishListItems(String userId){
+    // Uma requisição: devolve os itens (appid + priority) da lista de desejos.
+    public static JSONArray getWishListItems(String userId){
 
         JSONObject respostaJson = ApiConnection.makeRequestBody(
                 "https://api.steampowered.com/IWishlistService/GetWishlist/v1?steamid=" + userId
         );
 
-        JSONArray jogos = respostaJson.getJSONObject("response").getJSONArray("items");
+        JSONObject response = respostaJson.optJSONObject("response");
+        if (response == null || !response.has("items")) {
+            System.out.println("[Wishlist] Resposta sem 'items' para o usuário " + userId);
+            return new JSONArray();
+        }
 
-        return jogos;
+        return response.getJSONArray("items");
+    }
+
+    // Uma requisição: busca os dados de um jogo da lista de desejos. Retorna null se falhar.
+    public static Jogo buscarJogoDaWishlist(int appid, int prioridade){
+        Jogo jogo = GameAPI.getGame(appid);
+        if (jogo != null) {
+            jogo.setPrioridade(prioridade);
+        }
+        return jogo;
     }
 
     public static List<Jogo> getWishlist(String userId){
@@ -56,7 +70,7 @@ public class UserAPI {
             int maxTentativas = 3;
 
             while (jogo == null && tentativas < maxTentativas) {
-                jogo = GameAPI.getGame(appid);
+                jogo = buscarJogoDaWishlist(appid, prioridade);
 
                 if (jogo == null) {
                     tentativas++;
@@ -76,7 +90,6 @@ public class UserAPI {
                 continue;
             }
 
-            jogo.setPrioridade(prioridade);
             wishList.add(jogo);
 
             try {
