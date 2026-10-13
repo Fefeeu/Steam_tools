@@ -32,7 +32,7 @@ public class Sequencial {
         System.out.println("==================================");
     }
 
-    private static void notificacaoWishlist() {
+    public static void notificacaoWishlist() {
         System.out.println("[Wishlist] Verificando lista de desejos...");
 
         Usuario eu = new Usuario("76561198299393168");
@@ -43,7 +43,7 @@ public class Sequencial {
         System.out.println("[Wishlist] Concluído.");
     }
 
-    private static void comparacaoBiblioteca() throws InterruptedException {
+    public static void comparacaoBiblioteca() throws InterruptedException {
         System.out.println("[Biblioteca] Comparando bibliotecas...");
 
         String[] amigos = {
@@ -62,7 +62,7 @@ public class Sequencial {
         System.out.println("[Biblioteca] Concluído.");
     }
 
-    private static void monitorJogadores() throws InterruptedException {
+    public static void monitorJogadores() throws InterruptedException {
         System.out.println("[Jogadores] Monitorando jogadores online...");
 
         Map<String, String> jogos = new LinkedHashMap<>();
