@@ -25,12 +25,26 @@ public class Usuario {
     }
 
     public void atualizarListaDeDesejos() {
+        prepararBackup();
+        this.wishList = UserAPI.getWishlist(this.idUsuario);
+    }
+
+    // Guarda a lista atual como backup antes de uma nova busca.
+    public void prepararBackup() {
         if (this.wishList != null) {
             this.beckupWishList = new ArrayList<>(this.wishList);
         } else {
             this.beckupWishList = getFileBeckupWishList();
         }
-        this.wishList = UserAPI.getWishlist(this.idUsuario);
+    }
+
+    // Usado quando a lista é montada aos poucos (ex.: Round Robin, um jogo por passo).
+    public void definirListaDeDesejos(List<Jogo> wishList) {
+        this.wishList = wishList;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
     public void atualizaBeckupWishList(){
