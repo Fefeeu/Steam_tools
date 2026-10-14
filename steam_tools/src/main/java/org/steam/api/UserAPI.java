@@ -15,23 +15,46 @@ import java.util.List;
 
 public class UserAPI {
 
-    private static JSONArray getListaJogos(String userId){
+    // A chave NÃO fica mais no código. Defina a variável de ambiente STEAM_API_KEY
+    // (ou troque por uma leitura do seu ConfigLoader).
+    private static String chave() {
+        String k = System.getenv("STEAM_API_KEY");
+        if (k == null || k.isEmpty()) {
+            throw new IllegalStateException("Defina a variável de ambiente STEAM_API_KEY com a sua chave da Steam.");
+        }
+        return k;
+    }
+
+    private static JSONArray getListaJogos(String userId) {
 
         JSONObject respostaJson = ApiConnection.makeRequestBody(
-                        "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=194FB210F5B1AFFEF7AADDB3C6FF84F9&steamid=" + userId
+                "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + chave() + "&steamid=" + userId
         );
 
-        JSONArray jogos = respostaJson.getJSONObject("response").getJSONArray("games");
+        if (respostaJson == null) {
+            System.out.println("[Biblioteca] Sem resposta da Steam para o usuário " + userId);
+            return new JSONArray();
+        }
 
-        return jogos;
+        JSONObject response = respostaJson.optJSONObject("response");
+        if (response == null || !response.has("games")) {
+            System.out.println("[Biblioteca] Sem 'games' (perfil privado?) para o usuário " + userId);
+            return new JSONArray();
+        }
+
+        return response.getJSONArray("games");
     }
 
     // Uma requisição: devolve os itens (appid + priority) da lista de desejos.
-    public static JSONArray getWishListItems(String userId){
+    public static JSONArray getWishListItems(String userId) {
 
         JSONObject respostaJson = ApiConnection.makeRequestBody(
                 "https://api.steampowered.com/IWishlistService/GetWishlist/v1?steamid=" + userId
         );
+
+        if (respostaJson == null) {
+            return new JSONArray();
+        }
 
         JSONObject response = respostaJson.optJSONObject("response");
         if (response == null || !response.has("items")) {
@@ -43,7 +66,7 @@ public class UserAPI {
     }
 
     // Uma requisição: busca os dados de um jogo da lista de desejos. Retorna null se falhar.
-    public static Jogo buscarJogoDaWishlist(int appid, int prioridade){
+    public static Jogo buscarJogoDaWishlist(int appid, int prioridade) {
         Jogo jogo = GameAPI.getGame(appid);
         if (jogo != null) {
             jogo.setPrioridade(prioridade);
@@ -51,15 +74,13 @@ public class UserAPI {
         return jogo;
     }
 
-    public static List<Jogo> getWishlist(String userId){
+    public static List<Jogo> getWishlist(String userId) {
 
         List<Jogo> wishList = new ArrayList<>();
 
         JSONArray jogosJson = getWishListItems(userId);
 
-        int tamanhoWishList = jogosJson.length();
-
-        for (int i = 0; i < tamanhoWishList; i++){
+        for (int i = 0; i < jogosJson.length(); i++) {
             JSONObject jogoAtual = jogosJson.getJSONObject(i);
 
             int appid = jogoAtual.getInt("appid");
@@ -74,7 +95,8 @@ public class UserAPI {
 
                 if (jogo == null) {
                     tentativas++;
-                    System.out.println("DEU ALGO ERRADO REQUISIÇÃO JOGO: " + appid + " - tentativa " + tentativas + "/" + maxTentativas + ", esperando...");
+                    System.out.println("DEU ALGO ERRADO REQUISIÇÃO JOGO: " + appid
+                            + " - tentativa " + tentativas + "/" + maxTentativas + ", esperando...");
 
                     try {
                         Thread.sleep(10000);
@@ -91,50 +113,40 @@ public class UserAPI {
             }
 
             wishList.add(jogo);
-
-            try {
-                Thread.sleep(3);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return wishList;
-            }
+            // Sem Thread.sleep aqui: o ritmo agora é controlado pelo semáforo no ApiConnection.
         }
 
         return wishList;
     }
 
-    public static Produto[] getJogos(String userId){
+    public static Produto[] getJogos(String userId) {
 
         JSONArray jogosJson = getListaJogos(userId);
 
         int tamanholista = jogosJson.length();
         Produto[] listaJogos = new Produto[tamanholista];
 
-        for (int i = 0; i < tamanholista; i++){
+        LocalDate hoje = LocalDate.now();
+
+        for (int i = 0; i < tamanholista; i++) {
             JSONObject jogoAtual = jogosJson.getJSONObject(i);
 
             String appid = String.valueOf(jogoAtual.getInt("appid"));
 
-
-            LocalDate dataUltimoJogo = Instant.ofEpochSecond(jogoAtual.getInt("rtime_last_played"))
+            LocalDate dataUltimoJogo = Instant.ofEpochSecond(jogoAtual.optLong("rtime_last_played", 0))
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
 
-            LocalDate hoje = LocalDate.now();
-
             long diasSemJogar = ChronoUnit.DAYS.between(dataUltimoJogo, hoje);
 
-
-            Produto jogo = new Produto(appid, diasSemJogar);
-            listaJogos[i] = jogo;
-
+            listaJogos[i] = new Produto(appid, diasSemJogar);
         }
 
         return listaJogos;
     }
 
+    // Lê o JSON local. Não é mais usado pelo controller.
     public static Produto[] getJogosDoJsonLocal() {
-        Produto[] listaJogos = JsonExporter.lerListaProdutosDoJson();
-        return listaJogos;
+        return JsonExporter.lerListaProdutosDoJson();
     }
 }

@@ -14,6 +14,11 @@ public class RoundRobin {
     private static final int REPETICOES = 5;
     private static final long QUANTUM_PADRAO_MS = 1000;
 
+    // Mesmo SteamID usado no controller. Cada jogo = 1 requisição + 1 por DLC,
+    // então limite os jogos para o teste não levar horas (0 = biblioteca inteira).
+    private static final String STEAM_ID_DLC = "76561198241059866";
+    private static final int LIMITE_JOGOS_DLC = 20;
+
     public static void main(String[] args) throws InterruptedException {
         long quantum = args.length > 0 ? Long.parseLong(args[0]) : QUANTUM_PADRAO_MS;
 
@@ -32,7 +37,7 @@ public class RoundRobin {
         escalonador.adicionar(new TarefaWishlistRR("76561198299393168", REPETICOES));
         escalonador.adicionar(new TarefaBibliotecaRR(amigos, REPETICOES));
         escalonador.adicionar(new TarefaJogadoresRR(jogos, REPETICOES));
-        escalonador.adicionar(new TarefaDLCRR(REPETICOES));
+        escalonador.adicionar(new TarefaDLCRR(STEAM_ID_DLC, REPETICOES, LIMITE_JOGOS_DLC));
 
         long inicio = System.currentTimeMillis();
         escalonador.executar();

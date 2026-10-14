@@ -4,16 +4,26 @@ import org.steam.Produto;
 import org.steam.api.ProductAPI;
 import org.steam.api.UserAPI;
 
-/** Buscador de DLCs: 1 passo = processar 1 jogo da biblioteca local. */
+import java.util.Arrays;
+
+/**
+ * Buscador de DLCs: 1 passo = processar 1 jogo da biblioteca.
+ * Agora lê a lista de jogos direto da Steam (não usa mais o JSON local).
+ * As requisições passam pelo semáforo do ApiConnection.
+ */
 public class TarefaDLCRR implements TarefaRR {
 
+    private final String steamId;
     private final int repeticoes;
+    private final int limiteJogos;   // 0 = sem limite
     private Produto[] listaJogos = null;
     private int indice = 0;
     private int rodada = 1;
 
-    public TarefaDLCRR(int repeticoes) {
+    public TarefaDLCRR(String steamId, int repeticoes, int limiteJogos) {
+        this.steamId = steamId;
         this.repeticoes = repeticoes;
+        this.limiteJogos = limiteJogos;
     }
 
     @Override
@@ -24,15 +34,24 @@ public class TarefaDLCRR implements TarefaRR {
     @Override
     public boolean executarPasso() {
         if (listaJogos == null) {
-            listaJogos = UserAPI.getJogosDoJsonLocal();
-            if (listaJogos.length == 0) {
-                System.out.println("[DLC] Nenhum jogo no JSON local.");
+            Produto[] todos = UserAPI.getJogos(steamId);   // 1 requisição: appids + dias sem jogar
+            if (todos.length == 0) {
+                System.out.println("[DLC] Nenhum jogo retornado pela Steam (perfil privado?).");
                 return false;
             }
+            listaJogos = (limiteJogos > 0 && limiteJogos < todos.length)
+                    ? Arrays.copyOf(todos, limiteJogos)
+                    : todos;
+            indice = 0;
         }
 
         Produto jogo = listaJogos[indice];
-        listaJogos[indice] = ProductAPI.getJogoComJsonLocal(jogo.getAppid(), jogo.getDiasSemJogar());
+        Produto resultado = ProductAPI.getJogo(jogo.getAppid(), jogo.getDiasSemJogar());
+
+        if (!ProductAPI.nomeValido(resultado)) {
+            System.out.println("[DLC] Falhou: " + jogo.getAppid());
+        }
+        listaJogos[indice] = resultado;
         indice++;
 
         if (indice == listaJogos.length) {

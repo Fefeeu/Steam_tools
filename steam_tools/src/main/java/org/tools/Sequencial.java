@@ -19,10 +19,11 @@ public class Sequencial {
 
         for (int rodada = 1; rodada <= REPETICOES; rodada++) {
             System.out.println("\n----- Rodada " + rodada + "/" + REPETICOES + " -----");
+            controller.MostrarJogos();
             notificacaoWishlist();
             comparacaoBiblioteca();
             monitorJogadores();
-            controller.MostrarJogos();
+
         }
 
         long duracao = System.currentTimeMillis() - inicio;

@@ -22,7 +22,7 @@
   {
     "nome": "Cuphead",
     "appid": 268910,
-    "preco": 21.99,
+    "preco": 36.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 6,
@@ -33,8 +33,8 @@
     "nome": "Rain World",
     "appid": 312520,
     "preco": 73.99,
-    "promocao": 0.65,
-    "emPromocao": true,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -52,9 +52,9 @@
   {
     "nome": "Fallout 4",
     "appid": 377160,
-    "preco": 19.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 59.99,
+    "promocao": 0.75,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -62,9 +62,9 @@
   {
     "nome": "Dead Cells",
     "appid": 588650,
-    "preco": 29.99,
-    "promocao": 0.5,
-    "emPromocao": true,
+    "preco": 24.99,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 8,
     "foiLancado": true,
     "novaPromocao": false
@@ -72,7 +72,7 @@
   {
     "nome": "Breathedge",
     "appid": 738520,
-    "preco": 79.99,
+    "preco": 24.99,
     "promocao": 0.9,
     "emPromocao": true,
     "prioridade": 0,
@@ -82,9 +82,9 @@
   {
     "nome": "Outer Wilds",
     "appid": 753640,
-    "preco": 67.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 24.99,
+    "promocao": 0.5,
+    "emPromocao": true,
     "prioridade": 2,
     "foiLancado": true,
     "novaPromocao": false
@@ -92,9 +92,9 @@
   {
     "nome": "The Talos Principle 2",
     "appid": 835960,
-    "preco": 88.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 29.99,
+    "promocao": 0.9,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -112,7 +112,7 @@
   {
     "nome": "Hades II",
     "appid": 1145350,
-    "preco": 38.99,
+    "preco": 88.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 16,
@@ -123,7 +123,7 @@
     "nome": "Voidtrain",
     "appid": 1159690,
     "preco": 88.99,
-    "promocao": 0.4,
+    "promocao": 0.5,
     "emPromocao": true,
     "prioridade": 12,
     "foiLancado": true,
@@ -132,7 +132,7 @@
   {
     "nome": "Sea of Stars: Sunset Edition",
     "appid": 1244090,
-    "preco": 99.99,
+    "preco": 34.99,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 13,
@@ -142,9 +142,9 @@
   {
     "nome": "Cult of the Lamb",
     "appid": 1313140,
-    "preco": 64.95,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 27.99,
+    "promocao": 0.5,
+    "emPromocao": true,
     "prioridade": 10,
     "foiLancado": true,
     "novaPromocao": false
@@ -152,9 +152,9 @@
   {
     "nome": "Neon White",
     "appid": 1533420,
-    "preco": 74.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 24.99,
+    "promocao": 0.6,
+    "emPromocao": true,
     "prioridade": 7,
     "foiLancado": true,
     "novaPromocao": false
@@ -172,7 +172,7 @@
   {
     "nome": "Kingdom Come: Deliverance II",
     "appid": 1771300,
-    "preco": 89.95,
+    "preco": 299.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -182,9 +182,9 @@
   {
     "nome": "Haste",
     "appid": 1796470,
-    "preco": 59.99,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 19.99,
+    "promocao": 0.4,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -192,9 +192,9 @@
   {
     "nome": "Clair Obscur: Expedition 33",
     "appid": 1903340,
-    "preco": 199.0,
-    "promocao": 0.0,
-    "emPromocao": false,
+    "preco": 239.0,
+    "promocao": 0.2,
+    "emPromocao": true,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -213,8 +213,8 @@
     "nome": "The Farmer Was Replaced",
     "appid": 2060160,
     "preco": 30.99,
-    "promocao": 0.2,
-    "emPromocao": true,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -222,9 +222,9 @@
   {
     "nome": "Dispatch",
     "appid": 2592160,
-    "preco": 88.99,
-    "promocao": 0.2,
-    "emPromocao": true,
+    "preco": 38.99,
+    "promocao": 0.0,
+    "emPromocao": false,
     "prioridade": 0,
     "foiLancado": true,
     "novaPromocao": false
@@ -252,7 +252,7 @@
   {
     "nome": "Schedule I",
     "appid": 3164500,
-    "preco": 25.99,
+    "preco": 260000.0,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,
@@ -272,7 +272,7 @@
   {
     "nome": "PEAK",
     "appid": 3527290,
-    "preco": 7.99,
+    "preco": 6.39,
     "promocao": 0.0,
     "emPromocao": false,
     "prioridade": 0,

@@ -7,14 +7,59 @@ import org.steam.Produto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class JsonExporter {
 
     private static final String CAMINHO_COMPLETO = "src/main/resources/biblioteca_jogos.json";
 
+    // Semáforo binário: só uma thread por vez mexe no arquivo.
+    // Semaphore NÃO é reentrante, então os métodos públicos pegam a permissão
+    // e chamam os métodos privados "SemLock", que nunca pegam de novo.
+    private static final Semaphore MUTEX = new Semaphore(1, true);
+
+    // ---------- públicos (com semáforo) ----------
+
     public static void salvarListaProdutosComoJson(Produto[] listaJogos) {
+        MUTEX.acquireUninterruptibly();
+        try {
+            salvarSemLock(listaJogos);
+        } finally {
+            MUTEX.release();
+        }
+    }
+
+    public static Produto[] lerListaProdutosDoJson() {
+        MUTEX.acquireUninterruptibly();
+        try {
+            return lerSemLock();
+        } finally {
+            MUTEX.release();
+        }
+    }
+
+    // ler + alterar + gravar = uma única região crítica
+    public static void atualizarJogo(Produto novoJogo) {
+        if (novoJogo == null || novoJogo.getAppid() == null) return;
+
+        MUTEX.acquireUninterruptibly();
+        try {
+            Map<String, Produto> mapa = new LinkedHashMap<>();
+            for (Produto p : lerSemLock()) {
+                mapa.put(p.getAppid(), p);
+            }
+            mapa.put(novoJogo.getAppid(), novoJogo);
+            salvarSemLock(mapa.values().toArray(new Produto[0]));
+        } finally {
+            MUTEX.release();
+        }
+    }
+
+    // ---------- privados (sem semáforo) ----------
+
+    private static void salvarSemLock(Produto[] listaJogos) {
         File arquivo = new File(CAMINHO_COMPLETO);
         try {
             if (arquivo.getParentFile() != null) {
@@ -30,26 +75,10 @@ public class JsonExporter {
         }
     }
 
-    public static void atualizarJogo(Produto novoJogo) {
-        if (novoJogo == null || novoJogo.getAppid() == null) return;
-
-        Produto[] jogosAtuais = lerListaProdutosDoJson();
-
-        Map<String, Produto> mapaJogos = new HashMap<>();
-        for (Produto p : jogosAtuais) {
-            mapaJogos.put(p.getAppid(), p);
-        }
-
-        mapaJogos.put(novoJogo.getAppid(), novoJogo);
-
-        Produto[] listaAtualizada = mapaJogos.values().toArray(new Produto[0]);
-        salvarListaProdutosComoJson(listaAtualizada);
-    }
-
-    // Lê os dados salvos do JSON. Se não existir, retorna um array vazio.
-    public static Produto[] lerListaProdutosDoJson() {
+    private static Produto[] lerSemLock() {
         File arquivo = new File(CAMINHO_COMPLETO);
         if (!arquivo.exists()) {
+            System.err.println("Arquivo não encontrado: " + arquivo.getAbsolutePath());
             return new Produto[0];
         }
         try {
@@ -62,5 +91,4 @@ public class JsonExporter {
             return new Produto[0];
         }
     }
-
 }

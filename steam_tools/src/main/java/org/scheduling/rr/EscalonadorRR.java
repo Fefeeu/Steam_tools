@@ -6,23 +6,28 @@ import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 /**
- * Escalonador Round Robin sobre threads reais.
+ * Escalonador Round Robin sobre threads reais, sincronizado com SEMÁFOROS
+ * (no lugar de synchronized / wait / notifyAll).
  *
- * Cada tarefa roda na sua própria thread, mas só a tarefa que está com a "CPU"
- * (emExecucao) pode trabalhar. Ela executa passos até acabar o quantum e então
- * devolve a CPU, voltando para o fim da fila de prontos.
+ * Dois tipos de semáforo:
+ *  - turno (um por tarefa, começa em 0): a tarefa fica bloqueada nele até receber a "CPU".
+ *    Quem dá a CPU faz turno.release(); a tarefa só anda depois do turno.acquire().
+ *  - mutex (binário): exclusão mútua sobre a fila de prontos, as métricas e a troca de contexto.
  *
- * A troca de turno é feita com o monitor do Java (synchronized / wait / notifyAll).
+ * Só a tarefa que recebeu o turno trabalha. Ela executa passos até acabar o quantum,
+ * volta para o fim da fila e entrega o turno para a próxima.
  */
 public class EscalonadorRR {
 
     private final long quantumMs;
     private final List<TarefaRR> tarefas = new ArrayList<>();
     private final Deque<TarefaRR> filaProntos = new ArrayDeque<>();
-    private final Object monitor = new Object();
     private final Map<TarefaRR, Metricas> metricas = new LinkedHashMap<>();
+    private final Map<TarefaRR, Semaphore> turno = new LinkedHashMap<>();
+    private final Semaphore mutex = new Semaphore(1, true);
 
     private TarefaRR emExecucao = null;
     private int trocasDeContexto = 0;
@@ -48,13 +53,17 @@ public class EscalonadorRR {
         inicio = System.currentTimeMillis();
         List<Thread> threads = new ArrayList<>();
 
-        synchronized (monitor) {
+        mutex.acquireUninterruptibly();
+        try {
             for (TarefaRR tarefa : tarefas) {
                 Metricas m = new Metricas();
                 m.entrouNaFila = inicio;
                 metricas.put(tarefa, m);
+                turno.put(tarefa, new Semaphore(0));   // ninguém tem a CPU ainda
                 filaProntos.addLast(tarefa);
             }
+        } finally {
+            mutex.release();
         }
 
         for (TarefaRR tarefa : tarefas) {
@@ -64,8 +73,12 @@ public class EscalonadorRR {
         }
 
         log("Iniciando Round Robin com quantum = " + quantumMs + "ms, fila: " + nomesDaFila());
-        synchronized (monitor) {
-            despacharProxima();
+
+        mutex.acquireUninterruptibly();
+        try {
+            despacharProxima();   // entrega o primeiro turno
+        } finally {
+            mutex.release();
         }
 
         for (Thread t : threads) {
@@ -83,9 +96,16 @@ public class EscalonadorRR {
 
                 long inicioFatia = System.currentTimeMillis();
                 int passos = 0;
-                boolean cedeu = false;
+                boolean cedeu;
                 do {
-                    temMais = tarefa.executarPasso();
+                    try {
+                        temMais = tarefa.executarPasso();
+                    } catch (RuntimeException e) {
+                        // Sem este catch, uma exceção mataria a thread SEM devolver a CPU
+                        // e todas as outras tarefas ficariam bloqueadas para sempre.
+                        System.err.println("[RR] Tarefa " + tarefa.getNome() + " falhou e foi encerrada: " + e);
+                        temMais = false;
+                    }
                     passos++;
                     cedeu = temMais && tarefa.querCederCpu();
                 } while (temMais && !cedeu && System.currentTimeMillis() - inicioFatia < quantumMs);
@@ -97,18 +117,22 @@ public class EscalonadorRR {
         }
     }
 
+    // P(turno): bloqueia até alguém dar a CPU a esta tarefa.
     private void esperarTurno(TarefaRR tarefa) throws InterruptedException {
-        synchronized (monitor) {
-            while (emExecucao != tarefa) {
-                monitor.wait();
-            }
+        turno.get(tarefa).acquire();
+
+        mutex.acquireUninterruptibly();
+        try {
             Metricas m = metricas.get(tarefa);
             m.tempoEspera += System.currentTimeMillis() - m.entrouNaFila;
+        } finally {
+            mutex.release();
         }
     }
 
     private void devolverCpu(TarefaRR tarefa, boolean temMais, boolean cedeu, long duracao, int passos) {
-        synchronized (monitor) {
+        mutex.acquireUninterruptibly();
+        try {
             Metricas m = metricas.get(tarefa);
             m.quanta++;
             m.passos += passos;
@@ -125,17 +149,23 @@ public class EscalonadorRR {
             log(tarefa.getNome() + " rodou " + duracao + "ms (" + passos + " passos) -> " + destino);
 
             despacharProxima();
+        } finally {
+            mutex.release();
         }
     }
 
-    // Deve ser chamado com o monitor travado.
+    // Deve ser chamado com o mutex adquirido.
+    // V(turno da próxima): libera a próxima tarefa da fila.
     private void despacharProxima() {
         TarefaRR anterior = emExecucao;
         emExecucao = filaProntos.pollFirst();
-        if (emExecucao != null && anterior != null && emExecucao != anterior) {
-            trocasDeContexto++;
+
+        if (emExecucao != null) {
+            if (anterior != null && emExecucao != anterior) {
+                trocasDeContexto++;
+            }
+            turno.get(emExecucao).release();
         }
-        monitor.notifyAll();
     }
 
     private String nomesDaFila() {
