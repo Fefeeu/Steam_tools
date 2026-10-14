@@ -170,3 +170,99 @@ Com a API real, a Biblioteca passa a ser mais lenta que os Jogadores, então a o
 - **Mock x API real:** trocar o mock pela API real deixou a Biblioteca cerca de 37 vezes mais lenta, mas quase não mudou as métricas gerais, porque o gargalo do FCFS nesse projeto é a tarefa longa no início da fila.
 - **Baixo custo de despacho:** a primeira tarefa esperou em média menos de 30 ms para começar, e a troca entre uma tarefa e a próxima levou de 0 a 2 ms. Quase todo o tempo de espera vem das tarefas que estão na frente na fila, não do escalonador.
 - **Simplicidade:** o FCFS é o algoritmo mais simples de implementar (basta uma fila FIFO) e nenhum processo sofre *starvation*, mas o tempo médio de espera raramente é o mínimo. O Round Robin, por alternar entre os processos a cada quantum, evita que uma tarefa longa como a Wishlist bloqueie as outras por tanto tempo.
+
+---
+
+## Escalonamento: Round Robin
+
+Os pacotes `org.scheduling.rr` e `org.tools` escalonam as tarefas da aplicação usando o algoritmo **Round Robin**. Cada tarefa entra na **Fila de Prontos (Ready Queue)** e recebe a CPU por uma fatia de tempo fixa, o **quantum**. Quando o quantum acaba, a tarefa devolve a CPU e volta para o fim da fila, e a próxima tarefa da fila é despachada (algoritmo **preemptivo**). Isso se repete até todas as tarefas terminarem.
+
+Cada tarefa roda na sua própria thread, mas só a tarefa que está com a CPU pode trabalhar. As outras ficam bloqueadas esperando a sua vez. A troca de turno é feita com o monitor do Java (`synchronized`, `wait` e `notifyAll`).
+
+Para poderem ser interrompidas, as tarefas foram divididas em **passos**. O escalonador confere o quantum entre um passo e outro, então a preempção é **cooperativa**: um passo que já começou sempre termina, e por isso uma fatia pode passar um pouco do quantum.
+
+As quatro tarefas chegam na fila nesta ordem e são executadas **5 vezes** cada uma, como no Sequencial e no Paralelo:
+
+| Ordem | Tarefa | O que é 1 passo | Passos (5 repetições) |
+|:-----:|--------|-----------------|:---------------------:|
+| 1 | Wishlist | 1 requisição à API: a busca da lista ou a busca de 1 jogo da lista | 145 (5 × (1 + 28 jogos)) |
+| 2 | Biblioteca | Buscar a biblioteca de 1 usuário | 10 (5 × 2 usuários) |
+| 3 | Jogadores | Consultar os jogadores online de 1 jogo | 20 (5 × 4 jogos) |
+| 4 | DLC | Processar 1 jogo do JSON local | 25 (5 × 5 jogos) |
+
+Se a busca de um jogo da Wishlist falhar, a tarefa **cede a CPU** antes do fim do quantum e volta para o fim da fila. Ela tenta o mesmo jogo de novo na próxima fatia, até 3 vezes.
+
+| Classe | Responsabilidade |
+|--------|------------------|
+| `TarefaRR` | Interface de uma tarefa dividida em passos: `executarPasso()` devolve `true` enquanto ainda falta trabalho, e `querCederCpu()` indica se a tarefa quer devolver a CPU antes do fim do quantum. |
+| `EscalonadorRR` | Mantém a Ready Queue, cria uma thread por tarefa, controla de quem é a vez e gera o relatório com quanta, passos, tempo de espera, turnaround e trocas de contexto. |
+| `TarefaWishlistRR`, `TarefaBibliotecaRR`, `TarefaJogadoresRR`, `TarefaDLCRR` | As tarefas da Steam divididas em passos. |
+| `RoundRobin` | Classe principal: coloca as tarefas da Steam na fila e executa o escalonador. O quantum é passado como argumento (padrão 1000 ms). |
+
+### Como executar
+
+```bash
+mvn compile exec:java -Dexec.mainClass="org.tools.RoundRobin" -Dexec.args="1000"
+```
+
+O argumento é o quantum em milissegundos. Durante a execução, o programa imprime uma linha para cada fatia (quanto tempo a tarefa rodou, quantos passos executou e se voltou para a fila ou terminou). Ao final, imprime para cada tarefa a quantidade de quanta e de passos, o tempo de espera e o turnaround, além do tempo médio de espera, do turnaround médio, das trocas de contexto e do tempo total.
+
+### Relatório de execução
+
+O escalonador foi executado **5 vezes** com **quantum = 1000 ms** e a Biblioteca usando a API real (`USE_MOCK = false`). Em todas as execuções a ordem de conclusão foi a mesma: **DLC → Biblioteca → Jogadores → Wishlist**. Todos os tempos estão em milissegundos.
+
+Nas execuções 4 e 5, a Steam Web API passou a recusar parte das requisições da Wishlist por excesso de requisições (*rate limit*). Por isso os resultados foram separados em dois cenários.
+
+| Execução | Tempo médio de espera | Turnaround médio | Trocas de contexto | Tempo total | Rate limit |
+|:--------:|----------------------:|-----------------:|-------------------:|------------:|:----------:|
+| 1 | 19545,30 | 40496,80 | 29 | 83854 | Não |
+| 2 | 20756,00 | 41361,50 | 29 | 82518 | Não |
+| 3 | 23158,80 | 43942,30 | 30 | 83297 | Não |
+| 4 | 19328,30 | 49944,30 | 29 | 122516 | Sim |
+| 5 | 12790,30 | 35598,80 | 18 | 91290 | Sim |
+
+### Cenário 1: sem rate limit (execuções 1 a 3)
+
+#### Médias por tarefa
+
+| Tarefa | Quanta | Passos | Fatia média | Tempo de espera | Turnaround | % do tempo de CPU |
+|--------|-------:|-------:|------------:|----------------:|-----------:|------------------:|
+| Wishlist | 48,7 | 145 | 1182,9 | 25669,7 | 83198,7 | 69,2% |
+| Biblioteca | 6,0 | 10 | 1560,6 | 18155,3 | 27519,0 | 11,3% |
+| Jogadores | 10,0 | 20 | 1284,4 | 25790,0 | 38634,3 | 15,5% |
+| DLC | 3,3 | 25 | 1008,6 | 14998,3 | 18382,0 | 4,1% |
+
+#### Médias gerais
+
+| Métrica | Valor |
+|---------|------:|
+| Tempo médio de espera | 21153,37 |
+| Turnaround médio | 41933,53 |
+| Trocas de contexto | 29,3 |
+| Tempo total | 83223,0 |
+
+#### Linha do tempo (gráfico de Gantt, início da execução 1)
+
+```
+|  Wishlist  |  Biblioteca  |  Jogadores  |  DLC  |  Wishlist  |  Biblioteca  |  Jogadores  |  DLC  | ...
+0            1845           3055          4391    5442         6646           8322          9700    10750 ms
+```
+
+> As tarefas se revezam na CPU a cada quantum. A DLC termina em cerca de 18 s, a Biblioteca em cerca de 28 s e os Jogadores em cerca de 39 s. Depois disso, a Wishlist fica sozinha na fila e roda até o fim, em cerca de 83 s.
+
+### Cenário 2: com rate limit (execuções 4 e 5)
+
+| Execução | Falhas na Wishlist (cedeu a CPU) | Jogos desistidos após 3 tentativas | Quanta da Wishlist | Passos da Wishlist | Turnaround da Wishlist |
+|:--------:|---------------------------------:|-----------------------------------:|-------------------:|-------------------:|-----------------------:|
+| 4 | 97 | 48 | 126 | 242 | 122507 |
+| 5 | 4 | 2 | 59 | 149 | 91276 |
+
+Cada falha conta como um passo e encerra a fatia da Wishlist antes do fim do quantum, então a Wishlist usa mais quanta e mais passos. As outras tarefas não dependem dessas requisições e mantiveram resultados próximos aos do cenário 1: na execução 4, a DLC, a Biblioteca e os Jogadores terminaram em 15477, 25525 e 36268 ms.
+
+### Conclusões
+
+- **Divisão justa da CPU:** nenhuma tarefa fica com a CPU por mais de uma fatia seguida enquanto há outras na fila. As tarefas curtas não ficam presas atrás da Wishlist: a DLC, que precisa de cerca de 3,4 s de CPU, termina em cerca de 18 s, mesmo com a Wishlist precisando de cerca de 57,5 s.
+- **Ordem de conclusão pela duração:** apesar de a Wishlist chegar primeiro, as tarefas terminaram na ordem DLC, Biblioteca, Jogadores e Wishlist em todas as execuções, ou seja, da que precisa de menos CPU para a que precisa de mais.
+- **O tempo total não diminui:** como só uma tarefa usa a CPU por vez, o tempo total (cerca de 83 s) é a soma do tempo de todas as tarefas. O ganho do Round Robin está no tempo de resposta das tarefas curtas, não no tempo total.
+- **Preempção cooperativa:** a fatia média ficou entre 1008,6 e 1560,6 ms com quantum de 1000 ms. A fatia passa do quantum porque o escalonador só confere o tempo entre um passo e outro, e um passo que começou sempre termina.
+- **Ceder a CPU:** quando a API recusou as requisições da Wishlist (execuções 4 e 5), ela devolveu a CPU antes do fim do quantum, e as outras tarefas continuaram sendo executadas normalmente.
