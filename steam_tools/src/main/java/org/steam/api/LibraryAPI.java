@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class LibraryAPI {
     private static final String API_KEY = ConfigLoader.get("steam.api.key");
-    private static final boolean USE_MOCK = true; // troque pra false pra usar a API real
+    private static final boolean USE_MOCK = false; // troque pra false pra usar a API real
 
     public static Map<String, String> getOwnedGames(String steamId) {
         if (USE_MOCK) {
