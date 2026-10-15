@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semáforo no Paralelo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: painel de laboratório. Controles no topo, um cartão por semáforo, linha do tempo, comparação, código e saída. */
+:root {
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-2: #f5f7f9;
+  --ink: #16202a;
+  --muted: #5a6876;
+  --line: #d5dce3;
+  --api: #0f7a8a;
+  --api-soft: #d5eef1;
+  --store: #b8640b;
+  --store-soft: #f8e6d0;
+  --full: #c23a3a;
+  --full-soft: #f8dcdc;
+  --ok: #2f7d4a;
+  --ok-soft: #dcefe2;
+  --hl: #fff2b8;
+  --console-bg: #121a22;
+  --console-ink: #cfd8e1;
+  --sans: "IBM Plex Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", "JetBrains Mono", Consolas, "Liberation Mono", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f151b; --surface: #17202a; --surface-2: #1d2833; --ink: #e3e9ef; --muted: #93a2b1; --line: #2b3946;
+    --api: #4cc3d3; --api-soft: #133840; --store: #f0a14a; --store-soft: #42301a;
+    --full: #f07272; --full-soft: #4a2222; --ok: #6fcf8d; --ok-soft: #1c3a26; --hl: #4b4316;
+    --console-bg: #0a0f14; --console-ink: #c6d0da; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f151b; --surface: #17202a; --surface-2: #1d2833; --ink: #e3e9ef; --muted: #93a2b1; --line: #2b3946;
+  --api: #4cc3d3; --api-soft: #133840; --store: #f0a14a; --store-soft: #42301a;
+  --full: #f07272; --full-soft: #4a2222; --ok: #6fcf8d; --ok-soft: #1c3a26; --hl: #4b4316;
+  --console-bg: #0a0f14; --console-ink: #c6d0da; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 20px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; line-height: 1.2; }
+h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); }
+.muted { color: var(--muted); }
+.label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* topo */
+.topo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 24px; align-items: end; }
+.topo .intro { display: grid; gap: 6px; max-width: 68ch; }
+.controles { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end; }
+button {
+  font: 600 0.95rem var(--sans); border-radius: 8px; padding: 10px 18px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+button:focus-visible, .seg input:focus-visible + span { outline: 3px solid var(--api); outline-offset: 2px; }
+button.primario { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg label { position: relative; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; padding: 9px 14px; font: 600 0.88rem var(--sans); color: var(--muted); }
+.seg label + label span { border-left: 1px solid var(--line); }
+.seg input:checked + span { background: var(--ink); color: var(--bg); }
+.seg input[value="sem"]:checked + span { background: var(--full); color: #fff; }
+.seg.travado { opacity: 0.55; }
+.seg.travado label { cursor: not-allowed; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; font: 600 0.8rem var(--sans);
+  padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line);
+}
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pill.rodando { color: var(--ok); background: var(--ok-soft); border-color: transparent; }
+.pill.rodando::before { animation: pulso 1s infinite; }
+.pill.erro { color: var(--full); background: var(--full-soft); border-color: transparent; }
+@keyframes pulso { 50% { opacity: 0.25; } }
+
+.faixa-modo { border-radius: 10px; padding: 10px 16px; font-size: 0.92rem; border: 1px solid var(--line); background: var(--surface); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.faixa-modo strong { font-family: var(--mono); }
+.faixa-modo.sem { border-color: var(--full); background: var(--full-soft); }
+
+.resumo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.resumo > div { background: var(--surface); padding: 12px 16px; display: grid; gap: 2px; }
+.resumo .valor { font: 600 1.45rem var(--mono); }
+
+.aviso { border-radius: 10px; padding: 12px 16px; border: 1px solid var(--full); background: var(--full-soft); display: grid; gap: 4px; }
+
+/* cartões dos semáforos */
+.semaforos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.sem { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+.sem-topo { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.sem-nome { font: 600 1.15rem var(--mono); }
+.sem[data-sem="STEAM_API"] .sem-nome { color: var(--api); }
+.sem[data-sem="STORE"] .sem-nome { color: var(--store); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 0.78rem var(--mono); padding: 3px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); }
+.chip.riscado { text-decoration: line-through; color: var(--muted); }
+.chip.alerta { border-color: var(--full); color: var(--full); background: var(--full-soft); }
+
+.livres { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.livres .grande { font: 600 2.6rem/1 var(--mono); }
+.livres .grande.zero { color: var(--full); }
+.livres-legenda { color: var(--muted); font-size: 0.9rem; }
+
+.slots { display: grid; gap: 8px; }
+.slot { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px dashed var(--line); background: var(--surface-2); min-height: 52px; }
+.slot .sl { font: 600 0.75rem var(--mono); color: var(--muted); }
+.slot .quem { font: 500 0.92rem var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slot .barra { grid-column: 2 / 4; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.slot .barra i { display: block; height: 100%; width: 0; }
+.slot .tempo { font: 500 0.8rem var(--mono); color: var(--muted); }
+.slot.ocupado { border-style: solid; }
+.sem[data-sem="STEAM_API"] .slot.ocupado { border-color: var(--api); background: var(--api-soft); }
+.sem[data-sem="STORE"] .slot.ocupado { border-color: var(--store); background: var(--store-soft); }
+.sem[data-sem="STEAM_API"] .slot .barra i { background: var(--api); }
+.sem[data-sem="STORE"] .slot .barra i { background: var(--store); }
+.sem .slot.acima { border-color: var(--full); }
+.sem .slot.acima .sl { color: var(--full); }
+.sem .slot.acima.ocupado { background: var(--full-soft); border-color: var(--full); }
+.slot.novo { animation: entra 0.6s ease-out; }
+@keyframes entra { from { box-shadow: 0 0 0 4px var(--hl); } to { box-shadow: 0 0 0 0 transparent; } }
+
+.metricas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+.metricas > div { display: grid; gap: 1px; }
+.metricas .v { font: 600 1.1rem var(--mono); }
+.metricas .v.ruim { color: var(--full); }
+
+.ultimas { display: grid; gap: 4px; font: 0.82rem var(--mono); }
+.ultimas div { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--line); }
+.ultimas .z { color: var(--full); font-weight: 600; }
+
+/* painéis */
+.painel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 12px; min-width: 0; }
+.painel-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.legenda { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--muted); }
+.legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.legenda i { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+canvas { width: 100%; display: block; }
+.dois { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+
+.codigo { font: 0.84rem/1.6 var(--mono); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 0; overflow-x: auto; }
+.codigo div { white-space: pre; padding: 0 14px; border-left: 3px solid transparent; transition: background 0.25s; }
+.codigo .n { color: var(--muted); display: inline-block; width: 2.4em; user-select: none; }
+.codigo .ativo { background: var(--hl); border-left-color: var(--ink); }
+.codigo .c { color: var(--muted); }
+.passos { display: grid; gap: 8px; font-size: 0.9rem; }
+.passos div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 10px; }
+.passos b { font: 600 0.82rem var(--mono); }
+
+.tabela-wrap { overflow-x: auto; max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--surface-2); font-weight: 600; }
+td.r, th.r { text-align: right; }
+td.api { color: var(--api); font-weight: 600; }
+td.store { color: var(--store); font-weight: 600; }
+td.ruim { color: var(--full); font-weight: 600; }
+.tag { font: 600 0.75rem var(--mono); padding: 2px 8px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); }
+.tag.sem { background: var(--full-soft); color: var(--full); }
+
+.console { background: var(--console-bg); color: var(--console-ink); font: 0.8rem/1.55 var(--mono); border-radius: 8px; padding: 12px 14px; height: 340px; overflow: auto; }
+.console div { white-space: pre-wrap; word-break: break-word; }
+.console .t { color: #6f8293; }
+.console .api { color: #5fd0de; }
+.console .store { color: #f4b062; }
+.console .erro { color: #ff8a8a; }
+.console .vazio { color: #6f8293; font-style: italic; }
+.alternar { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .semaforos, .dois { grid-template-columns: minmax(0, 1fr); }
+  .resumo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .topo { grid-template-columns: minmax(0, 1fr); }
+  .controles { justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="topo">
+    <div class="intro">
+      <span class="label">C12 · Sistemas Operacionais · Steam Tools</span>
+      <h1>Semáforo no Paralelo</h1>
+      <p class="muted">Roda o <code>org.tools.Paralelo</code> de verdade e mostra, em tempo real, como o <code>LimitadorApi</code> usa dois <code>java.util.concurrent.Semaphore</code> para limitar quantas threads falam com a Steam ao mesmo tempo. Rode com e sem semáforo para comparar.</p>
+    </div>
+    <div class="controles">
+      <div class="seg" id="seletorModo" role="radiogroup" aria-label="Modo de execução">
+        <label><input type="radio" name="modoSem" id="modoCom" value="com" checked><span>Com semáforo</span></label>
+        <label><input type="radio" name="modoSem" id="modoSemSem" value="sem"><span>Sem semáforo</span></label>
+      </div>
+      <span id="status" class="pill">parado</span>
+      <button id="btnRodar" class="primario" type="button">Rodar Paralelo</button>
+      <button id="btnParar" type="button" disabled>Parar</button>
+    </div>
+  </header>
+
+  <div id="faixaModo" class="faixa-modo"></div>
+
+  <div id="avisos" class="wrap" style="gap:10px"></div>
+
+  <section class="resumo" aria-label="Resumo da execução">
+    <div><span class="label">Tempo decorrido</span><span id="rDecorrido" class="valor num">0,0 s</span></div>
+    <div><span class="label">Requisições à Steam</span><span id="rEntradas" class="valor num">0</span></div>
+    <div><span class="label">Respostas 429 da Steam</span><span id="r429" class="valor num">0</span></div>
+    <div><span class="label">Tempo total (Paralelo)</span><span id="rTotal" class="valor num">–</span></div>
+  </section>
+
+  <section class="semaforos" id="semaforos"></section>
+
+  <section class="painel">
+    <div class="painel-topo">
+      <h2 id="tituloTimeline">Linha do tempo das permissões</h2>
+      <div class="legenda">
+        <span><i style="background:var(--api)"></i>STEAM_API</span>
+        <span><i style="background:var(--store)"></i>STORE</span>
+        <span><i style="background:repeating-linear-gradient(45deg,var(--muted) 0 2px,transparent 2px 5px)"></i>liberada em algum ponto deste trecho</span>
+        <span><i style="background:var(--full)"></i>entrou com livres: 0 / acima do limite</span>
+      </div>
+    </div>
+    <p id="textoTimeline" class="muted" style="font-size:0.88rem"></p>
+    <canvas id="cvTimeline" height="300" aria-label="Linha do tempo das requisições de cada semáforo"></canvas>
+  </section>
+
+  <section class="painel">
+    <div class="painel-topo">
+      <h2>Ritmo das requisições comparado ao limite do semáforo</h2>
+      <div class="legenda">
+        <span><i style="background:var(--api)"></i>STEAM_API acumulado</span>
+        <span><i style="background:var(--store)"></i>STORE acumulado</span>
+        <span><i style="background:var(--muted);height:2px"></i>teto do semáforo (permissões ÷ pausa)</span>
+      </div>
+    </div>
+    <canvas id="cvRitmo" height="220" aria-label="Requisições acumuladas por semáforo comparadas ao teto"></canvas>
+  </section>
+
+  <section class="painel">
+    <div class="painel-topo">
+      <h2>Com semáforo × sem semáforo</h2>
+      <span class="muted" style="font-size:0.85rem">execuções desta sessão, na ordem em que terminaram</span>
+    </div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Modo</th><th class="r">Tempo total</th>
+          <th class="r">Máx. simultâneas STEAM_API</th><th class="r">Máx. simultâneas STORE</th>
+          <th class="r">Requisições</th><th class="r">429</th><th class="r">Timeouts</th><th class="r">Jogos desistidos</th>
+        </tr></thead>
+        <tbody id="tbComparacao"><tr><td colspan="9" class="muted">Rode uma vez com semáforo e uma vez sem para comparar aqui.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="dois">
+    <div class="painel">
+      <h2 id="tituloCodigo">O que acontece em cada entrada</h2>
+      <div class="codigo" id="codigo"></div>
+      <p id="codigoLegenda" class="muted" style="font-size:0.88rem">Ao rodar, a linha do código correspondente acende a cada requisição.</p>
+      <div class="passos" id="passos"></div>
+    </div>
+    <div class="painel">
+      <div class="painel-topo"><h2>Requisições por thread</h2><span class="muted" style="font-size:0.85rem">quem disputou cada semáforo</span></div>
+      <div class="tabela-wrap">
+        <table>
+          <thead><tr><th>Thread</th><th>Tarefa</th><th class="r">STEAM_API</th><th class="r">STORE</th><th class="r">Última</th></tr></thead>
+          <tbody id="tbThreads"><tr><td colspan="5" class="muted">Nenhuma requisição ainda.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="painel">
+    <div class="painel-topo">
+      <h2>Saída do Paralelo</h2>
+      <label class="alternar"><input type="checkbox" id="soSemaforo" checked> mostrar só as linhas do semáforo e erros</label>
+    </div>
+    <div class="console" id="console"><div class="vazio">A saída do programa aparece aqui quando ele estiver rodando.</div></div>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+
+// Valores do LimitadorApi.java (permissões e pausa em ms).
+const SEMAFOROS = {
+  STEAM_API: { permissoes: 2, pausa: 1000, host: "api.steampowered.com", uso: "Biblioteca, Jogadores, lista da Wishlist e lista do DLC", cor: "--api" },
+  STORE:     { permissoes: 3, pausa: 5000, host: "store.steampowered.com", uso: "cada jogo da Wishlist e cada jogo do DLC", cor: "--store" }
+};
+const NOMES = Object.keys(SEMAFOROS);
+const MODO = "paralelo";
+
+const RE_ENTRADA = /\[(STEAM_API|STORE)\]\s+(.+?)\s+entrou\s*\|\s*livres:\s*(\d+)/;
+const RE_LIVRE = /\[LIVRE:(STEAM_API|STORE)\]\s+(.+?)\s+(começou|terminou)\s*\|\s*simultâneas:\s*(\d+)/;
+const RE_429 = /\[ApiConnection\]\s*429.*?em:\s*(\S+)/;
+const RE_HTTP = /\[ApiConnection\]\s*HTTP\s+(\d+)\s+em:\s*(\S+)/;
+const RE_TIMEOUT = /HttpConnectTimeoutException|HttpTimeoutException|ConnectException|UnknownHostException/;
+const RE_CHAVE = /STEAM_API_KEY/;
+const RE_TOTAL = /Tempo total \(PARALELO\):\s*(\d+)\s*ms/;
+
+const CODIGO_COM = [
+  "// LimitadorApi.executar(), chamado pelo ApiConnection",
+  "public <T> T executar(Supplier<T> requisicao) {",
+  "    try {",
+  "        semaforo.acquire();          // espera uma permissão",
+  "    } catch (InterruptedException e) { ... }",
+  "    try {",
+  "        System.out.println(\"[\" + name() + \"] \" + thread",
+  "                + \" entrou | livres: \" + semaforo.availablePermits());",
+  "        return requisicao.get();     // requisição HTTP à Steam",
+  "    } finally {",
+  "        Thread.sleep(pausaMs);       // permissão continua ocupada",
+  "        semaforo.release();          // sempre liberada",
+  "    }",
+  "}"
+];
+const PASSOS_COM = [[3], [6, 7], [8], [10], [11]];
+
+const CODIGO_SEM = [
+  "// ApiConnection.makeRequestBody() com -Dsemaforo=false",
+  "if (!LimitadorApi.ATIVO) {",
+  "    return requisicaoSemSemaforo(limitador, endPoint);",
+  "}",
+  "",
+  "private static JSONObject requisicaoSemSemaforo(...) {",
+  "    println(\"[LIVRE:...] começou | simultâneas: \" + contador.incrementAndGet());",
+  "    try {",
+  "        return makeRequestBodySemLimite(endPoint);  // vai direto, sem fila",
+  "    } finally {",
+  "        println(\"[LIVRE:...] terminou | simultâneas: \" + contador.decrementAndGet());",
+  "    }",
+  "}"
+];
+const PASSOS_SEM = [[1, 2], [6], [8], [10]];
+
+const TEXTO_PASSOS_COM = [
+  ["acquire()", "Pega uma permissão. Se <code>livres</code> já está em 0, a thread fica bloqueada (WAITING) na fila FIFO do semáforo."],
+  ["livres: n", "Permissões que sobraram depois desta entrada. <strong>0</strong> significa que o semáforo encheu e a próxima thread vai esperar."],
+  ["sleep(pausa)", "A permissão continua ocupada durante a pausa. É isso que limita a taxa de requisições."],
+  ["release()", "No <code>finally</code>: devolve a permissão mesmo se a requisição falhar, e a primeira thread da fila entra."]
+];
+const TEXTO_PASSOS_SEM = [
+  ["sem acquire()", "Nenhuma thread espera: todas as requisições saem no mesmo instante em que são pedidas."],
+  ["simultâneas: n", "Quantas requisições estão abertas ao mesmo tempo para aquele endpoint. Passar do número de permissões é o que o semáforo impediria."],
+  ["sem pausa", "Sem o <code>sleep</code> segurando a vaga, o ritmo fica livre e a Steam pode responder 429 (limite de requisições)."],
+  ["sem MUTEX", "O <code>JsonExporter</code> também grava o arquivo sem exclusão mútua nesse modo."]
+];
+
+let estado;
+function novoEstado(semSemaforo) {
+  const sem = {};
+  for (const n of NOMES) {
+    sem[n] = {
+      permissoes: SEMAFOROS[n].permissoes,
+      entradas: [],      // {thread, t, livres, simult}
+      intervalos: [],    // {thread, slot, ini, minFim, fim (null = ainda aberta), marca}
+      ocupando: [],      // intervalos ainda abertos, do mais antigo para o mais novo
+      ultimoLivres: null,
+      simAgora: 0, maxSim: 0, acima: 0,
+      e429: 0
+    };
+  }
+  return {
+    semSemaforo: !!semSemaforo,
+    sem, total: 0, threads: new Map(),
+    status: "parado", decorrido: 0, refDecorrido: 0, refRelogio: 0,
+    tempoTotal: null, timeouts: 0, httpErros: 0, faltaChave: false, desistencias: 0,
+    registrado: false
+  };
+}
+estado = novoEstado(false);
+
+let comparacao = [];
+try { comparacao = JSON.parse(localStorage.getItem("semaforo-comparacao") || "[]"); } catch (_) { comparacao = []; }
+
+// ---------------------------------------------------------------- leitura do log
+
+function semDaUrl(url) {
+  return url.includes(SEMAFOROS.STORE.host) ? "STORE" : "STEAM_API";
+}
+
+function tarefaDa(thread) {
+  if (/^Monitor-/.test(thread)) return "Jogadores";
+  if (/^Biblioteca-/.test(thread)) return "Biblioteca";
+  if (thread === "Thread-Wishlist") return "Wishlist";
+  if (/^pool-\d+-thread-\d+$/.test(thread)) return "DLC (pool)";
+  if (/^Thread-\d+$/.test(thread)) return "DLC (controller)";
+  return "–";
+}
+
+function contarThread(nome, thread, t) {
+  let th = estado.threads.get(thread);
+  if (!th) { th = { STEAM_API: 0, STORE: 0, ultimo: 0 }; estado.threads.set(thread, th); }
+  th[nome]++;
+  th.ultimo = t;
+}
+
+function primeiroSlotLivre(s) {
+  const usados = new Set(s.ocupando.map(i => i.slot));
+  let slot = 0;
+  while (usados.has(slot)) slot++;
+  return slot;
+}
+
+// Com semáforo: o log só mostra a ENTRADA (acquire). A ocupação vem do "livres: n".
+function registrarEntrada(nome, thread, t, livres) {
+  const s = estado.sem[nome];
+  if (livres + 1 > s.permissoes) s.permissoes = livres + 1;
+  const pausa = SEMAFOROS[nome].pausa;
+
+  // Ainda seguram permissão além desta: permissoes - livres - 1.
+  // As outras já fizeram release() antes de t; saem primeiro as mais antigas.
+  const continuam = Math.max(0, s.permissoes - livres - 1);
+  while (s.ocupando.length > continuam) {
+    const it = s.ocupando.shift();
+    it.fim = Math.max(t, it.ini);
+  }
+
+  const slot = primeiroSlotLivre(s);
+  const it = { thread, slot, ini: t, minFim: t + pausa, fim: null, marca: livres === 0 };
+  s.ocupando.push(it);
+  s.intervalos.push(it);
+  s.entradas.push({ thread, t, livres, simult: s.ocupando.length });
+  s.ultimoLivres = livres;
+  s.simAgora = s.ocupando.length;
+  s.maxSim = Math.max(s.maxSim, s.ocupando.length);
+  contarThread(nome, thread, t);
+  animarCodigo(nome, thread, `livres: ${livres}`, livres === 0);
+  return slot;
+}
+
+// Sem semáforo: o log mostra início e fim exatos de cada requisição.
+function registrarLivre(nome, thread, t, acao, simult) {
+  const s = estado.sem[nome];
+  if (acao === "começou") {
+    const slot = primeiroSlotLivre(s);
+    const acima = simult > s.permissoes;
+    const it = { thread, slot, ini: t, minFim: t, fim: null, marca: acima };
+    s.ocupando.push(it);
+    s.intervalos.push(it);
+    s.entradas.push({ thread, t, livres: null, simult });
+    if (acima) s.acima++;
+    s.simAgora = simult;
+    s.maxSim = Math.max(s.maxSim, simult);
+    contarThread(nome, thread, t);
+    animarCodigo(nome, thread, `simultâneas: ${simult}`, acima);
+    return slot;
+  }
+  const i = s.ocupando.findIndex(o => o.thread === thread);
+  if (i >= 0) {
+    s.ocupando[i].fim = t;
+    s.ocupando.splice(i, 1);
+  }
+  s.simAgora = simult;
+  return null;
+}
+
+function lerLinha(texto, t) {
+  let tipo = "";
+  let m;
+  if ((m = RE_LIVRE.exec(texto))) {
+    estado.semSemaforo = true;
+    const slot = registrarLivre(m[1], m[2], t, m[3], Number(m[4]));
+    if (slot != null) marcarSlotNovo(m[1], slot);
+    tipo = m[1] === "STORE" ? "store" : "api";
+  } else if ((m = RE_ENTRADA.exec(texto))) {
+    const slot = registrarEntrada(m[1], m[2], t, Number(m[3]));
+    marcarSlotNovo(m[1], slot);
+    tipo = m[1] === "STORE" ? "store" : "api";
+  } else if ((m = RE_429.exec(texto))) {
+    estado.sem[semDaUrl(m[1])].e429++;
+    tipo = "erro";
+  } else if (RE_HTTP.test(texto)) {
+    estado.httpErros++;
+    tipo = "erro";
+  } else if (RE_TIMEOUT.test(texto)) {
+    estado.timeouts++;
+    tipo = "erro";
+  } else if (RE_CHAVE.test(texto)) {
+    estado.faltaChave = true;
+    tipo = "erro";
+  } else if (/Exception|Erro|DEU ALGO ERRADO|Desisti/.test(texto)) {
+    if (/Desisti/.test(texto)) estado.desistencias++;
+    tipo = "erro";
+  }
+  const tot = RE_TOTAL.exec(texto);
+  if (tot) estado.tempoTotal = Number(tot[1]);
+  adicionarNoConsole(texto, t, tipo);
+}
+
+function fecharIntervalosAbertos(t) {
+  for (const n of NOMES) {
+    for (const it of estado.sem[n].ocupando) it.fim = Math.max(t, it.minFim);
+    estado.sem[n].ocupando = [];
+    estado.sem[n].simAgora = 0;
+  }
+}
+
+// ---------------------------------------------------------------- servidor
+
+const $ = id => document.getElementById(id);
+let timerPoll = null;
+let buscando = false;
+
+async function api(caminho, metodo = "GET") {
+  const r = await fetch(caminho, { method: metodo, cache: "no-store" });
+  let corpo = {};
+  try { corpo = await r.json(); } catch (_) {}
+  return { ok: r.ok, status: r.status, corpo };
+}
+
+function modoEscolhidoSem() {
+  return $("modoSemSem").checked;
+}
+
+async function rodar() {
+  $("btnRodar").disabled = true;
+  const sem = modoEscolhidoSem();
+  try {
+    const r = await api(`/api/rodar?modo=${MODO}${sem ? "&semaforo=false" : ""}`, "POST");
+    if (!r.ok && r.status !== 409) {
+      avisar("Não foi possível iniciar o Paralelo", r.corpo.erro || `O servidor respondeu ${r.status}.`);
+      $("btnRodar").disabled = false;
+      return;
+    }
+    reiniciarTela(sem);
+    estado.status = "rodando";
+    estado.refDecorrido = 0;
+    estado.refRelogio = performance.now();
+    atualizarStatus();
+    agendarPoll(0);
+  } catch (e) {
+    servidorFora();
+    $("btnRodar").disabled = false;
+  }
+}
+
+async function parar() {
+  $("btnParar").disabled = true;
+  try { await api(`/api/parar?modo=${MODO}`, "POST"); } catch (_) {}
+  agendarPoll(0);
+}
+
+function agendarPoll(ms) {
+  clearTimeout(timerPoll);
+  timerPoll = setTimeout(buscarLog, ms);
+}
+
+async function buscarLog() {
+  if (buscando) return;
+  buscando = true;
+  try {
+    const r = await api(`/api/log?modo=${MODO}&desde=${estado.total}`);
+    const j = r.corpo;
+    const eraSem = estado.semSemaforo;
+    if (typeof j.parametro === "string" && j.parametro.includes("sem semáforo")) estado.semSemaforo = true;
+    for (const l of (j.linhas || [])) lerLinha(l.s, l.t);
+    if (estado.semSemaforo !== eraSem) aplicarModoNaTela();
+    estado.total = typeof j.total === "number" ? j.total : estado.total;
+    estado.status = j.status || "parado";
+    if (typeof j.decorrido === "number") {
+      estado.refDecorrido = j.decorrido;
+      estado.refRelogio = performance.now();
+      estado.decorrido = j.decorrido;
+    }
+    if (j.tempoTotal && estado.tempoTotal == null) estado.tempoTotal = Number(j.tempoTotal);
+    if (estado.status !== "rodando") {
+      fecharIntervalosAbertos(estado.decorrido);
+      registrarComparacao();
+    }
+    atualizarAvisos();
+    atualizarStatus();
+    renderTudo();
+    if (estado.status === "rodando") agendarPoll(400);
+  } catch (e) {
+    servidorFora();
+    agendarPoll(2000);
+  } finally {
+    buscando = false;
+  }
+}
+
+async function iniciar() {
+  aplicarModoNaTela();
+  try {
+    const r = await api("/api/estado");
+    const p = r.corpo.modos && r.corpo.modos[MODO];
+    if (p && p.status && p.status !== "parado") {
+      // Já existe uma execução (página recarregada no meio): reconstrói a partir do log inteiro.
+      const sem = typeof p.parametro === "string" && p.parametro.includes("sem semáforo");
+      estado = novoEstado(sem);
+      estado.registrado = p.status !== "rodando";   // não duplica na comparação ao recarregar
+      $(sem ? "modoSemSem" : "modoCom").checked = true;
+      aplicarModoNaTela();
+      agendarPoll(0);
+    }
+    limparAviso("servidor");
+  } catch (e) {
+    servidorFora();
+  }
+  atualizarStatus();
+  renderTudo();
+  requestAnimationFrame(quadro);
+}
+
+// ---------------------------------------------------------------- comparação
+
+function registrarComparacao() {
+  if (estado.registrado) return;
+  const totalReq = NOMES.reduce((a, n) => a + estado.sem[n].entradas.length, 0);
+  if (!totalReq && estado.tempoTotal == null) return;
+  estado.registrado = true;
+  comparacao.push({
+    sem: estado.semSemaforo,
+    status: estado.status,
+    tempo: estado.tempoTotal != null ? estado.tempoTotal : estado.decorrido,
+    tempoCompleto: estado.tempoTotal != null,
+    maxApi: estado.sem.STEAM_API.maxSim,
+    maxStore: estado.sem.STORE.maxSim,
+    req: totalReq,
+    e429: estado.sem.STEAM_API.e429 + estado.sem.STORE.e429,
+    timeouts: estado.timeouts,
+    desist: estado.desistencias
+  });
+  try { localStorage.setItem("semaforo-comparacao", JSON.stringify(comparacao.slice(-20))); } catch (_) {}
+  renderComparacao();
+}
+
+function renderComparacao() {
+  const tb = $("tbComparacao");
+  if (!comparacao.length) {
+    tb.innerHTML = `<tr><td colspan="9" class="muted">Rode uma vez com semáforo e uma vez sem para comparar aqui.</td></tr>`;
+    return;
+  }
+  tb.innerHTML = comparacao.map((c, i) => {
+    const pApi = SEMAFOROS.STEAM_API.permissoes, pSt = SEMAFOROS.STORE.permissoes;
+    return `<tr>
+      <td class="num">${i + 1}</td>
+      <td><span class="tag ${c.sem ? "sem" : ""}">${c.sem ? "sem semáforo" : "com semáforo"}</span>${c.status === "parado" ? ' <span class="muted">(parado)</span>' : ""}</td>
+      <td class="r num">${fmtS(c.tempo)}${c.tempoCompleto ? "" : "*"}</td>
+      <td class="r num ${c.maxApi > pApi ? "ruim" : ""}">${c.maxApi} <span class="muted">/ ${pApi}</span></td>
+      <td class="r num ${c.maxStore > pSt ? "ruim" : ""}">${c.maxStore} <span class="muted">/ ${pSt}</span></td>
+      <td class="r num">${fmtN(c.req)}</td>
+      <td class="r num ${c.e429 ? "ruim" : ""}">${fmtN(c.e429)}</td>
+      <td class="r num ${c.timeouts ? "ruim" : ""}">${fmtN(c.timeouts)}</td>
+      <td class="r num ${c.desist ? "ruim" : ""}">${fmtN(c.desist)}</td>
+    </tr>`;
+  }).join("") + `<tr><td colspan="9" class="muted" style="white-space:normal">/ n = número de permissões do semáforo. * = execução parada antes do fim, mostra o tempo decorrido.</td></tr>`;
+}
+
+// ---------------------------------------------------------------- avisos
+
+function avisar(titulo, texto, id) {
+  const box = $("avisos");
+  let el = id ? box.querySelector(`[data-id="${id}"]`) : null;
+  if (!el) {
+    el = document.createElement("div");
+    el.className = "aviso";
+    if (id) el.dataset.id = id;
+    box.appendChild(el);
+  }
+  el.innerHTML = `<strong>${titulo}</strong><span>${texto}</span>`;
+}
+function limparAviso(id) {
+  const el = $("avisos").querySelector(`[data-id="${id}"]`);
+  if (el) el.remove();
+}
+function servidorFora() {
+  avisar("O servidor da demonstração não respondeu",
+    "Rode <code>org.demo.ServidorDemo</code> no IntelliJ (pasta de trabalho: <code>steam_tools</code>) e abra <code>http://localhost:8090</code>. Abrir este arquivo direto no navegador não funciona, porque o navegador não consegue iniciar o Java sozinho.",
+    "servidor");
+}
+function atualizarAvisos() {
+  limparAviso("servidor");
+  if (estado.faltaChave) {
+    avisar("Falta a chave da Steam",
+      "O DLC parou porque a variável de ambiente <code>STEAM_API_KEY</code> não está definida. Coloque-a em Run → Edit Configurations → Environment variables do <code>ServidorDemo</code> e rode de novo.",
+      "chave");
+  }
+  if (estado.timeouts >= 3) {
+    avisar("A Steam não está respondendo",
+      `${estado.timeouts} requisições terminaram em timeout de conexão. Teste a rede com <code>curl -I https://api.steampowered.com</code>.`,
+      "timeout");
+  }
+}
+
+// ---------------------------------------------------------------- tela
+
+const fmtS = ms => (ms / 1000).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " s";
+const fmtN = (n, d = 0) => n.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+function agora() {
+  if (estado.status === "rodando") return estado.refDecorrido + (performance.now() - estado.refRelogio);
+  return estado.decorrido;
+}
+
+function atualizarStatus() {
+  const st = estado.status;
+  const el = $("status");
+  const texto = { rodando: "rodando", concluido: "concluído", parado: "parado", erro: "terminou com erro" }[st] || st;
+  el.textContent = texto;
+  el.className = "pill" + (st === "rodando" ? " rodando" : st === "erro" ? " erro" : "");
+  const rodando = st === "rodando";
+  $("btnRodar").disabled = rodando;
+  $("btnParar").disabled = !rodando;
+  $("btnRodar").textContent = estado.total > 0 && !rodando ? "Rodar de novo" : "Rodar Paralelo";
+  for (const r of document.querySelectorAll('input[name="modoSem"]')) r.disabled = rodando;
+  $("seletorModo").classList.toggle("travado", rodando);
+}
+
+function reiniciarTela(sem) {
+  estado = novoEstado(sem);
+  $("console").innerHTML = "";
+  for (const n of ["chave", "timeout"]) limparAviso(n);
+  aplicarModoNaTela();
+  renderTudo();
+}
+
+// Troca textos, cartões e código conforme o modo da execução mostrada.
+function aplicarModoNaTela() {
+  const sem = estado.total > 0 || estado.status === "rodando" ? estado.semSemaforo : modoEscolhidoSem();
+  const faixa = $("faixaModo");
+  faixa.className = "faixa-modo" + (sem ? " sem" : "");
+  faixa.innerHTML = sem
+    ? `<strong>Sem semáforo</strong><span>O Paralelo roda com <code>-Dsemaforo=false</code>: cada thread faz a requisição na hora, sem fila e sem pausa.</span>`
+    : `<strong>Com semáforo</strong><span>Cada requisição passa pelo <code>LimitadorApi</code>: no máximo 2 ao mesmo tempo na STEAM_API e 3 na STORE.</span>`;
+  $("tituloTimeline").textContent = sem ? "Linha do tempo das requisições" : "Linha do tempo das permissões";
+  $("textoTimeline").innerHTML = sem
+    ? "Cada linha é uma requisição aberta ao mesmo tempo. Sem semáforo não há limite: as linhas em vermelho passam do número de permissões que o semáforo permitiria."
+    : "Cada linha é uma permissão. Uma barra começa quando uma thread imprime <code>entrou</code> e dura pelo menos a pausa do semáforo, porque a permissão só é devolvida depois do <code>Thread.sleep</code>. Nunca há mais barras ao mesmo tempo do que permissões.";
+  $("tituloCodigo").textContent = sem ? "O que acontece em cada requisição (sem semáforo)" : "O que acontece em cada entrada";
+  montarCartoes(sem);
+  montarCodigo(sem);
+}
+
+function montarCartoes(sem) {
+  const box = $("semaforos");
+  box.innerHTML = "";
+  for (const n of NOMES) {
+    const c = SEMAFOROS[n];
+    const s = estado.sem[n];
+    const teto = c.permissoes / (c.pausa / 1000) * 60;
+    const el = document.createElement("article");
+    el.className = "sem";
+    el.dataset.sem = n;
+    el.innerHTML = `
+      <div class="sem-topo">
+        <div style="display:grid;gap:4px;min-width:0">
+          <span class="sem-nome">LimitadorApi.${n}</span>
+          <span class="muted" style="font-size:0.85rem">${c.host} · ${c.uso}</span>
+        </div>
+        <div class="chips">
+          ${sem ? `<span class="chip alerta">desligado</span>` : ""}
+          <span class="chip ${sem ? "riscado" : ""}">new Semaphore(${c.permissoes}, true)</span>
+          <span class="chip ${sem ? "riscado" : ""}">pausa ${fmtN(c.pausa / 1000)} s</span>
+          <span class="chip ${sem ? "riscado" : ""}">teto ≈ ${fmtN(teto)} req/min</span>
+        </div>
+      </div>
+      <div class="livres">
+        <span class="label" style="width:100%">${sem ? "requisições abertas agora" : "permissões livres na última entrada"}</span>
+        <span class="grande num" data-r="livres">${sem ? "0" : "–"}</span>
+        <span class="livres-legenda" data-r="livresLeg">${sem ? `o semáforo permitiria ${s.permissoes}` : `de ${s.permissoes}`}</span>
+      </div>
+      <div class="slots" data-r="slots"></div>
+      <div class="metricas">
+        <div><span class="label">${sem ? "Requisições" : "Entradas"}</span><span class="v num" data-r="entradas">0</span></div>
+        <div><span class="label">${sem ? `Começaram acima de ${s.permissoes} abertas` : "Entraram com livres: 0"}</span><span class="v num" data-r="zeros">0</span></div>
+        <div><span class="label">Taxa observada</span><span class="v num" data-r="taxa">–</span></div>
+        <div><span class="label">Intervalo médio entre requisições</span><span class="v num" data-r="intervalo">–</span></div>
+        <div><span class="label">Máx. simultâneas observadas</span><span class="v num" data-r="max">0 de ${s.permissoes}</span></div>
+        <div><span class="label">Respostas 429</span><span class="v num" data-r="e429">0</span></div>
+      </div>
+      <div style="display:grid;gap:6px">
+        <span class="label">Últimas requisições</span>
+        <div class="ultimas" data-r="ultimas"><div class="muted">Nenhuma ainda.</div></div>
+      </div>`;
+    box.appendChild(el);
+    const slots = el.querySelector('[data-r="slots"]');
+    for (let i = 0; i < s.permissoes; i++) slots.appendChild(criarSlot(i, sem, s.permissoes));
+  }
+}
+
+function criarSlot(i, sem, permissoes) {
+  const d = document.createElement("div");
+  d.className = "slot" + (i >= permissoes ? " acima" : "");
+  d.dataset.slot = i;
+  const rotulo = sem ? (i >= permissoes ? `acima do limite` : `vaga ${i + 1}`) : `permissão ${i + 1}`;
+  d.innerHTML = `<span class="sl">${rotulo}</span><span class="quem muted">livre</span><span class="tempo"></span><div class="barra"><i></i></div>`;
+  return d;
+}
+
+function marcarSlotNovo(nome, slot) {
+  const el = document.querySelector(`.sem[data-sem="${nome}"] .slot[data-slot="${slot}"]`);
+  if (!el) return;
+  el.classList.remove("novo");
+  void el.offsetWidth;
+  el.classList.add("novo");
+}
+
+function campo(nome, r) {
+  return document.querySelector(`.sem[data-sem="${nome}"] [data-r="${r}"]`);
+}
+
+function renderCartoes() {
+  const t = agora();
+  const sem = estado.semSemaforo;
+  for (const n of NOMES) {
+    const s = estado.sem[n];
+    const c = SEMAFOROS[n];
+    const slotsBox = campo(n, "slots");
+    if (!slotsBox) continue;
+
+    // Com semáforo: uma vaga por permissão. Sem semáforo: tantas quantas estiverem abertas.
+    const maiorSlot = s.ocupando.reduce((m, i) => Math.max(m, i.slot + 1), 0);
+    const desejado = sem ? Math.max(s.permissoes, maiorSlot) : s.permissoes;
+    while (slotsBox.children.length < desejado) slotsBox.appendChild(criarSlot(slotsBox.children.length, sem, s.permissoes));
+    while (slotsBox.children.length > desejado) slotsBox.lastChild.remove();
+
+    const lv = campo(n, "livres");
+    if (sem) {
+      lv.textContent = s.simAgora;
+      lv.classList.toggle("zero", s.simAgora > s.permissoes);
+    } else {
+      lv.textContent = s.ultimoLivres == null ? "–" : s.ultimoLivres;
+      lv.classList.toggle("zero", s.ultimoLivres === 0);
+      campo(n, "livresLeg").textContent = `de ${s.permissoes}`;
+    }
+
+    const porSlot = new Map(s.ocupando.map(i => [i.slot, i]));
+    for (const el of slotsBox.children) {
+      const it = porSlot.get(Number(el.dataset.slot));
+      const quem = el.querySelector(".quem"), tempo = el.querySelector(".tempo"), barra = el.querySelector(".barra i");
+      if (it) {
+        const dt = Math.max(0, t - it.ini);
+        el.classList.add("ocupado");
+        quem.textContent = it.thread;
+        quem.classList.remove("muted");
+        if (sem) {
+          tempo.textContent = `aberta há ${fmtS(dt)}`;
+          barra.style.width = "100%";
+        } else {
+          tempo.textContent = dt < c.pausa ? `ocupada há ${fmtS(dt)}` : `há ${fmtS(dt)} · pausa cumprida`;
+          barra.style.width = Math.min(100, dt / c.pausa * 100) + "%";
+        }
+      } else {
+        el.classList.remove("ocupado");
+        quem.textContent = "livre";
+        quem.classList.add("muted");
+        tempo.textContent = "";
+        barra.style.width = "0";
+      }
+    }
+
+    const ent = s.entradas;
+    campo(n, "entradas").textContent = fmtN(ent.length);
+    const ruins = sem ? s.acima : ent.filter(e => e.livres === 0).length;
+    const zerosEl = campo(n, "zeros");
+    zerosEl.textContent = ent.length ? `${fmtN(ruins)} (${fmtN(ruins / ent.length * 100)}%)` : "0";
+    zerosEl.classList.toggle("ruim", sem && ruins > 0);
+    campo(n, "taxa").textContent = ent.length && t > 0 ? `${fmtN(ent.length / (t / 60000), 1)} req/min` : "–";
+    campo(n, "intervalo").textContent = ent.length > 1 ? fmtS((ent[ent.length - 1].t - ent[0].t) / (ent.length - 1)) : "–";
+    const maxEl = campo(n, "max");
+    maxEl.textContent = `${s.maxSim} de ${s.permissoes}`;
+    maxEl.classList.toggle("ruim", s.maxSim > s.permissoes);
+    const e429 = campo(n, "e429");
+    e429.textContent = fmtN(s.e429);
+    e429.classList.toggle("ruim", s.e429 > 0);
+
+    const ult = ent.slice(-6).reverse();
+    campo(n, "ultimas").innerHTML = ult.length
+      ? ult.map(e => {
+          const txt = e.livres == null ? `simultâneas: ${e.simult}` : `livres: ${e.livres}`;
+          const ruim = e.livres == null ? e.simult > s.permissoes : e.livres === 0;
+          return `<div><span>${fmtS(e.t)} · ${esc(e.thread)}</span><span class="${ruim ? "z" : ""}">${txt}</span></div>`;
+        }).join("")
+      : `<div class="muted">Nenhuma ainda.</div>`;
+  }
+}
+
+function renderResumo() {
+  const t = agora();
+  $("rDecorrido").textContent = fmtS(t);
+  $("rEntradas").textContent = fmtN(NOMES.reduce((a, n) => a + estado.sem[n].entradas.length, 0));
+  $("r429").textContent = fmtN(NOMES.reduce((a, n) => a + estado.sem[n].e429, 0));
+  $("rTotal").textContent = estado.tempoTotal != null ? fmtS(estado.tempoTotal) : "–";
+}
+
+function renderThreads() {
+  const linhas = [...estado.threads.entries()].sort((a, b) => b[1].ultimo - a[1].ultimo);
+  $("tbThreads").innerHTML = linhas.length
+    ? linhas.map(([nome, th]) => `<tr><td class="mono">${esc(nome)}</td><td>${tarefaDa(nome)}</td>
+        <td class="r num ${th.STEAM_API ? "api" : "muted"}">${th.STEAM_API}</td>
+        <td class="r num ${th.STORE ? "store" : "muted"}">${th.STORE}</td>
+        <td class="r num">${fmtS(th.ultimo)}</td></tr>`).join("")
+    : `<tr><td colspan="5" class="muted">Nenhuma requisição ainda.</td></tr>`;
+}
+
+// ---------------------------------------------------------------- código
+
+let passosAtuais = PASSOS_COM;
+function montarCodigo(sem) {
+  const linhas = sem ? CODIGO_SEM : CODIGO_COM;
+  passosAtuais = sem ? PASSOS_SEM : PASSOS_COM;
+  $("codigo").innerHTML = linhas.map((l, i) => {
+    const html = esc(l).replace(/(\/\/.*)$/, '<span class="c">$1</span>');
+    return `<div data-l="${i}"><span class="n">${i + 1}</span>${html}</div>`;
+  }).join("");
+  $("passos").innerHTML = (sem ? TEXTO_PASSOS_SEM : TEXTO_PASSOS_COM)
+    .map(([a, b]) => `<div><b>${a}</b><span>${b}</span></div>`).join("");
+}
+
+let filaAnim = [];
+let animando = false;
+function animarCodigo(nome, thread, detalhe, ruim) {
+  filaAnim.push({ nome, thread, detalhe, ruim });
+  if (filaAnim.length > 4) filaAnim = filaAnim.slice(-4);
+  if (!animando) proximaAnim();
+}
+function proximaAnim() {
+  const a = filaAnim.shift();
+  if (!a) { animando = false; return; }
+  animando = true;
+  const sem = estado.semSemaforo;
+  let fim;
+  if (sem) fim = a.ruim ? `. Passou do limite de ${estado.sem[a.nome].permissoes}: com semáforo, esta thread estaria esperando na fila.` : ".";
+  else fim = a.ruim ? ". O semáforo encheu: a próxima thread fica bloqueada no <code>acquire()</code> até um <code>release()</code>." : ".";
+  $("codigoLegenda").innerHTML = `<strong class="mono">${esc(a.thread)}</strong> ${sem ? "fez uma requisição em" : "entrou em"} <strong class="mono">${a.nome}</strong> com <strong class="mono">${a.detalhe}</strong>${fim}`;
+  const passos = passosAtuais;
+  let i = 0;
+  const passo = () => {
+    document.querySelectorAll("#codigo .ativo").forEach(el => el.classList.remove("ativo"));
+    if (i >= passos.length) { setTimeout(proximaAnim, 60); return; }
+    for (const l of passos[i]) {
+      const el = document.querySelector(`#codigo [data-l="${l}"]`);
+      if (el) el.classList.add("ativo");
+    }
+    i++;
+    setTimeout(passo, 170);
+  };
+  passo();
+}
+
+// ---------------------------------------------------------------- console
+
+let pendentesConsole = [];
+function adicionarNoConsole(texto, t, tipo) {
+  pendentesConsole.push({ texto, t, tipo });
+}
+function descarregarConsole() {
+  if (!pendentesConsole.length) return;
+  const box = $("console");
+  const soSem = $("soSemaforo").checked;
+  const noFim = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
+  const frag = document.createDocumentFragment();
+  for (const l of pendentesConsole) {
+    const d = document.createElement("div");
+    d.dataset.tipo = l.tipo || "outro";
+    if (l.tipo) d.className = l.tipo;
+    d.innerHTML = `<span class="t">${fmtS(l.t).padStart(8)}</span>  ${esc(l.texto)}`;
+    if (soSem && !l.tipo) d.hidden = true;
+    frag.appendChild(d);
+  }
+  pendentesConsole = [];
+  const vazio = box.querySelector(".vazio");
+  if (vazio) vazio.remove();
+  box.appendChild(frag);
+  while (box.children.length > 4000) box.firstChild.remove();
+  if (noFim) box.scrollTop = box.scrollHeight;
+}
+$("soSemaforo").addEventListener("change", () => {
+  const soSem = $("soSemaforo").checked;
+  for (const d of $("console").children) {
+    if (d.dataset.tipo === "outro") d.hidden = soSem;
+  }
+});
+
+// ---------------------------------------------------------------- gráficos
+
+function cor(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+function prepararCanvas(cv, alturaCss) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth;
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(alturaCss * dpr)) {
+    cv.width = Math.round(w * dpr);
+    cv.height = Math.round(alturaCss * dpr);
+    cv.style.height = alturaCss + "px";
+  }
+  const ctx = cv.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, alturaCss);
+  return { ctx, w, h: alturaCss };
+}
+
+function eixoTempo(ctx, x0, x1, y, fim, corTxt, corLinha, alturaGrade, yTopo) {
+  const passosS = [1, 2, 5, 10, 15, 30, 60, 120, 300, 600];
+  const alvo = (x1 - x0) / 90;
+  const passo = (passosS.find(p => fim / 1000 / p <= alvo) || 600) * 1000;
+  ctx.font = `11px ${cor("--mono") || "monospace"}`;
+  ctx.fillStyle = corTxt;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  for (let s = 0; s <= fim + 1; s += passo) {
+    const x = x0 + (s / fim) * (x1 - x0);
+    ctx.strokeStyle = corLinha;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(Math.round(x) + 0.5, yTopo);
+    ctx.lineTo(Math.round(x) + 0.5, yTopo + alturaGrade);
+    ctx.stroke();
+    ctx.fillText(`${Math.round(s / 1000)} s`, x, y + 4);
+  }
+}
+
+function linhasDo(n) {
+  const s = estado.sem[n];
+  if (!estado.semSemaforo) return s.permissoes;
+  const maiorSlot = s.intervalos.reduce((m, i) => Math.max(m, i.slot + 1), 0);
+  return Math.max(s.permissoes, maiorSlot);
+}
+
+function desenharLinhaDoTempo() {
+  const cv = $("cvTimeline");
+  const sem = estado.semSemaforo;
+  const linhasPor = Object.fromEntries(NOMES.map(n => [n, linhasDo(n)]));
+  const totalLinhas = NOMES.reduce((a, n) => a + linhasPor[n], 0);
+  const alturaLinha = totalLinhas > 12 ? 22 : 30, gapGrupo = 18, topo = 8, rodape = 24;
+  const altura = topo + totalLinhas * alturaLinha + gapGrupo * (NOMES.length - 1) + rodape;
+  const { ctx, w } = prepararCanvas(cv, altura);
+  const esq = 170, dir = w - 12;
+  const t = agora();
+  const fim = Math.max(10000, t * 1.04);
+  const X = ms => esq + (Math.min(ms, fim) / fim) * (dir - esq);
+  const cTxt = cor("--muted"), cLinha = cor("--line"), cFull = cor("--full"), cSurf = cor("--surface-2"), cFullSoft = cor("--full-soft");
+  const fonte = cor("--mono") || "monospace";
+  const yGrade = altura - rodape;
+
+  eixoTempo(ctx, esq, dir, yGrade, fim, cTxt, cLinha, yGrade - topo, topo);
+
+  let y = topo;
+  ctx.textBaseline = "middle";
+  for (const n of NOMES) {
+    const s = estado.sem[n];
+    const c = cor(SEMAFOROS[n].cor);
+    for (let i = 0; i < linhasPor[n]; i++) {
+      const yy = y + i * alturaLinha;
+      const acima = i >= s.permissoes;
+      ctx.fillStyle = acima ? cFullSoft : cSurf;
+      ctx.fillRect(esq, yy + 2, dir - esq, alturaLinha - 4);
+      if (i === 0) {
+        ctx.fillStyle = c;
+        ctx.textAlign = "left";
+        ctx.font = `600 12px ${fonte}`;
+        ctx.fillText(n, 4, yy + alturaLinha / 2);
+      }
+      ctx.fillStyle = acima ? cFull : cTxt;
+      ctx.textAlign = "right";
+      ctx.font = `11px ${fonte}`;
+      ctx.fillText(sem ? (acima ? "acima do limite" : `vaga ${i + 1}`) : `permissão ${i + 1}`, esq - 8, yy + alturaLinha / 2);
+    }
+    if (sem) {
+      // linha que marca o limite que o semáforo imporia
+      const yl = y + s.permissoes * alturaLinha;
+      if (linhasPor[n] > s.permissoes) {
+        ctx.strokeStyle = cFull;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(esq, yl + 0.5); ctx.lineTo(dir, yl + 0.5); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+    for (const it of s.intervalos) {
+      const yy = y + it.slot * alturaLinha + 4;
+      const hh = alturaLinha - 8;
+      const fimReal = it.fim == null ? t : it.fim;
+      const solido = sem ? fimReal : Math.min(fimReal, it.minFim);
+      const x0 = X(it.ini), xs = X(solido), xf = X(fimReal);
+      ctx.fillStyle = c;
+      ctx.fillRect(x0, yy, Math.max(1.5, xs - x0 - 1), hh);
+      if (xf > xs + 1) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(xs, yy, xf - xs - 1, hh);
+        ctx.clip();
+        ctx.strokeStyle = c;
+        ctx.globalAlpha = 0.55;
+        ctx.lineWidth = 1;
+        for (let k = xs - hh; k < xf; k += 5) {
+          ctx.beginPath(); ctx.moveTo(k, yy + hh); ctx.lineTo(k + hh, yy); ctx.stroke();
+        }
+        ctx.restore();
+      }
+      if (it.marca) {
+        ctx.fillStyle = cFull;
+        ctx.fillRect(x0, yy - 2, 3, hh + 4);
+      }
+    }
+    y += linhasPor[n] * alturaLinha + gapGrupo;
+  }
+
+  if (estado.status === "rodando") {
+    ctx.strokeStyle = cor("--ink");
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(X(t) + 0.5, topo); ctx.lineTo(X(t) + 0.5, yGrade); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+function desenharRitmo() {
+  const cv = $("cvRitmo");
+  const { ctx, w, h } = prepararCanvas(cv, 220);
+  const esq = 46, dir = w - 12, topo = 10, base = h - 24;
+  const t = agora();
+  const fim = Math.max(10000, t * 1.04);
+  const maxEnt = Math.max(5, ...NOMES.map(n => estado.sem[n].entradas.length));
+  const tetoMax = Math.max(...NOMES.map(n => SEMAFOROS[n].permissoes * (1 + Math.min(t, fim) / SEMAFOROS[n].pausa)));
+  const yMax = Math.ceil(Math.max(maxEnt, Math.min(tetoMax, maxEnt * 2.2)) * 1.1);
+  const X = ms => esq + (ms / fim) * (dir - esq);
+  const Y = v => base - (v / yMax) * (base - topo);
+  const cTxt = cor("--muted"), cLinha = cor("--line");
+
+  eixoTempo(ctx, esq, dir, base, fim, cTxt, cLinha, base - topo, topo);
+  ctx.fillStyle = cTxt;
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+  for (let k = 0; k <= 4; k++) {
+    const v = Math.round(yMax * k / 4);
+    ctx.fillText(String(v), esq - 6, Y(v));
+  }
+
+  ctx.save();
+  ctx.beginPath(); ctx.rect(esq, topo, dir - esq, base - topo); ctx.clip();
+  for (const n of NOMES) {
+    const c = cor(SEMAFOROS[n].cor);
+    const s = estado.sem[n];
+    const p = s.permissoes, pausa = SEMAFOROS[n].pausa;
+    // Teto do semáforo: cada permissão é usada no máximo uma vez a cada pausa.
+    ctx.strokeStyle = c;
+    ctx.globalAlpha = 0.45;
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(p));
+    ctx.lineTo(X(fim), Y(p * (1 + fim / pausa)));
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(0));
+    let k = 0;
+    for (const e of s.entradas) {
+      ctx.lineTo(X(e.t), Y(k));
+      k++;
+      ctx.lineTo(X(e.t), Y(k));
+    }
+    ctx.lineTo(X(t), Y(k));
+    ctx.stroke();
+    if (k) {
+      ctx.fillStyle = c;
+      ctx.beginPath(); ctx.arc(X(t), Y(k), 3.5, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------- laço
+
+function renderTudo() {
+  descarregarConsole();
+  renderResumo();
+  renderCartoes();
+  renderThreads();
+  renderComparacao();
+  desenharLinhaDoTempo();
+  desenharRitmo();
+}
+
+let ultimoQuadro = 0;
+function quadro(ts) {
+  if (estado.status === "rodando" && ts - ultimoQuadro > 100) {
+    ultimoQuadro = ts;
+    renderTudo();
+  }
+  requestAnimationFrame(quadro);
+}
+window.addEventListener("resize", () => { desenharLinhaDoTempo(); desenharRitmo(); });
+if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", renderTudo);
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+}
+
+for (const r of document.querySelectorAll('input[name="modoSem"]')) {
+  r.addEventListener("change", () => {
+    if (estado.status !== "rodando") {
+      // Só mostra o modo escolhido; a execução anterior continua na tabela de comparação.
+      estado = novoEstado(modoEscolhidoSem());
+      $("console").innerHTML = `<div class="vazio">A saída do programa aparece aqui quando ele estiver rodando.</div>`;
+      aplicarModoNaTela();
+      atualizarStatus();
+      renderTudo();
+    }
+  });
+}
+$("btnRodar").addEventListener("click", rodar);
+$("btnParar").addEventListener("click", parar);
+iniciar();
+</script>
+</body>
+</html>

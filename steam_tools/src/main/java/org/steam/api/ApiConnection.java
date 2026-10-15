@@ -8,6 +8,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ApiConnection {
 
@@ -26,10 +29,36 @@ public class ApiConnection {
                 ? LimitadorApi.STORE
                 : LimitadorApi.STEAM_API;
 
+        if (!LimitadorApi.ATIVO) {
+            return requisicaoSemSemaforo(limitador, endPoint);
+        }
+
         JSONObject resultado = limitador.executar(() -> makeRequestBodySemLimite(endPoint));
 
         // executar() devolve null se a thread foi interrompida enquanto esperava a permissão
         return resultado != null ? resultado : new JSONObject();
+    }
+
+    // Requisições em andamento por endpoint, só para o log do modo sem semáforo
+    private static final Map<LimitadorApi, AtomicInteger> SIMULTANEAS = new EnumMap<>(Map.of(
+            LimitadorApi.STEAM_API, new AtomicInteger(),
+            LimitadorApi.STORE, new AtomicInteger()));
+
+    /**
+     * VERSÃO SEM SEMÁFORO: toda thread faz a requisição na hora, sem controle de ritmo.
+     * Imprime quantas requisições estão abertas ao mesmo tempo para comparar com o modo com semáforo.
+     */
+    private static JSONObject requisicaoSemSemaforo(LimitadorApi tipo, String endPoint) {
+        AtomicInteger contador = SIMULTANEAS.get(tipo);
+        String thread = Thread.currentThread().getName();
+        System.out.println("[LIVRE:" + tipo.name() + "] " + thread
+                + " começou | simultâneas: " + contador.incrementAndGet());
+        try {
+            return makeRequestBodySemLimite(endPoint);
+        } finally {
+            System.out.println("[LIVRE:" + tipo.name() + "] " + thread
+                    + " terminou | simultâneas: " + contador.decrementAndGet());
+        }
     }
 
     private static JSONObject makeRequestBodySemLimite(String endPoint) {

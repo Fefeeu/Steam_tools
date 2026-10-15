@@ -19,6 +19,12 @@ public enum LimitadorApi {
     // api.steampowered.com (biblioteca, wishlist, jogadores online): mais folgado
     STEAM_API(2, 1000);
 
+    /**
+     * Liga/desliga os semáforos do projeto (este limitador e o MUTEX do JsonExporter).
+     * Padrão: ligado. Para rodar SEM semáforo: java -Dsemaforo=false ...
+     */
+    public static final boolean ATIVO = !"false".equalsIgnoreCase(System.getProperty("semaforo"));
+
     private final Semaphore semaforo;
     private final long pausaMs;
 

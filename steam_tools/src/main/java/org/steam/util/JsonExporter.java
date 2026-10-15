@@ -23,6 +23,10 @@ public class JsonExporter {
     // ---------- públicos (com semáforo) ----------
 
     public static void salvarListaProdutosComoJson(Produto[] listaJogos) {
+        if (!LimitadorApi.ATIVO) {          // versão sem semáforo: sem exclusão mútua
+            salvarSemLock(listaJogos);
+            return;
+        }
         MUTEX.acquireUninterruptibly();
         try {
             salvarSemLock(listaJogos);
@@ -32,6 +36,9 @@ public class JsonExporter {
     }
 
     public static Produto[] lerListaProdutosDoJson() {
+        if (!LimitadorApi.ATIVO) {
+            return lerSemLock();
+        }
         MUTEX.acquireUninterruptibly();
         try {
             return lerSemLock();
@@ -43,6 +50,16 @@ public class JsonExporter {
     // ler + alterar + gravar = uma única região crítica
     public static void atualizarJogo(Produto novoJogo) {
         if (novoJogo == null || novoJogo.getAppid() == null) return;
+
+        if (!LimitadorApi.ATIVO) {          // ler + alterar + gravar sem proteção: pode perder jogos
+            Map<String, Produto> mapa = new LinkedHashMap<>();
+            for (Produto p : lerSemLock()) {
+                mapa.put(p.getAppid(), p);
+            }
+            mapa.put(novoJogo.getAppid(), novoJogo);
+            salvarSemLock(mapa.values().toArray(new Produto[0]));
+            return;
+        }
 
         MUTEX.acquireUninterruptibly();
         try {
