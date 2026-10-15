@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class RoundRobin {
 
-    private static final int REPETICOES = 5;
+    private static final int REPETICOES = 1;
     private static final long QUANTUM_PADRAO_MS = 1000;
 
     public static void main(String[] args) throws InterruptedException {

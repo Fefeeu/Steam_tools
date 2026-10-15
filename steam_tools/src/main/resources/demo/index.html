@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steam Tools: demonstração</title>
+<style>
+  :root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #18202b;
+    --muted: #5d6878;
+    --border: #d9dee6;
+    --accent: #1f6feb;
+    --ok: #1a7f37;
+    --warn: #9a6700;
+    --err: #cf222e;
+    --log-bg: #0f1620;
+    --log-text: #d6deea;
+    --wishlist: #2f81f7;
+    --biblioteca: #bf3989;
+    --jogadores: #1a7f37;
+    --dlc: #d4790b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --card: #161b22;
+      --text: #e6edf3;
+      --muted: #8d96a0;
+      --border: #30363d;
+      --accent: #4493f8;
+      --ok: #3fb950;
+      --warn: #d29922;
+      --err: #f85149;
+      --log-bg: #010409;
+      --log-text: #c9d1d9;
+      --wishlist: #4493f8;
+      --biblioteca: #db61a2;
+      --jogadores: #3fb950;
+      --dlc: #e3943b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+  header h1 { margin: 0; font-size: 1.8rem; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  h2 { margin: 40px 0 12px; font-size: 1.3rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 560px), 1fr)); gap: 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .card-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .card-top h3 { margin: 0; font-size: 1.15rem; }
+  .card-top .desc { color: var(--muted); font-size: .9rem; width: 100%; margin-top: -8px; }
+  .pill {
+    font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .pill.rodando { color: var(--accent); border-color: var(--accent); }
+  .pill.concluido { color: var(--ok); border-color: var(--ok); }
+  .pill.parado { color: var(--warn); border-color: var(--warn); }
+  .pill.erro { color: var(--err); border-color: var(--err); }
+  .timer { font-variant-numeric: tabular-nums; font-weight: 600; margin-left: auto; font-size: 1.1rem; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  button {
+    font: inherit; font-weight: 600; padding: 6px 16px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--card); color: var(--text);
+  }
+  button.run { background: var(--ok); border-color: var(--ok); color: #fff; }
+  button.stop { background: var(--err); border-color: var(--err); color: #fff; }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  label.quantum { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: .9rem; }
+  label.quantum input {
+    width: 90px; font: inherit; padding: 4px 8px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  }
+  .resultado { font-size: .95rem; min-height: 1.5em; }
+  .resultado b { font-variant-numeric: tabular-nums; }
+
+  .gantt { display: flex; flex-direction: column; gap: 4px; }
+  .lane { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 8px; font-size: .85rem; }
+  .lane .track { position: relative; height: 20px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+  .lane .seg { position: absolute; top: 0; bottom: 0; border-right: 1px solid var(--card); }
+  .lane .seg.vivo { opacity: .55; }
+  .lane .bar { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; transition: width .4s; }
+  .lane .count { position: absolute; right: 6px; top: 0; line-height: 20px; font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lane .nome.ativo { font-weight: 700; }
+  .eixo { display: grid; grid-template-columns: 90px 1fr; gap: 8px; font-size: .75rem; color: var(--muted); }
+  .eixo div:last-child { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+  pre.log {
+    margin: 0; background: var(--log-bg); color: var(--log-text); border-radius: 6px;
+    padding: 10px 12px; height: 220px; overflow: auto; font: 12.5px/1.45 ui-monospace, "Cascadia Code", Menlo, monospace;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  details summary { cursor: pointer; color: var(--muted); font-size: .9rem; }
+
+  .table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: .95rem; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: var(--bg); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  tr.media td { font-weight: 700; }
+  .vazio { color: var(--muted); text-align: center !important; padding: 16px; }
+
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tabs button { border-radius: 999px; }
+  .tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .painel { display: none; flex-direction: column; gap: 16px; }
+  .painel.ativo { display: flex; }
+  .painel h3 { margin: 8px 0 0; font-size: 1.05rem; }
+  .painel p { margin: 0; color: var(--muted); }
+
+  header { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  header .titulo { flex: 1; min-width: 240px; }
+  .acoes-topo { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sino { position: relative; }
+  .sino .badge {
+    position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 6px;
+    border-radius: 999px; background: var(--err); color: #fff; font-size: .75rem; line-height: 20px; text-align: center;
+  }
+  .sino .badge:empty { display: none; }
+
+  .toasts {
+    position: fixed; top: 16px; right: 16px; z-index: 20; display: flex; flex-direction: column; gap: 8px;
+    width: min(360px, calc(100vw - 32px)); pointer-events: none;
+  }
+  .notif {
+    display: grid; grid-template-columns: 36px 1fr; gap: 10px; padding: 10px 12px;
+    background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--cor);
+    border-radius: 8px; font-size: .9rem; line-height: 1.35;
+  }
+  .toasts .notif {
+    pointer-events: auto; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+    animation: entrar .25s ease-out;
+  }
+  .toasts .notif.saindo { animation: sair .3s ease-in forwards; }
+  @keyframes entrar { from { transform: translateX(110%); opacity: 0; } }
+  @keyframes sair { to { transform: translateX(110%); opacity: 0; } }
+  .notif .icone {
+    width: 36px; height: 36px; border-radius: 8px; background: var(--cor); color: #fff;
+    display: grid; place-items: center; font-weight: 700; font-size: 1.1rem;
+  }
+  .notif .cabeca { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+  .notif .cabeca b { font-size: .95rem; }
+  .notif .origem { color: var(--muted); font-size: .75rem; margin-left: auto; white-space: nowrap; }
+  .notif .corpo { margin-top: 2px; }
+  .notif .corpo ul { margin: 4px 0 0; padding-left: 18px; }
+  .notif .nova { color: var(--ok); font-weight: 600; font-size: .75rem; }
+
+  .central {
+    position: fixed; inset: 0 0 0 auto; z-index: 30; width: min(420px, 100vw); background: var(--bg);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column; transform: translateX(100%);
+    transition: transform .25s;
+  }
+  .central.aberta { transform: none; box-shadow: -8px 0 24px rgba(0, 0, 0, .25); }
+  .central .topo { display: flex; align-items: center; gap: 8px; padding: 16px; border-bottom: 1px solid var(--border); }
+  .central .topo h3 { margin: 0; flex: 1; font-size: 1.1rem; }
+  .central .filtros { display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 16px 0; }
+  .central .filtros button { font-size: .8rem; padding: 2px 10px; border-radius: 999px; }
+  .central .filtros button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .central .lista { flex: 1; overflow: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="titulo">
+      <h1>Steam Tools</h1>
+      <p>C12 · Sistemas Operacionais: threads e escalonamento de processos com as tarefas Wishlist, Biblioteca, Jogadores e DLC</p>
+    </div>
+    <div class="acoes-topo">
+      <button id="btn-sistema" title="Também mostrar como notificação do sistema operacional">Notificação do sistema: desligada</button>
+      <button id="btn-central" class="sino">🔔 Notificações <span class="badge" id="badge"></span></button>
+    </div>
+  </header>
+
+  <h2>Executar ao vivo</h2>
+  <div class="grid" id="cards"></div>
+
+  <h2>Resultados desta sessão</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Modo</th><th>Parâmetro</th><th>Situação</th><th>Tempo total (ms)</th><th>Espera média (ms)</th><th>Turnaround médio (ms)</th><th>Trocas de contexto</th><th>Início</th></tr>
+      </thead>
+      <tbody id="historico"><tr><td colspan="8" class="vazio">Nenhuma execução terminou ainda.</td></tr></tbody>
+    </table>
+  </div>
+
+  <h2>Resultados medidos</h2>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-painel="p-threads">Sequencial × Paralelo</button>
+    <button role="tab" aria-selected="false" data-painel="p-fcfs">FCFS</button>
+    <button role="tab" aria-selected="false" data-painel="p-rr">Round Robin</button>
+  </div>
+
+  <section class="painel ativo" id="p-threads">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Execução</th><th>Tempo Sequencial (ms)</th><th>Tempo Paralelo (ms)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>173482</td><td>94512</td></tr>
+          <tr><td>2</td><td>159807</td><td>89765</td></tr>
+          <tr><td>3</td><td>186234</td><td>101243</td></tr>
+          <tr><td>4</td><td>164950</td><td>92876</td></tr>
+          <tr><td>5</td><td>177310</td><td>97104</td></tr>
+          <tr class="media"><td>Média</td><td>172357</td><td>95100</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="painel" id="p-fcfs">
+    <h3>Comparação entre os cenários (médias)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Métrica</th><th>Com mock</th><th>Com API real</th></tr></thead>
+        <tbody>
+          <tr><td>Pico de CPU da Biblioteca</td><td>10,8</td><td>396,0</td></tr>
+          <tr><td>Tempo médio de espera</td><td>8185,80</td><td>7981,40</td></tr>
+          <tr><td>Turnaround médio</td><td>10943,35</td><td>10702,10</td></tr>
+          <tr><td>Tempo total</td><td>11066,20</td><td>10917,80</td></tr>
+          <tr><td>Throughput</td><td>0,36 processos/s</td><td>0,37 processos/s</td></tr>
+          <tr><td>TME se as tarefas curtas chegassem primeiro</td><td>~54,6</td><td>~191,4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Médias por processo: Biblioteca com API real</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Processo</th><th>Pico de CPU</th><th>Tempo de espera</th><th>Turnaround</th><th>% do tempo de CPU</th></tr></thead>
+        <tbody>
+          <tr><td>Wishlist</td><td>10303,8</td><td>28,0</td><td>10331,8</td><td>94,7%</td></tr>
+          <tr><td>Biblioteca</td><td>396,0</td><td>10310,4</td><td>10706,4</td><td>3,6%</td></tr>
+          <tr><td>Jogadores</td><td>179,4</td><td>10705,8</td><td>10885,2</td><td>1,7%</td></tr>
+          <tr><td>DLC</td><td>3,6</td><td>10881,4</td><td>10885,0</td><td>&lt; 0,1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="painel" id="p-rr">
+    <h3>Médias por tarefa: quantum = 1000 ms, sem rate limit (execuções 1 a 3)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tarefa</th><th>Quanta</th><th>Passos</th><th>Fatia média</th><th>Tempo de espera</th><th>Turnaround</th><th>% do tempo de CPU</th></tr></thead>
+        <tbody>
+          <tr><td>Wishlist</td><td>48,7</td><td>145</td><td>1182,9</td><td>25669,7</td><td>83198,7</td><td>69,2%</td></tr>
+          <tr><td>Biblioteca</td><td>6,0</td><td>10</td><td>1560,6</td><td>18155,3</td><td>27519,0</td><td>11,3%</td></tr>
+          <tr><td>Jogadores</td><td>10,0</td><td>20</td><td>1284,4</td><td>25790,0</td><td>38634,3</td><td>15,5%</td></tr>
+          <tr><td>DLC</td><td>3,3</td><td>25</td><td>1008,6</td><td>14998,3</td><td>18382,0</td><td>4,1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Resultado de cada execução</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Execução</th><th>Tempo médio de espera</th><th>Turnaround médio</th><th>Trocas de contexto</th><th>Tempo total</th><th>Rate limit</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>19545,30</td><td>40496,80</td><td>29</td><td>83854</td><td>Não</td></tr>
+          <tr><td>2</td><td>20756,00</td><td>41361,50</td><td>29</td><td>82518</td><td>Não</td></tr>
+          <tr><td>3</td><td>23158,80</td><td>43942,30</td><td>30</td><td>83297</td><td>Não</td></tr>
+          <tr><td>4</td><td>19328,30</td><td>49944,30</td><td>29</td><td>122516</td><td>Sim</td></tr>
+          <tr><td>5</td><td>12790,30</td><td>35598,80</td><td>18</td><td>91290</td><td>Sim</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<aside class="central" id="central" aria-label="Central de notificações">
+  <div class="topo">
+    <h3>Notificações</h3>
+    <button id="btn-limpar">Limpar</button>
+    <button id="btn-fechar" aria-label="Fechar">✕</button>
+  </div>
+  <div class="filtros" id="filtros"></div>
+  <div class="lista" id="lista-notif"></div>
+</aside>
+
+<script>
+const TAREFAS = ["Wishlist", "Biblioteca", "Jogadores", "DLC"];
+const MODOS = [
+  { id: "sequencial", nome: "Sequencial", desc: "As 4 tarefas, uma depois da outra, 5 rodadas.", vista: "progresso" },
+  { id: "paralelo", nome: "Paralelo", desc: "Uma thread por tarefa, todas ao mesmo tempo, 5 repetições.", vista: "progresso" },
+  { id: "fcfs", nome: "FCFS", desc: "Fila de prontos FIFO, não-preemptivo: cada tarefa roda até terminar.", vista: "gantt" },
+  { id: "rr", nome: "Round Robin", desc: "Fila de prontos com quantum: cada tarefa roda uma fatia e volta para o fim da fila.", vista: "gantt" },
+];
+const STATUS = { rodando: "Rodando", concluido: "Concluído", parado: "Parado", erro: "Erro" };
+const MAX_LOG = 400;
+
+const estado = {};
+
+function el(tag, attrs = {}, ...filhos) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v);
+  }
+  for (const f of filhos) e.append(f);
+  return e;
+}
+
+function criarCards() {
+  const cards = document.getElementById("cards");
+  for (const m of MODOS) {
+    const s = estado[m.id] = { modo: m, linhas: [], inicio: null, status: "parado", decorrido: 0, parser: novoParser() };
+    s.pill = el("span", { class: "pill" }, "Parado");
+    s.timer = el("span", { class: "timer" }, "0,0 s");
+    s.btnRodar = el("button", { class: "run", onclick: () => rodar(m.id) }, "▶ Rodar");
+    s.btnParar = el("button", { class: "stop", onclick: () => parar(m.id), disabled: "" }, "■ Parar");
+    const controles = el("div", { class: "controls" }, s.btnRodar, s.btnParar);
+    if (m.id === "rr") {
+      s.quantum = el("input", { type: "number", min: "1", step: "100", value: "1000" });
+      controles.append(el("label", { class: "quantum" }, "Quantum (ms)", s.quantum));
+    }
+    s.resultado = el("div", { class: "resultado" });
+    s.vista = el("div", { class: "gantt" });
+    s.log = el("pre", { class: "log" });
+    cards.append(el("section", { class: "card" },
+      el("div", { class: "card-top" }, el("h3", {}, m.nome), s.pill, s.timer, el("div", { class: "desc" }, m.desc)),
+      controles,
+      s.vista,
+      s.resultado,
+      el("details", { open: "" }, el("summary", {}, "Saída do programa"), s.log)
+    ));
+    desenhar(s);
+  }
+}
+
+async function rodar(id) {
+  const s = estado[id];
+  let url = "/api/rodar?modo=" + id;
+  if (s.quantum) url += "&quantum=" + encodeURIComponent(s.quantum.value);
+  s.btnRodar.disabled = true;
+  s.iniciadoAqui = true;
+  const r = await fetch(url, { method: "POST" });
+  if (!r.ok) {
+    const corpo = await r.json().catch(() => ({}));
+    alert(corpo.erro || "Não foi possível iniciar.");
+  }
+  atualizar();
+}
+
+async function parar(id) {
+  estado[id].btnParar.disabled = true;
+  await fetch("/api/parar?modo=" + id, { method: "POST" });
+  atualizar();
+}
+
+let atualizando = false;
+async function atualizar() {
+  if (atualizando) return;
+  atualizando = true;
+  try {
+    const r = await fetch("/api/estado");
+    const dados = await r.json();
+    for (const m of MODOS) {
+      const info = dados.modos[m.id];
+      const s = estado[m.id];
+      if (info.inicio !== undefined && info.inicio !== s.inicio) {
+        s.inicio = info.inicio;
+        s.linhas = [];
+        s.log.textContent = "";
+        s.parser = novoParser();
+        // Ao recarregar a página no meio de uma execução, as notificações antigas vão
+        // direto para a central, sem aparecer na tela de uma vez.
+        s.silenciar = !s.iniciadoAqui && info.decorrido > 3000;
+        s.iniciadoAqui = false;
+      }
+      const mudou = s.status === "rodando" || info.status === "rodando" || s.linhas.length === 0;
+      s.status = info.status;
+      s.decorrido = info.decorrido || 0;
+      s.info = info;
+      if (info.inicio !== undefined && mudou) await buscarLog(s);
+      desenhar(s);
+    }
+    desenharHistorico(dados.historico);
+  } catch (e) {
+    for (const s of Object.values(estado)) s.pill.textContent = "Sem conexão";
+  } finally {
+    atualizando = false;
+  }
+}
+
+async function buscarLog(s) {
+  const r = await fetch(`/api/log?modo=${s.modo.id}&desde=${s.linhas.length}`);
+  const dados = await r.json();
+  if (!dados.linhas || dados.inicio !== s.inicio) return;
+  const novas = dados.linhas;
+  s.linhas.push(...novas);
+  s.status = dados.status;
+  s.decorrido = dados.decorrido;
+  s.info = dados;
+  for (const linha of novas) lerLinha(s, linha, s.silenciar);
+  s.silenciar = false;
+  if (novas.length) escreverLog(s);
+}
+
+function escreverLog(s) {
+  const pre = s.log;
+  const noFim = pre.scrollHeight - pre.scrollTop - pre.clientHeight < 40;
+  const texto = s.linhas.slice(-MAX_LOG).map(l => l.s).join("\n").replace(/\n{3,}/g, "\n\n");
+  pre.textContent = texto;
+  if (noFim) pre.scrollTop = pre.scrollHeight;
+}
+
+function fmt(n, casas = 0) {
+  if (n === undefined || n === null || n === "") return "—";
+  return Number(n).toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
+}
+
+function desenhar(s) {
+  const rodando = s.status === "rodando";
+  s.pill.className = "pill " + s.status;
+  s.pill.textContent = STATUS[s.status] || "Parado";
+  s.timer.textContent = fmt(s.decorrido / 1000, 1) + " s";
+  s.btnRodar.disabled = rodando;
+  s.btnParar.disabled = !rodando;
+  if (s.quantum) s.quantum.disabled = rodando;
+
+  const i = s.info || {};
+  const partes = [];
+  if (i.tempoTotal) partes.push(`Tempo total: <b>${fmt(i.tempoTotal)} ms</b>`);
+  if (i.esperaMedia) partes.push(`Espera média: <b>${fmt(i.esperaMedia, 1)} ms</b>`);
+  if (i.turnaroundMedio) partes.push(`Turnaround médio: <b>${fmt(i.turnaroundMedio, 1)} ms</b>`);
+  if (i.trocas) partes.push(`Trocas de contexto: <b>${i.trocas}</b>`);
+  s.resultado.innerHTML = partes.join(" · ");
+
+  if (s.modo.vista === "gantt") desenharGantt(s);
+  else desenharProgresso(s);
+}
+
+// ---- Gantt do FCFS e do Round Robin, montado a partir do log do escalonador
+function segmentos(s) {
+  const segs = [];
+  let agora = 0;
+  if (s.modo.id === "rr") {
+    for (const l of s.linhas) {
+      const m = l.s.match(/^\[RR\] t=(\d+)ms \| (\S+) rodou (\d+)ms/);
+      if (m) {
+        const fim = +m[1], dur = +m[3];
+        segs.push({ tarefa: m[2], ini: fim - dur, fim });
+        agora = Math.max(agora, fim);
+      }
+    }
+    // O RR registra a fatia quando ela termina: estima o "agora" pelo relógio do servidor.
+    if (s.status === "rodando" && s.linhas.length) {
+      const ult = s.linhas.findLast(l => /^\[RR\] t=/.test(l.s));
+      if (ult) agora = Math.max(agora, +ult.s.match(/t=(\d+)/)[1] + (s.decorrido - ult.t));
+    }
+  } else {
+    let aberto = null, offset = 0;
+    for (const l of s.linhas) {
+      let m = l.s.match(/^\[\s*(\d+) ms\] \[FCFS\] despachando (\S+)/);
+      if (m) {
+        aberto = { tarefa: m[2], ini: +m[1], fim: null };
+        offset = l.t - +m[1];
+        segs.push(aberto);
+        agora = Math.max(agora, +m[1]);
+        continue;
+      }
+      m = l.s.match(/^\[\s*(\d+) ms\] \[FCFS\] (\S+) terminou/);
+      if (m && aberto) {
+        aberto.fim = +m[1];
+        agora = Math.max(agora, +m[1]);
+        aberto = null;
+      }
+    }
+    if (aberto) {
+      aberto.vivo = true;
+      aberto.fim = s.status === "rodando" ? Math.max(aberto.ini, s.decorrido - offset) : agora;
+      agora = Math.max(agora, aberto.fim);
+    }
+  }
+  return { segs, agora };
+}
+
+function desenharGantt(s) {
+  const { segs, agora } = segmentos(s);
+  const escala = Math.max(agora, 1000);
+  s.vista.textContent = "";
+  for (const t of TAREFAS) {
+    const track = el("div", { class: "track" });
+    const cor = `var(--${t.toLowerCase()})`;
+    for (const g of segs.filter(g => g.tarefa === t)) {
+      const seg = el("div", { class: "seg" + (g.vivo ? " vivo" : "") });
+      seg.style.left = (g.ini / escala * 100) + "%";
+      seg.style.width = (Math.max(g.fim - g.ini, 0) / escala * 100) + "%";
+      seg.style.background = cor;
+      seg.title = `${t}: ${fmt(g.ini)} → ${fmt(g.fim)} ms`;
+      track.append(seg);
+    }
+    const n = segs.filter(g => g.tarefa === t && !g.vivo).length;
+    if (s.modo.id === "rr" && n) track.append(el("span", { class: "count" }, n + (n === 1 ? " quantum" : " quanta")));
+    s.vista.append(el("div", { class: "lane" }, el("span", { class: "nome" }, t), track));
+  }
+  s.vista.append(el("div", { class: "eixo" }, el("div"),
+    el("div", {}, el("span", {}, "0"), el("span", {}, fmt(escala / 2) + " ms"), el("span", {}, fmt(escala) + " ms"))));
+}
+
+// ---- Progresso por tarefa do Sequencial e do Paralelo
+function progresso(s) {
+  const p = {};
+  for (const t of TAREFAS) p[t] = { feitos: 0, ativo: false };
+  const paralelo = s.modo.id === "paralelo";
+  let rodadas = 0, ultimaJogadores = false, fim = false;
+  for (const { s: linha } of s.linhas) {
+    let m = linha.match(/^\[(Wishlist|Biblioteca|Jogadores)\] (.*)$/);
+    if (/^Tempo total/.test(linha)) fim = true;
+    if (/^----- Rodada \d+\/\d+ -----/.test(linha)) { rodadas++; ultimaJogadores = false; }
+    if (!m) continue;
+    const t = m[1], resto = m[2];
+    if (resto.startsWith("Concluído")) {
+      p[t].ativo = false;
+      if (!paralelo) p[t].feitos++;
+      if (t === "Jogadores") ultimaJogadores = true;
+    } else if (paralelo) {
+      const r = resto.match(/^(?:Verificação|Rodada) (\d+)\/\d+/);
+      if (r) p[t].feitos = +r[1];
+      p[t].ativo = true;
+    } else {
+      p[t].ativo = true;
+      ultimaJogadores = false;
+    }
+  }
+  if (!paralelo) {
+    // O DLC não imprime nada: no Sequencial ele roda depois dos Jogadores em cada rodada.
+    p.DLC.feitos = Math.max(0, rodadas - 1) + (fim ? 1 : 0);
+    p.DLC.ativo = s.status === "rodando" && ultimaJogadores;
+  } else if (fim) {
+    p.DLC.feitos = 5;
+  }
+  if (s.status !== "rodando") for (const t of TAREFAS) p[t].ativo = false;
+  return p;
+}
+
+function desenharProgresso(s) {
+  const p = progresso(s);
+  const paralelo = s.modo.id === "paralelo";
+  s.vista.textContent = "";
+  for (const t of TAREFAS) {
+    const track = el("div", { class: "track" });
+    const bar = el("div", { class: "bar" });
+    bar.style.width = (p[t].feitos / 5 * 100) + "%";
+    bar.style.background = `var(--${t.toLowerCase()})`;
+    if (p[t].ativo) bar.style.opacity = ".8";
+    track.append(bar);
+    const rotulo = paralelo && t === "DLC" && !p[t].feitos ? (s.status === "rodando" ? "rodando (sem saída no log)" : "")
+      : `${p[t].feitos}/5${p[t].ativo ? " · executando" : ""}`;
+    track.append(el("span", { class: "count" }, rotulo));
+    s.vista.append(el("div", { class: "lane" }, el("span", { class: "nome" + (p[t].ativo ? " ativo" : "") }, t), track));
+  }
+}
+
+function desenharHistorico(lista) {
+  const corpo = document.getElementById("historico");
+  corpo.textContent = "";
+  if (!lista.length) {
+    corpo.append(el("tr", {}, el("td", { colspan: "8", class: "vazio" }, "Nenhuma execução terminou ainda.")));
+    return;
+  }
+  for (const h of lista.slice().reverse()) {
+    corpo.append(el("tr", {},
+      el("td", {}, h.nome),
+      el("td", {}, h.parametro || "—"),
+      el("td", {}, STATUS[h.status] || h.status),
+      el("td", {}, fmt(h.tempoTotal)),
+      el("td", {}, fmt(h.esperaMedia, 1)),
+      el("td", {}, fmt(h.turnaroundMedio, 1)),
+      el("td", {}, h.trocas || "—"),
+      el("td", {}, new Date(h.inicio).toLocaleTimeString("pt-BR"))));
+  }
+}
+
+// ---- Notificações: montadas a partir dos relatórios que cada sistema imprime
+const ICONES = { Wishlist: "🏷️", Biblioteca: "📚", Jogadores: "👥", DLC: "🧩" };
+const MAX_TOASTS = 4;
+const notificacoes = [];
+let naoLidas = 0;
+let filtro = "Todas";
+let notifSistema = false;
+
+function novoParser() {
+  return { bloco: null, itens: [], tamanhos: [], comum: null, dlc: null, vistos: new Set() };
+}
+
+function lerLinha(s, linha, silencioso) {
+  const p = s.parser;
+  const texto = linha.s;
+
+  // DLC: cada jogo vem entre duas linhas de traços
+  if (/^-{10,}$/.test(texto)) {
+    if (p.dlc && p.dlc.nome) fecharDlc(s, linha, silencioso);
+    else p.dlc = { nome: null, appid: null, dlcs: [] };
+    return;
+  }
+  if (p.dlc) {
+    let m = texto.match(/^Jogo: (.+) \(AppID: (\d+)\)$/);
+    if (m) { p.dlc.nome = m[1]; p.dlc.appid = m[2]; return; }
+    m = texto.match(/^\s+- (.+) \| Lançamento: (.+)$/);
+    if (m) { p.dlc.dlcs.push({ nome: m[1], data: m[2] }); return; }
+  }
+  let m = texto.match(/^O jogo (.+) lançou essa dlc (.+) no dia (.+) ela esta custando R\$\s*(.+)$/);
+  if (m) {
+    emitir(s, linha, silencioso, "DLC", "Nova DLC lançada", [`${m[2]} (${m[1]})`, `Lançada em ${m[3]} · R$ ${m[4]}`], [], "lancou:" + m[2]);
+    return;
+  }
+
+  // Blocos de relatório: " ===== Título ===== " seguido de uma linha por item, até uma linha em branco
+  m = texto.match(/^\s*=+ (.+?) =+\s*$/);
+  if (m) {
+    fecharBloco(s, linha, silencioso);
+    const titulo = m[1];
+    let c;
+    if (titulo === "Jogos Em Promoção") p.bloco = { tipo: "promo" };
+    else if (titulo === "Bibliotecas") p.bloco = { tipo: "biblio" };
+    else if ((c = titulo.match(/^Jogos Em Comum \((\d+)\)/))) p.bloco = { tipo: "comum", total: +c[1] };
+    else if ((c = titulo.match(/^Jogos Exclusivos de (\S+) \((\d+)\)/))) p.bloco = { tipo: "exclusivos", id: c[1], total: +c[2] };
+    else if (titulo === "Jogadores Online") p.bloco = { tipo: "jogadores" };
+    else p.bloco = null;
+    p.itens = [];
+    return;
+  }
+  if (!p.bloco) return;
+  if (texto.trim() === "") { fecharBloco(s, linha, silencioso); return; }
+  if (texto.startsWith("[") || texto.startsWith("Config ")) return; // linhas de outras threads no meio do bloco
+  p.itens.push(texto.trim());
+}
+
+function fecharBloco(s, linha, silencioso) {
+  const p = s.parser;
+  const b = p.bloco;
+  if (!b) return;
+  const itens = p.itens;
+  p.bloco = null;
+  p.itens = [];
+
+  if (b.tipo === "promo") {
+    const jogos = itens.map(i => ({ nome: i.replace(/ == nova ==$/, ""), nova: i.endsWith("== nova ==") }));
+    const novas = jogos.filter(j => j.nova).length;
+    const resumo = jogos.length === 0 ? "Nenhum jogo da lista está em promoção."
+      : `${jogos.length} ${jogos.length === 1 ? "jogo" : "jogos"} da lista em promoção` + (novas ? ` · ${novas} ${novas === 1 ? "nova" : "novas"}` : "");
+    emitir(s, linha, silencioso, "Wishlist", "Promoções na lista de desejos", [resumo], jogos,
+      "promo:" + jogos.map(j => j.nome).join("|"));
+  } else if (b.tipo === "biblio") {
+    p.tamanhos = itens.map(i => i.match(/^(\S+): (\d+) jogos/)).filter(Boolean).map(x => ({ id: x[1], jogos: +x[2] }));
+  } else if (b.tipo === "comum") {
+    p.comum = { total: b.total, jogos: itens };
+  } else if (b.tipo === "exclusivos") {
+    const comum = p.comum || { total: 0, jogos: [] };
+    const linhas = [`${comum.total} ${comum.total === 1 ? "jogo" : "jogos"} em comum entre as bibliotecas`];
+    if (p.tamanhos.length) linhas.push(p.tamanhos.map(t => `…${t.id.slice(-4)}: ${fmt(t.jogos)} jogos`).join(" · "));
+    linhas.push(`${b.total} exclusivos de …${b.id.slice(-4)}`);
+    emitir(s, linha, silencioso, "Biblioteca", "Comparação de bibliotecas", linhas,
+      comum.jogos.map(nome => ({ nome })), "biblio:" + comum.jogos.join("|") + ":" + b.total);
+    p.comum = null;
+  } else if (b.tipo === "jogadores") {
+    const jogos = itens.map(i => i.match(/^(.+)\((\d+)\):(-?\d+) jogadores online/)).filter(Boolean)
+      .map(x => ({ nome: `${x[1]}: ${fmt(+x[3])} online` }));
+    emitir(s, linha, silencioso, "Jogadores", "Jogadores online agora", [], jogos,
+      "jogadores:" + jogos.map(j => j.nome).join("|"));
+  }
+}
+
+function fecharDlc(s, linha, silencioso) {
+  const d = s.parser.dlc;
+  s.parser.dlc = null;
+  if (!d.dlcs.length) return;
+  const recente = d.dlcs.slice().sort((a, b) => b.data.localeCompare(a.data))[0];
+  const data = recente.data.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$3/$2/$1");
+  emitir(s, linha, silencioso, "DLC", `DLCs de ${d.nome}`,
+    [`${d.dlcs.length} ${d.dlcs.length === 1 ? "DLC" : "DLCs"} · mais recente: ${recente.nome} (${data})`], [],
+    "dlc:" + d.appid + ":" + d.dlcs.length);
+}
+
+function emitir(s, linha, silencioso, tarefa, titulo, linhas, lista, chave) {
+  if (s.parser.vistos.has(chave)) return;
+  s.parser.vistos.add(chave);
+  const n = { tarefa, titulo, linhas, lista, modo: s.modo.nome, t: linha.t };
+  notificacoes.push(n);
+  if (!document.getElementById("central").classList.contains("aberta")) naoLidas++;
+  atualizarCentral();
+  if (silencioso) return;
+  mostrarToast(n);
+  if (notifSistema && "Notification" in window && Notification.permission === "granted") {
+    new Notification(`${tarefa} · ${titulo}`, {
+      body: linhas.concat(lista.slice(0, 3).map(j => "• " + j.nome)).join("\n"),
+      tag: chave,
+    });
+  }
+}
+
+function cartaoNotif(n) {
+  const corpo = el("div", { class: "corpo" });
+  for (const l of n.linhas) corpo.append(el("div", {}, l));
+  if (n.lista.length) {
+    const ul = el("ul");
+    for (const j of n.lista.slice(0, 4)) {
+      const li = el("li", {}, j.nome);
+      if (j.nova) li.append(" ", el("span", { class: "nova" }, "NOVA"));
+      ul.append(li);
+    }
+    if (n.lista.length > 4) ul.append(el("li", {}, `e mais ${n.lista.length - 4}`));
+    corpo.append(ul);
+  }
+  const card = el("div", { class: "notif" },
+    el("div", { class: "icone" }, ICONES[n.tarefa]),
+    el("div", {},
+      el("div", { class: "cabeca" }, el("b", {}, `${n.tarefa} · ${n.titulo}`),
+        el("span", { class: "origem" }, `${n.modo} · ${fmt(n.t / 1000, 1)} s`)),
+      corpo));
+  card.style.setProperty("--cor", `var(--${n.tarefa.toLowerCase()})`);
+  return card;
+}
+
+function mostrarToast(n) {
+  const area = document.getElementById("toasts");
+  const card = cartaoNotif(n);
+  const fechar = () => {
+    if (card.classList.contains("saindo")) return;
+    card.classList.add("saindo");
+    setTimeout(() => card.remove(), 300);
+  };
+  card.addEventListener("click", () => { fechar(); abrirCentral(); });
+  area.append(card);
+  const visiveis = [...area.children].filter(c => !c.classList.contains("saindo"));
+  if (visiveis.length > MAX_TOASTS) visiveis[0].remove();
+  setTimeout(fechar, 7000);
+}
+
+function atualizarCentral() {
+  document.getElementById("badge").textContent = naoLidas ? naoLidas : "";
+  const lista = document.getElementById("lista-notif");
+  lista.textContent = "";
+  const itens = notificacoes.filter(n => filtro === "Todas" || n.tarefa === filtro);
+  if (!itens.length) lista.append(el("p", { class: "vazio" }, "Nenhuma notificação ainda. Rode algum modo para recebê-las."));
+  for (const n of itens.slice().reverse()) lista.append(cartaoNotif(n));
+}
+
+function abrirCentral() {
+  document.getElementById("central").classList.add("aberta");
+  naoLidas = 0;
+  atualizarCentral();
+}
+
+function iniciarNotificacoes() {
+  const filtros = document.getElementById("filtros");
+  for (const f of ["Todas", ...TAREFAS]) {
+    const b = el("button", { "aria-pressed": f === filtro }, f === "Todas" ? f : `${ICONES[f]} ${f}`);
+    b.addEventListener("click", () => {
+      filtro = f;
+      filtros.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      atualizarCentral();
+    });
+    filtros.append(b);
+  }
+  document.getElementById("btn-central").addEventListener("click", () => {
+    const c = document.getElementById("central");
+    if (c.classList.contains("aberta")) c.classList.remove("aberta");
+    else abrirCentral();
+  });
+  document.getElementById("btn-fechar").addEventListener("click", () => document.getElementById("central").classList.remove("aberta"));
+  document.getElementById("btn-limpar").addEventListener("click", () => { notificacoes.length = 0; naoLidas = 0; atualizarCentral(); });
+
+  const btn = document.getElementById("btn-sistema");
+  if (!("Notification" in window)) btn.hidden = true;
+  btn.addEventListener("click", async () => {
+    if (!notifSistema && Notification.permission !== "granted") await Notification.requestPermission();
+    notifSistema = !notifSistema && Notification.permission === "granted";
+    btn.textContent = "Notificação do sistema: " + (notifSistema ? "ligada" : "desligada");
+  });
+  atualizarCentral();
+}
+
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll(".painel").forEach(p => p.classList.toggle("ativo", p.id === b.dataset.painel));
+}));
+
+criarCards();
+iniciarNotificacoes();
+atualizar();
+setInterval(atualizar, 800);
+</script>
+</body>
+</html>
